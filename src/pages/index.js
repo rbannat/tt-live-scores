@@ -1,21 +1,81 @@
 import React from "react"
-import { Link } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+const IndexPage = () => {
+  const {
+    league: { Ergebnistabelle: table },
+  } = useStaticQuery(
+    graphql`
+      query {
+        league {
+          Ergebnistabelle {
+            Liga
+            Ligalink
+            Verband
+            Zeit
+            Content {
+              Mannschaft {
+                Mannschaft
+                Platz
+                Niederlagen
+                PunkteDif
+                PunkteMinus
+                PunktePlus
+                SaetzeDif
+                Siege
+                Spiele
+                SpieleDif
+                SpieleMinus
+                SpielePlus
+                Unentschieden
+              }
+            }
+          }
+        }
+      }
+    `
+  )
+  const teams = table.Content[0].Mannschaft
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>{table.Liga}</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Platz</th>
+            <th>Mannschaft</th>
+            <th>Spiele</th>
+            <th>Siege</th>
+            <th>Unentschieden</th>
+            <th>Niederlagen</th>
+            <th>Punkte</th>
+          </tr>
+        </thead>
+        <tbody>
+          {teams.map((team, index) => {
+            return (
+              <tr key={index}>
+                <td>{team.Platz}</td>
+                <td>{team.Mannschaft}</td>
+                <td>{team.Spiele}</td>
+                <td>{team.Siege}</td>
+                <td>{team.Unentschieden}</td>
+                <td>{team.Niederlagen}</td>
+                <td>
+                  {team.PunktePlus}:{team.PunkteMinus}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      {/* <Link to="/page-2/">Go to page 2</Link> */}
+    </Layout>
+  )
+}
 
 export default IndexPage
