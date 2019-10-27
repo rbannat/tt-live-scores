@@ -42,17 +42,18 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>{table.Liga}</h1>
+      <h2>{table.Liga}</h2>
       <table>
         <thead>
           <tr>
-            <th>Platz</th>
+            <th>#</th>
             <th>Mannschaft</th>
-            <th>Spiele</th>
-            <th>Siege</th>
-            <th>Unentschieden</th>
-            <th>Niederlagen</th>
-            <th>Punkte</th>
+            <th>Sp</th>
+            <th>S</th>
+            <th>U</th>
+            <th>N</th>
+            <th>Pkt</th>
+            <th>Diff</th>
           </tr>
         </thead>
         <tbody>
@@ -66,7 +67,10 @@ const IndexPage = () => {
                 <td>{team.Unentschieden}</td>
                 <td>{team.Niederlagen}</td>
                 <td>
-                  {team.PunktePlus}:{team.PunkteMinus}
+                  {team.PunktePlus}
+                </td>
+                <td>
+                  {team.PunkteDif}
                 </td>
               </tr>
             )
