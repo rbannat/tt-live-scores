@@ -42,8 +42,8 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h2>{table.Liga}</h2>
-      <table>
+      <div class="table-container">
+        <table class="table">
         <thead>
           <tr>
             <th>#</th>
@@ -77,7 +77,7 @@ const IndexPage = () => {
           })}
         </tbody>
       </table>
-      {/* <Link to="/page-2/">Go to page 2</Link> */}
+      </div>
     </Layout>
   )
 }
