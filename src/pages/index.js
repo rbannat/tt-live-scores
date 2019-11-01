@@ -42,8 +42,8 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <div class="table-container">
-        <table class="table">
+      <div className="table-container">
+        <table className="table">
         <thead>
           <tr>
             <th>#</th>

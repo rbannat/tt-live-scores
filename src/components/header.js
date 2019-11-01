@@ -3,14 +3,14 @@ import React from "react"
 
 const Header = ({ siteTitle, siteSubtitle }) => (
   <header
-   class="hero is-primary"
+   className="hero is-primary"
   >
-    <div class="hero-body">
+    <div className="hero-body">
       <div className="container">
-      <h1 class="title">
+      <h1 className="title">
           {siteTitle}
       </h1>
-      <h2 class="subtitle">{siteSubtitle}</h2>
+      <h2 className="subtitle">{siteSubtitle}</h2>
       </div>
     </div>
   </header>
