@@ -1,5 +1,5 @@
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -61,7 +61,7 @@ const IndexPage = () => {
             return (
               <tr key={index}>
                 <td>{team.Platz}</td>
-                <td>{team.Mannschaft}</td>
+                <td><Link to={`/team/${team.Mannschaft}`}>{team.Mannschaft}</Link></td>
                 <td>{team.Spiele}</td>
                 <td>{team.Siege}</td>
                 <td>{team.Unentschieden}</td>
