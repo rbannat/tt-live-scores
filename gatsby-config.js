@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `BeTTV Ergebnisse`,
+    title: `TT-Live App`,
     description: `Hier findest du Ergebnisse des Berliner Tisch-Tennis Verband e.V. direkt aus TischtennisLive.`,
     author: `@rennitlb`,
   },

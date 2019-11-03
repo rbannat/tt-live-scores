@@ -31,12 +31,8 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} siteSubtitle={data.league.Ergebnistabelle.Liga} />
-      <section className="section">
-        <div className="container">
-          <main>{children}</main>
-        </div>
-      </section>
+    <Header siteTitle={data.site.siteMetadata.title} />
+    <main>{children}</main>
     </>
   )
 }

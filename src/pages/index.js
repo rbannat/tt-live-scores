@@ -5,11 +5,14 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const IndexPage = () => {
-  const {
-    league: { Ergebnistabelle: table },
-  } = useStaticQuery(
+  const data = useStaticQuery(
     graphql`
       query {
+        site {
+          siteMetadata {
+            title
+          }
+        }
         league {
           Ergebnistabelle {
             Liga
@@ -38,10 +41,22 @@ const IndexPage = () => {
       }
     `
   )
-  const teams = table.Content[0].Mannschaft
+  const teams = data.league.Ergebnistabelle.Content[0].Mannschaft
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Tabelle" />
+      <div className="hero is-primary">
+       <div className="hero-body">
+      <div className="container">
+      <h1 className="title">
+          Tabelle
+      </h1>
+      <h2 className="subtitle">{data.league.Ergebnistabelle.Liga}</h2>
+      </div>
+    </div>
+    </div>
+    <section className="section">
+      <div className="container">
       <div className="table-container">
         <table className="table">
         <thead>
@@ -78,6 +93,8 @@ const IndexPage = () => {
         </tbody>
       </table>
       </div>
+    </div>
+      </section>
     </Layout>
   )
 }

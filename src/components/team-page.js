@@ -7,7 +7,15 @@ const TeamPage = ({pageContext: {team}}) => {
   return (
     <Layout>
       <SEO title="Team" />
-      <h1 className="title is-1">{team}</h1>
+      <div className="hero is-primary">
+       <div className="hero-body">
+      <div className="container">
+      <h1 className="title">
+          {team}
+      </h1>
+      </div>
+    </div>
+    </div>
     </Layout>
   )
 }
