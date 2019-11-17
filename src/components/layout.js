@@ -21,18 +21,18 @@ const Layout = ({ children }) => {
         }
       }
       league {
-          Ergebnistabelle {
-            Liga
-            Ligalink
-          }
+        Ergebnistabelle {
+          Liga
+          Ligalink
         }
+      }
     }
   `)
 
   return (
     <>
-    <Header siteTitle={data.site.siteMetadata.title} />
-    <main>{children}</main>
+      <Header siteTitle={data.site.siteMetadata.title} />
+      <main>{children}</main>
     </>
   )
 }
