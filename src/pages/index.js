@@ -13,7 +13,9 @@ const IndexPage = ({ data }) => {
         <div className="hero-body">
           <div className="container">
             <h1 className="title">Tabelle</h1>
-            <h2 className="subtitle">{data.league.Ergebnistabelle.Liga}</h2>
+            <h2 className="subtitle">
+              {data.leagueTable.Ergebnistabelle.Liga}
+            </h2>
           </div>
         </div>
       </div>
@@ -28,7 +30,7 @@ const IndexPage = ({ data }) => {
 
 export const query = graphql`
   query {
-    league {
+    leagueTable {
       Ergebnistabelle {
         Liga
         Ligalink

@@ -5,7 +5,7 @@ const Table = () => {
   const data = useStaticQuery(
     graphql`
       query {
-        league {
+        leagueTable {
           Ergebnistabelle {
             Content {
               Mannschaft {
@@ -24,7 +24,7 @@ const Table = () => {
       }
     `
   )
-  const teams = data.league.Ergebnistabelle.Content[0].Mannschaft
+  const teams = data.leagueTable.Ergebnistabelle.Content[0].Mannschaft
   return (
     <div className="table-container">
       <table className="table is-striped">
