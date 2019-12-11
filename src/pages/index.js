@@ -38,7 +38,7 @@ const IndexPage = ({ data }) => {
           {nextGames.map(
             ({ homeTeamName, guestTeamName, date, result }, index) => {
               return (
-                <p key={index}>
+                <div className="fixture-container" key={index}>
                   <h3 className="is-size-6">
                     {new Date(date).toLocaleDateString("de-DE", {
                       weekday: "long",
@@ -55,7 +55,7 @@ const IndexPage = ({ data }) => {
                     date={date}
                     result={result}
                   ></Fixture>
-                </p>
+                </div>
               )
             }
           )}

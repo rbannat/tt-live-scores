@@ -20,8 +20,8 @@ const Header = () => {
             {data.site.siteMetadata.title}
           </Link>
 
-          <div
-            role="button"
+          <button
+            type="button"
             className={
               isActive
                 ? "navbar-burger burger is-active"
@@ -35,7 +35,7 @@ const Header = () => {
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </div>
+          </button>
         </div>
 
         <div
