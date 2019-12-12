@@ -16,27 +16,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
       {
         leagueTable {
-          Ergebnistabelle {
-            Liga
-            Ligalink
-            Verband
-            Zeit
-            Content {
-              Mannschaft {
-                Mannschaft
-                Platz
-                Niederlagen
-                PunkteDif
-                PunkteMinus
-                PunktePlus
-                SaetzeDif
-                Siege
-                Spiele
-                SpieleDif
-                SpieleMinus
-                SpielePlus
-                Unentschieden
-              }
+          liga
+          ligalink
+          verband
+          zeit
+          content {
+            mannschaft {
+              mannschaft
+              platz
+              niederlagen
+              punktedif
+              punkteminus
+              punkteplus
+              saetzedif
+              siege
+              spiele
+              spieledif
+              spieleminus
+              spieleplus
+              unentschieden
             }
           }
         }
@@ -52,16 +50,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // Create pages for each team.
   const component = path.resolve(`src/components/team-page.js`)
-  result.data.leagueTable.Ergebnistabelle.Content[0].Mannschaft.forEach(
-    ({ Mannschaft }) => {
-      const path = `/team/${Mannschaft}`
-      createPage({
-        path,
-        component,
-        context: {
-          team: Mannschaft,
-        },
-      })
-    }
-  )
+  result.data.leagueTable.content.mannschaft.forEach(({ mannschaft }) => {
+    const path = `/team/${mannschaft}`
+    createPage({
+      path,
+      component,
+      context: {
+        team: mannschaft,
+      },
+    })
+  })
 }

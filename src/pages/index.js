@@ -6,13 +6,13 @@ import SEO from "../components/seo"
 import Fixture from "../components/fixture"
 
 const IndexPage = ({ data }) => {
-  const nextGames = data.teamReport.Team_Report.Content[0].Spielplan[0].Spiel.reduce(
+  const nextGames = data.teamReport.content.spielplan.spiel.reduce(
     (acc, prev) => {
-      if (new Date(prev.Datum[0]) > new Date()) {
+      if (new Date(prev.datum) > new Date()) {
         acc.push({
-          date: prev.Datum[0],
-          homeTeamName: prev.Heimmannschaft[0],
-          guestTeamName: prev.Gastmannschaft[0],
+          date: prev.datum,
+          homeTeamName: prev.heimmannschaft,
+          guestTeamName: prev.gastmannschaft,
         })
       }
       return acc
@@ -26,9 +26,7 @@ const IndexPage = ({ data }) => {
         <div className="hero-body">
           <div className="container">
             <h1 className="title">Übersicht</h1>
-            <h2 className="subtitle">
-              {data.leagueTable.Ergebnistabelle.Liga}
-            </h2>
+            <h2 className="subtitle">{data.leagueTable.liga}</h2>
           </div>
         </div>
       </div>
@@ -68,23 +66,19 @@ const IndexPage = ({ data }) => {
 export const query = graphql`
   query {
     leagueTable {
-      Ergebnistabelle {
-        Liga
-        Ligalink
-        Verband
-        Zeit
-      }
+      liga
+      ligalink
+      verband
+      zeit
     }
     teamReport {
-      Team_Report {
-        Content {
-          Spielplan {
-            Spiel {
-              Datum
-              Ergebnis
-              Gastmannschaft
-              Heimmannschaft
-            }
+      content {
+        spielplan {
+          spiel {
+            datum
+            ergebnis
+            gastmannschaft
+            heimmannschaft
           }
         }
       }

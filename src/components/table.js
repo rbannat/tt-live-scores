@@ -6,25 +6,23 @@ const Table = () => {
     graphql`
       query {
         leagueTable {
-          Ergebnistabelle {
-            Content {
-              Mannschaft {
-                Mannschaft
-                Platz
-                Niederlagen
-                PunkteDif
-                PunktePlus
-                Siege
-                Spiele
-                Unentschieden
-              }
+          content {
+            mannschaft {
+              mannschaft
+              platz
+              niederlagen
+              punktedif
+              punkteplus
+              siege
+              spiele
+              unentschieden
             }
           }
         }
       }
     `
   )
-  const teams = data.leagueTable.Ergebnistabelle.Content[0].Mannschaft
+  const teams = data.leagueTable.content.mannschaft
   return (
     <div className="table-container">
       <table className="table is-striped">
@@ -44,16 +42,16 @@ const Table = () => {
           {teams.map((team, index) => {
             return (
               <tr key={index}>
-                <td>{team.Platz}</td>
+                <td>{team.platz}</td>
                 <td>
-                  <Link to={`/team/${team.Mannschaft}`}>{team.Mannschaft}</Link>
+                  <Link to={`/team/${team.mannschaft}`}>{team.mannschaft}</Link>
                 </td>
-                <td>{team.Spiele}</td>
-                <td>{team.Siege}</td>
-                <td>{team.Unentschieden}</td>
-                <td>{team.Niederlagen}</td>
-                <td>{team.PunktePlus}</td>
-                <td>{team.PunkteDif}</td>
+                <td>{team.spiele}</td>
+                <td>{team.siege}</td>
+                <td>{team.unentschieden}</td>
+                <td>{team.niederlagen}</td>
+                <td>{team.punkteplus}</td>
+                <td>{team.punktedif}</td>
               </tr>
             )
           })}
