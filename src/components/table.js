@@ -25,7 +25,7 @@ const Table = () => {
   const teams = data.leagueTable.content.mannschaft
   return (
     <div className="table-container">
-      <table className="table is-striped">
+      <table className="table is-striped is-fullwidth">
         <thead>
           <tr>
             <th>#</th>

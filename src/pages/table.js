@@ -5,7 +5,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Table from "../components/table"
 
-const IndexPage = ({ data }) => {
+const TablePage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Tabelle" />
@@ -37,4 +37,4 @@ export const query = graphql`
   }
 `
 
-export default IndexPage
+export default TablePage

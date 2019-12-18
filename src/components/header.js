@@ -46,6 +46,9 @@ const Header = () => {
             <Link to="/" className="navbar-item">
               Übersicht
             </Link>
+            <Link to="/schedule" className="navbar-item">
+              Spielplan
+            </Link>
             <Link to="/table" className="navbar-item">
               Tabelle
             </Link>
