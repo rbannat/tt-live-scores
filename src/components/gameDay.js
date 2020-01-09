@@ -13,17 +13,24 @@ const GameDay = ({ date, games }) => (
         })}
       </h3>
 
-      {games.map(({ homeTeamName, guestTeamName, date, result }, index) => {
-        return (
-          <Fixture
-            key={index}
-            homeTeamName={homeTeamName}
-            guestTeamName={guestTeamName}
-            date={date}
-            result={result}
-          ></Fixture>
-        )
-      })}
+      {games.map(
+        ({ homeTeamName, guestTeamName, date, result, link }, index) => {
+          const highlight = [homeTeamName, guestTeamName].some(
+            name => name === "SV Berl. Brauereien IX"
+          )
+          return (
+            <Fixture
+              key={index}
+              highlight={highlight}
+              homeTeamName={homeTeamName}
+              guestTeamName={guestTeamName}
+              date={date}
+              result={result}
+              link={link}
+            ></Fixture>
+          )
+        }
+      )}
     </div>
   </div>
 )

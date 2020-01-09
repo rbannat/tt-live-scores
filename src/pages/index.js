@@ -6,8 +6,8 @@ import SEO from "../components/seo"
 import GameDay from "../components/gameDay"
 
 const IndexPage = ({ data }) => {
-  const gamesByDate = data.teamReport.content.spielplan.spiel.reduce(
-    (gamesByDate, game) => {
+  const gamesByDate = data.allGame.edges.reduce(
+    (gamesByDate, { node: game }) => {
       const date = game.datum.split("T")[0]
       if (!gamesByDate[date]) {
         gamesByDate[date] = []
@@ -17,6 +17,7 @@ const IndexPage = ({ data }) => {
         homeTeamName: game.heimmannschaft,
         guestTeamName: game.gastmannschaft,
         result: game.ergebnis,
+        link: game.link,
       })
       return gamesByDate
     },
@@ -61,15 +62,14 @@ export const query = graphql`
       verband
       zeit
     }
-    teamReport {
-      content {
-        spielplan {
-          spiel {
-            datum
-            ergebnis
-            gastmannschaft
-            heimmannschaft
-          }
+    allGame {
+      edges {
+        node {
+          datum
+          ergebnis
+          gastmannschaft
+          heimmannschaft
+          link
         }
       }
     }
