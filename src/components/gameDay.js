@@ -15,13 +15,9 @@ const GameDay = ({ date, fixtures }) => (
 
       {fixtures.map(
         ({ homeTeamName, guestTeamName, date, result, link }, index) => {
-          const highlight = [homeTeamName, guestTeamName].some(
-            name => name === "SV Berl. Brauereien IX"
-          )
           return (
             <Fixture
               key={index}
-              highlight={highlight}
               homeTeamName={homeTeamName}
               guestTeamName={guestTeamName}
               date={date}

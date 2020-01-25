@@ -1,37 +1,25 @@
 import React from "react"
 
-const Fixture = ({
-  homeTeamName,
-  guestTeamName,
-  result,
-  date,
-  highlight,
-  link,
-}) => {
-  const highlightClasses = highlight
-    ? "has-background-primary has-text-white"
-    : ""
+const Fixture = ({ homeTeamName, guestTeamName, result, date, link }) => {
   return (
     <a
       href={link}
       target="__blank"
       title="Go to Game Details"
-      className={`box ${highlightClasses}`}
+      className={`box`}
     >
       <div className="level">
         <div className="level-item has-text-centered">
-          <span className={`title is-5 ${highlightClasses}`}>
-            {homeTeamName}
-          </span>
+          <span className={`title is-5`}>{homeTeamName}</span>
         </div>
         <div className="level-item has-text-centered">
           <div>
-            <div className={`title ${highlightClasses}`}>
+            <div className={`title`}>
               {result && result !== "Vorbericht"
                 ? `${result[0]}:${result[1]}`
                 : "vs."}
             </div>
-            <div className={`is-6 ${highlightClasses}`}>
+            <div className={`is-6`}>
               {new Date(date).toLocaleTimeString("de-DE", {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -40,9 +28,7 @@ const Fixture = ({
           </div>
         </div>
         <div className="level-item has-text-centered">
-          <span className={`title is-5 ${highlightClasses}`}>
-            {guestTeamName}
-          </span>
+          <span className={`title is-5`}>{guestTeamName}</span>
         </div>
       </div>
     </a>
