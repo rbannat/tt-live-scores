@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
@@ -6,6 +6,8 @@ import SEO from "../components/seo"
 import GameDay from "../components/gameDay"
 
 const SchedulePage = ({ data }) => {
+  const [activeTab, setActiveTab] = useState("firstHalf")
+
   const fixturesByDate = data.allFixture.edges.reduce(
     (fixturesByDate, { node: fixture }) => {
       const date = fixture.date.split("T")[0]
@@ -13,6 +15,7 @@ const SchedulePage = ({ data }) => {
         fixturesByDate[date] = []
       }
       fixturesByDate[date].push({
+        isFirstHalf: fixture.isFirstHalf,
         date: fixture.date,
         homeTeamName: fixture.homeTeam,
         guestTeamName: fixture.guestTeam,
@@ -36,15 +39,40 @@ const SchedulePage = ({ data }) => {
       </div>
       <section className="section">
         <div className="container">
-          {Object.keys(fixturesByDate).map((date, index) => {
-            return (
-              <GameDay
-                key={index}
-                date={date}
-                fixtures={fixturesByDate[date]}
-              ></GameDay>
-            )
-          })}
+          <div className="tabs">
+            <ul>
+              <li className={activeTab === "firstHalf" ? "is-active" : ""}>
+                <a onClick={() => setActiveTab("firstHalf")}>Hinrunde</a>
+              </li>
+              <li className={activeTab === "secondHalf" ? "is-active" : ""}>
+                <a onClick={() => setActiveTab("secondHalf")}>Rückrunde</a>
+              </li>
+            </ul>
+          </div>
+
+          {activeTab === "firstHalf"
+            ? Object.keys(fixturesByDate)
+                .filter(date => fixturesByDate[date][0].isFirstHalf)
+                .map((date, index) => {
+                  return (
+                    <GameDay
+                      key={index}
+                      date={date}
+                      fixtures={fixturesByDate[date]}
+                    ></GameDay>
+                  )
+                })
+            : Object.keys(fixturesByDate)
+                .filter(date => !fixturesByDate[date][0].isFirstHalf)
+                .map((date, index) => {
+                  return (
+                    <GameDay
+                      key={index}
+                      date={date}
+                      fixtures={fixturesByDate[date]}
+                    ></GameDay>
+                  )
+                })}
         </div>
       </section>
     </Layout>
@@ -63,6 +91,7 @@ export const query = graphql`
     allFixture {
       edges {
         node {
+          isFirstHalf
           date
           result
           guestTeam
