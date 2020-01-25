@@ -17,7 +17,6 @@ module.exports = {
       resolve: `gatsby-source-ttlive`,
       options: {
         leagueId: 12970,
-        homeTeamId: 83548,
       },
     },
     `gatsby-transformer-sharp`,

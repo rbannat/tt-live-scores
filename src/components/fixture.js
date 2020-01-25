@@ -27,7 +27,9 @@ const Fixture = ({
         <div className="level-item has-text-centered">
           <div>
             <div className={`title ${highlightClasses}`}>
-              {result && result !== "Vorbericht" ? result : "vs."}
+              {result && result !== "Vorbericht"
+                ? `${result[0]}:${result[1]}`
+                : "vs."}
             </div>
             <div className={`is-6 ${highlightClasses}`}>
               {new Date(date).toLocaleTimeString("de-DE", {

@@ -13,7 +13,7 @@ const TablePage = ({ data }) => {
         <div className="hero-body">
           <div className="container">
             <h1 className="title">Tabelle</h1>
-            <h2 className="subtitle">{data.leagueTable.liga}</h2>
+            <h2 className="subtitle">{data.league.name}</h2>
           </div>
         </div>
       </div>
@@ -28,11 +28,12 @@ const TablePage = ({ data }) => {
 
 export const query = graphql`
   query {
-    leagueTable {
-      liga
-      ligalink
-      verband
-      zeit
+    league {
+      name
+      link
+      association {
+        name
+      }
     }
   }
 `

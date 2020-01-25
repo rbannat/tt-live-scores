@@ -6,20 +6,20 @@ import SEO from "../components/seo"
 import GameDay from "../components/gameDay"
 
 const IndexPage = ({ data }) => {
-  const gamesByDate = data.allGame.edges.reduce(
-    (gamesByDate, { node: game }) => {
-      const date = game.datum.split("T")[0]
-      if (!gamesByDate[date]) {
-        gamesByDate[date] = []
+  const fixturesByDate = data.allFixture.edges.reduce(
+    (fixturesByDate, { node: fixture }) => {
+      const date = fixture.date.split("T")[0]
+      if (!fixturesByDate[date]) {
+        fixturesByDate[date] = []
       }
-      gamesByDate[date].push({
-        date: game.datum,
-        homeTeamName: game.heimmannschaft,
-        guestTeamName: game.gastmannschaft,
-        result: game.ergebnis,
-        link: game.link,
+      fixturesByDate[date].push({
+        date: fixture.date,
+        homeTeamName: fixture.homeTeam,
+        guestTeamName: fixture.guestTeam,
+        result: fixture.result,
+        link: fixture.link,
       })
-      return gamesByDate
+      return fixturesByDate
     },
     {}
   )
@@ -30,21 +30,21 @@ const IndexPage = ({ data }) => {
         <div className="hero-body">
           <div className="container">
             <h1 className="title">Übersicht</h1>
-            <h2 className="subtitle">{data.leagueTable.liga}</h2>
+            <h2 className="subtitle">{data.league.name}</h2>
           </div>
         </div>
       </div>
       <section className="section">
         <div className="container">
           <h2 className="title is-4">Nächste Spiele</h2>
-          {Object.keys(gamesByDate)
+          {Object.keys(fixturesByDate)
             .filter(date => date >= new Date().toISOString().split("T")[0])
             .map((date, index) => {
               return (
                 <GameDay
                   key={index}
                   date={date}
-                  games={gamesByDate[date]}
+                  fixtures={fixturesByDate[date]}
                 ></GameDay>
               )
             })}
@@ -56,19 +56,20 @@ const IndexPage = ({ data }) => {
 
 export const query = graphql`
   query {
-    leagueTable {
-      liga
-      ligalink
-      verband
-      zeit
+    league {
+      name
+      link
+      association {
+        name
+      }
     }
-    allGame {
+    allFixture {
       edges {
         node {
-          datum
-          ergebnis
-          gastmannschaft
-          heimmannschaft
+          date
+          result
+          guestTeam
+          homeTeam
           link
         }
       }

@@ -15,26 +15,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const result = await graphql(
     `
       {
-        leagueTable {
-          liga
-          ligalink
-          verband
-          zeit
-          content {
-            mannschaft {
-              mannschaft
-              platz
-              niederlagen
-              punktedif
-              punkteminus
-              punkteplus
-              saetzedif
-              siege
-              spiele
-              spieledif
-              spieleminus
-              spieleplus
-              unentschieden
+        allTeam {
+          edges {
+            node {
+              id
             }
           }
         }
@@ -50,13 +34,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // Create pages for each team.
   const component = path.resolve(`src/components/team-page.js`)
-  result.data.leagueTable.content.mannschaft.forEach(({ mannschaft }) => {
-    const path = `/team/${mannschaft}`
+  result.data.allTeam.edges.forEach(({ node: team }) => {
+    const path = `/team/${team.id}`
     createPage({
       path,
       component,
       context: {
-        team: mannschaft,
+        teamId: team.id,
       },
     })
   })

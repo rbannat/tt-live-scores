@@ -4,25 +4,31 @@ import { Link, useStaticQuery, graphql } from "gatsby"
 const Table = () => {
   const data = useStaticQuery(
     graphql`
-      query {
-        leagueTable {
-          content {
-            mannschaft {
-              mannschaft
-              platz
-              niederlagen
-              punktedif
-              punkteplus
-              siege
-              spiele
-              unentschieden
+      query Table {
+        allTeam(sort: { fields: position, order: DESC }) {
+          edges {
+            node {
+              drawn
+              gamesPlayed
+              id
+              lost
+              matchesDiff
+              matchesLost
+              matchesWon
+              name
+              pointsDiff
+              pointsLost
+              pointsWon
+              position
+              setsDiff
+              won
             }
           }
         }
       }
     `
   )
-  const teams = data.leagueTable.content.mannschaft
+  const teams = data.allTeam.edges
   return (
     <div className="table-container">
       <table className="table is-striped is-fullwidth">
@@ -39,19 +45,19 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {teams.map((team, index) => {
+          {teams.map(({ node: team }) => {
             return (
-              <tr key={index}>
-                <td>{team.platz}</td>
+              <tr key={team.id}>
+                <td>{team.position}</td>
                 <td>
-                  <Link to={`/team/${team.mannschaft}`}>{team.mannschaft}</Link>
+                  <Link to={`/team/${team.id}`}>{team.name}</Link>
                 </td>
-                <td>{team.spiele}</td>
-                <td>{team.siege}</td>
-                <td>{team.unentschieden}</td>
-                <td>{team.niederlagen}</td>
-                <td>{team.punkteplus}</td>
-                <td>{team.punktedif}</td>
+                <td>{team.gamesPlayed}</td>
+                <td>{team.won}</td>
+                <td>{team.drawn}</td>
+                <td>{team.lost}</td>
+                <td>{team.pointsWon}</td>
+                <td>{team.pointsDiff}</td>
               </tr>
             )
           })}
