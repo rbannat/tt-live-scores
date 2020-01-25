@@ -1,4 +1,5 @@
 import React from "react"
+import fixtureStyles from "./fixture.module.scss"
 
 const Fixture = ({ homeTeamName, guestTeamName, result, date, link }) => {
   return (
@@ -8,27 +9,27 @@ const Fixture = ({ homeTeamName, guestTeamName, result, date, link }) => {
       title="Go to Game Details"
       className={`box`}
     >
-      <div className="level">
-        <div className="level-item has-text-centered">
-          <span className={`title is-5`}>{homeTeamName}</span>
+      <div className={fixtureStyles.container}>
+        <div className={`${fixtureStyles.team} has-text-right`}>
+          <span className={`is-size-6`}>{homeTeamName}</span>
         </div>
-        <div className="level-item has-text-centered">
+        <div className={`${fixtureStyles.resultContainer} has-text-centered`}>
           <div>
-            <div className={`title`}>
-              {result && result !== "Vorbericht"
-                ? `${result[0]}:${result[1]}`
-                : "vs."}
-            </div>
-            <div className={`is-6`}>
+            <div className={`is-size-7`}>
               {new Date(date).toLocaleTimeString("de-DE", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
             </div>
+            <div className={`is-size-4 has-text-weight-bold`}>
+              {result && result !== "Vorbericht"
+                ? `${result[0]}:${result[1]}`
+                : "vs."}
+            </div>
           </div>
         </div>
-        <div className="level-item has-text-centered">
-          <span className={`title is-5`}>{guestTeamName}</span>
+        <div className={`${fixtureStyles.team} has-text-left`}>
+          <span className={`is-size-6`}>{guestTeamName}</span>
         </div>
       </div>
     </a>

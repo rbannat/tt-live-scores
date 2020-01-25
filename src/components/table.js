@@ -5,7 +5,7 @@ const Table = () => {
   const data = useStaticQuery(
     graphql`
       query Table {
-        allTeam(sort: { fields: position, order: DESC }) {
+        allTeam(sort: { fields: position, order: ASC }) {
           edges {
             node {
               drawn
