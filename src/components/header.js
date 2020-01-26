@@ -20,8 +20,7 @@ const Header = () => {
             {data.site.siteMetadata.title}
           </Link>
 
-          <button
-            type="button"
+          <a
             className={
               isActive
                 ? "navbar-burger burger is-active"
@@ -29,13 +28,13 @@ const Header = () => {
             }
             onClick={() => setIsActive(!isActive)}
             aria-label="menu"
-            aria-expanded="false"
+            aria-expanded={isActive ? "true" : "false"}
             data-target="navbarBasicExample"
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </button>
+          </a>
         </div>
 
         <div
@@ -46,11 +45,11 @@ const Header = () => {
             <Link to="/" className="navbar-item">
               Übersicht
             </Link>
-            <Link to="/schedule" className="navbar-item">
-              Spielplan
-            </Link>
             <Link to="/table" className="navbar-item">
               Tabelle
+            </Link>
+            <Link to="/schedule" className="navbar-item">
+              Spielplan
             </Link>
           </div>
         </div>

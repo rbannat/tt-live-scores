@@ -31,15 +31,15 @@ const Table = () => {
   const teams = data.allTeam.edges
   return (
     <div className="table-container">
-      <table className="table is-striped is-fullwidth">
+      <table className="table is-fullwidth">
         <thead>
           <tr>
             <th>#</th>
             <th>Mannschaft</th>
             <th>Sp</th>
-            <th>S</th>
-            <th>U</th>
-            <th>N</th>
+            <th className="is-hidden-touch">S</th>
+            <th className="is-hidden-touch">U</th>
+            <th className="is-hidden-touch">N</th>
             <th>Pkt</th>
             <th>Diff</th>
           </tr>
@@ -50,14 +50,20 @@ const Table = () => {
               <tr key={team.id}>
                 <td>{team.position}</td>
                 <td>
-                  <Link to={`/team/${team.id}`}>{team.name}</Link>
+                  <Link to={`/team/${team.id}`}>
+                    <span>{team.name}</span>
+                  </Link>
                 </td>
                 <td>{team.gamesPlayed}</td>
-                <td>{team.won}</td>
-                <td>{team.drawn}</td>
-                <td>{team.lost}</td>
+                <td className="is-hidden-touch">{team.won}</td>
+                <td className="is-hidden-touch">{team.drawn}</td>
+                <td className="is-hidden-touch">{team.lost}</td>
                 <td>{team.pointsWon}</td>
-                <td>{team.pointsDiff}</td>
+                <td>
+                  {team.pointsDiff > 0
+                    ? `+${team.pointsDiff}`
+                    : team.pointsDiff}
+                </td>
               </tr>
             )
           })}

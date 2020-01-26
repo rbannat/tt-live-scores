@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -39,6 +39,7 @@ const IndexPage = ({ data }) => {
           <h2 className="title is-4">Nächste Spiele</h2>
           {Object.keys(fixturesByDate)
             .filter(date => date >= new Date().toISOString().split("T")[0])
+            .slice(0, 3)
             .map((date, index) => {
               return (
                 <GameDay
@@ -48,6 +49,34 @@ const IndexPage = ({ data }) => {
                 ></GameDay>
               )
             })}
+          <div className="columns">
+            <div className="column is-full has-text-right">
+              <Link to="/schedule" className="button is-link">
+                Zum Spielplan
+              </Link>
+            </div>
+          </div>
+          <h2 className="title is-4">Letzte Spiele</h2>
+          {Object.keys(fixturesByDate)
+            .filter(date => date < new Date().toISOString().split("T")[0])
+            .reverse()
+            .slice(0, 3)
+            .map((date, index) => {
+              return (
+                <GameDay
+                  key={index}
+                  date={date}
+                  fixtures={fixturesByDate[date]}
+                ></GameDay>
+              )
+            })}
+          <div className="columns">
+            <div className="column is-full has-text-right">
+              <Link to="/schedule" className="button is-link">
+                Zum Spielplan
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>

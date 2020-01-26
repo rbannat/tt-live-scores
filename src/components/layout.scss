@@ -1,2 +1,9 @@
 @charset "utf-8";
+@import "./variables.scss";
 @import "../../node_modules/bulma/bulma.sass";
+
+.single-line-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
