@@ -21,7 +21,7 @@ const Fixture = ({ homeTeamName, guestTeamName, result, date, link }) => {
             </div>
             <div className={`is-size-4 has-text-weight-bold`}>
               {result && result !== "Vorbericht"
-                ? `${result[0]}:${result[1]}`
+                ? `${result[0]} : ${result[1]}`
                 : "vs."}
             </div>
             <a

@@ -1,6 +1,6 @@
-# TT-Live Gatsby App
+# TT-Live Scores
 
-Simple Gatsby app to display [TT-Live](https://bettv.tischtennislive.de/) data.
+Simple Gatsby app that displays [TT-Live](https://bettv.tischtennislive.de/) scores.
 
 ## Getting Started
 

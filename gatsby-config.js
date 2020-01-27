@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `TT-Live App`,
+    title: `TT-Live Scores`,
     description: `Hier findest du Ergebnisse des Berliner Tisch-Tennis Verband e.V. direkt aus TischtennisLive.`,
     author: `@rennitlb`,
   },
@@ -24,8 +24,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `TT-Live App`,
-        short_name: `TT-Live App`,
+        name: `TT-Live Scores`,
+        short_name: `TT-Live Scores`,
         start_url: `/`,
         background_color: `#6eccae`,
         theme_color: `#6eccae`,
