@@ -25,7 +25,7 @@ const Fixture = ({ homeTeamName, guestTeamName, result, date, link }) => {
                 : "vs."}
             </div>
             <a
-              class="is-size-7"
+              className="is-size-7"
               href={link}
               target="__blank"
               title="Zur TT-Live Seite"
