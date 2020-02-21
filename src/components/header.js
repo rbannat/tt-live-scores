@@ -3,11 +3,21 @@ import { Link, useStaticQuery, graphql } from "gatsby"
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false)
+  const [activeSubmenu, setActiveSubmenu] = useState("")
   const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
+    query {
       site {
         siteMetadata {
           title
+        }
+      }
+      allLeague {
+        edges {
+          node {
+            id
+            name
+            shortName
+          }
         }
       }
     }
@@ -45,12 +55,37 @@ const Header = () => {
             <Link to="/" className="navbar-item">
               Übersicht
             </Link>
-            <Link to="/table" className="navbar-item">
+            <div className={`navbar-item has-dropdown is-hoverable`}>
+              <a
+                className="navbar-link"
+                onClick={() =>
+                  setActiveSubmenu(activeSubmenu === "men" ? "" : "men")
+                }
+              >
+                Herren
+              </a>
+              <div
+                className={`navbar-dropdown ${
+                  activeSubmenu === "men" ? "" : "is-hidden"
+                }`}
+              >
+                {data.allLeague.edges.map(({ node: league }) => (
+                  <Link
+                    key={league.id}
+                    to={`/league/${league.id}`}
+                    className="navbar-item"
+                  >
+                    {league.shortName}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            {/* <Link to="/table" className="navbar-item">
               Tabelle
             </Link>
             <Link to="/schedule" className="navbar-item">
               Spielplan
-            </Link>
+            </Link> */}
           </div>
         </div>
       </nav>

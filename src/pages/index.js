@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -14,8 +14,10 @@ const IndexPage = ({ data }) => {
       }
       fixturesByDate[date].push({
         date: fixture.date,
-        homeTeamName: fixture.homeTeam,
-        guestTeamName: fixture.guestTeam,
+        homeTeamName: fixture.homeTeam.shortName,
+        homeTeamId: fixture.homeTeam.id,
+        guestTeamId: fixture.guestTeam.id,
+        guestTeamName: fixture.guestTeam.shortName,
         result: fixture.result,
         link: fixture.link,
       })
@@ -30,33 +32,12 @@ const IndexPage = ({ data }) => {
         <div className="hero-body">
           <div className="container">
             <h1 className="title">Übersicht</h1>
-            <h2 className="subtitle">{data.league.name}</h2>
           </div>
         </div>
       </div>
       <section className="section">
         <div className="container">
-          <h2 className="title is-4">Nächste Spiele</h2>
-          {Object.keys(fixturesByDate)
-            .filter(date => date >= new Date().toISOString().split("T")[0])
-            .slice(0, 3)
-            .map((date, index) => {
-              return (
-                <GameDay
-                  key={index}
-                  date={date}
-                  fixtures={fixturesByDate[date]}
-                ></GameDay>
-              )
-            })}
-          <div className="columns">
-            <div className="column is-full has-text-right">
-              <Link to="/schedule" className="button is-link">
-                Zum Spielplan
-              </Link>
-            </div>
-          </div>
-          <h2 className="title is-4">Letzte Spiele</h2>
+          <h2 className="title is-4">Neueste Ergebnisse</h2>
           {Object.keys(fixturesByDate)
             .filter(date => date < new Date().toISOString().split("T")[0])
             .reverse()
@@ -70,13 +51,19 @@ const IndexPage = ({ data }) => {
                 ></GameDay>
               )
             })}
-          <div className="columns">
-            <div className="column is-full has-text-right">
-              <Link to="/schedule" className="button is-link">
-                Zum Spielplan
-              </Link>
-            </div>
-          </div>
+          <h2 className="title is-4">Nächste Spiele</h2>
+          {Object.keys(fixturesByDate)
+            .filter(date => date >= new Date().toISOString().split("T")[0])
+            .slice(0, 2)
+            .map((date, index) => {
+              return (
+                <GameDay
+                  key={index}
+                  date={date}
+                  fixtures={fixturesByDate[date]}
+                ></GameDay>
+              )
+            })}
         </div>
       </section>
     </Layout>
@@ -96,8 +83,20 @@ export const query = graphql`
         node {
           date
           result
-          guestTeam
-          homeTeam
+          guestTeam {
+            ... on Team {
+              id
+              name
+              shortName
+            }
+          }
+          homeTeam {
+            ... on Team {
+              id
+              name
+              shortName
+            }
+          }
           link
         }
       }

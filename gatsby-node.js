@@ -11,11 +11,19 @@ const path = require(`path`)
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  // Query for teams to use in creating pages.
+  // Query for teams and leagues to create pages
   const result = await graphql(
     `
       {
         allTeam {
+          edges {
+            node {
+              id
+            }
+          }
+        }
+
+        allLeague {
           edges {
             node {
               id
@@ -32,15 +40,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return
   }
 
-  // Create pages for each team.
-  const component = path.resolve(`src/components/team-page.js`)
+  // Create pages for each team
+  const component = path.resolve(`src/templates/team.js`)
   result.data.allTeam.edges.forEach(({ node: team }) => {
-    const path = `/team/${team.id}`
     createPage({
-      path,
+      path: `/team/${team.id}`,
       component,
       context: {
         teamId: team.id,
+      },
+    })
+  })
+
+  // Create pages for each league
+  result.data.allLeague.edges.forEach(({ node: league }) => {
+    createPage({
+      path: `/league/${league.id}`,
+      component: path.resolve(`src/templates/league.js`),
+      context: {
+        leagueId: league.id,
       },
     })
   })

@@ -17,8 +17,9 @@ const SchedulePage = ({ data }) => {
       fixturesByDate[date].push({
         isFirstHalf: fixture.isFirstHalf,
         date: fixture.date,
-        homeTeamName: fixture.homeTeam,
-        guestTeamName: fixture.guestTeam,
+        homeTeamName: fixture.homeTeam.shortName,
+        homeTeamId: fixture.homeTeam.id,
+        guestTeamId: fixture.guestTeam.id,
         result: fixture.result,
         link: fixture.link,
       })
@@ -29,14 +30,6 @@ const SchedulePage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Spielplan" />
-      <div className="hero is-primary">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">Spielplan</h1>
-            <h2 className="subtitle">{data.league.name}</h2>
-          </div>
-        </div>
-      </div>
       <section className="section">
         <div className="container">
           <div className="tabs">
@@ -81,20 +74,26 @@ const SchedulePage = ({ data }) => {
 
 export const query = graphql`
   query {
-    league {
-      name
-      association {
-        name
-      }
-    }
     allFixture {
       edges {
         node {
           isFirstHalf
           date
           result
-          guestTeam
-          homeTeam
+          guestTeam {
+            ... on Team {
+              id
+              name
+              shortName
+            }
+          }
+          homeTeam {
+            ... on Team {
+              id
+              name
+              shortName
+            }
+          }
           link
         }
       }

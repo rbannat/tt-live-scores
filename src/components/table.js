@@ -1,34 +1,7 @@
 import React from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { Link } from "gatsby"
 
-const Table = () => {
-  const data = useStaticQuery(
-    graphql`
-      query Table {
-        allTeam(sort: { fields: position, order: ASC }) {
-          edges {
-            node {
-              drawn
-              gamesPlayed
-              id
-              lost
-              matchesDiff
-              matchesLost
-              matchesWon
-              name
-              pointsDiff
-              pointsLost
-              pointsWon
-              position
-              setsDiff
-              won
-            }
-          }
-        }
-      }
-    `
-  )
-  const teams = data.allTeam.edges
+const Table = ({ teams }) => {
   return (
     <div className="table-container">
       <table className="table is-fullwidth">
@@ -45,13 +18,13 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {teams.map(({ node: team }) => {
+          {teams.map(team => {
             return (
               <tr key={team.id}>
                 <td>{team.position}</td>
                 <td>
                   <Link to={`/team/${team.id}`}>
-                    <span>{team.name}</span>
+                    <span>{team.shortName}</span>
                   </Link>
                 </td>
                 <td>{team.gamesPlayed}</td>

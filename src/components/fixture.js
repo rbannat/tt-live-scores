@@ -1,15 +1,24 @@
 import React from "react"
 import fixtureStyles from "./fixture.module.scss"
 import { FaExternalLinkAlt } from "react-icons/fa"
+import { Link } from "gatsby"
 
-const Fixture = ({ homeTeamName, guestTeamName, result, date, link }) => {
+const Fixture = ({
+  homeTeamId,
+  guestTeamId,
+  homeTeamName,
+  guestTeamName,
+  result,
+  date,
+  link,
+}) => {
   return (
     <div className={`box`}>
       <div className={fixtureStyles.container}>
         <div className={`${fixtureStyles.team} has-text-right`}>
-          <span className={`is-size-6 single-line-truncate`}>
-            {homeTeamName}
-          </span>
+          <Link className="single-line-truncate" to={`/team/${homeTeamId}`}>
+            <span className={`is-size-6`}>{homeTeamName}</span>
+          </Link>
         </div>
         <div className={`${fixtureStyles.resultContainer} has-text-centered`}>
           <div>
@@ -35,9 +44,9 @@ const Fixture = ({ homeTeamName, guestTeamName, result, date, link }) => {
           </div>
         </div>
         <div className={`${fixtureStyles.team} has-text-left`}>
-          <span className={`is-size-6 single-line-truncate`}>
-            {guestTeamName}
-          </span>
+          <Link className="single-line-truncate" to={`/team/${guestTeamId}`}>
+            <span className={`is-size-6`}>{guestTeamName}</span>
+          </Link>
         </div>
       </div>
     </div>

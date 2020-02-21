@@ -14,12 +14,25 @@ const GameDay = ({ date, fixtures }) => (
       </h3>
 
       {fixtures.map(
-        ({ homeTeamName, guestTeamName, date, result, link }, index) => {
+        (
+          {
+            homeTeamId,
+            homeTeamName,
+            guestTeamName,
+            guestTeamId,
+            date,
+            result,
+            link,
+          },
+          index
+        ) => {
           return (
             <Fixture
               key={index}
               homeTeamName={homeTeamName}
+              homeTeamId={homeTeamId}
               guestTeamName={guestTeamName}
+              guestTeamId={guestTeamId}
               date={date}
               result={result}
               link={link}

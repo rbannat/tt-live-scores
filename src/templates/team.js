@@ -1,17 +1,24 @@
 import React, { useState } from "react"
 import { graphql } from "gatsby"
-import Layout from "./layout"
-import SEO from "./seo"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 const TeamPage = ({ data }) => {
   const [activeTab, setActiveTab] = useState("firstHalf")
+  const players =
+    data && data.team
+      ? activeTab === "firstHalf"
+        ? data.team.playersFirstHalf
+        : data.team.playersSecondHalf
+      : []
   return (
     <Layout>
-      <SEO title="Team" />
+      <SEO title={data.team.name} />
       <div className="hero is-primary">
         <div className="hero-body">
           <div className="container">
             <h1 className="title">{data.team.name}</h1>
+            <h2 className="subtitle">{data.team.league.shortName}</h2>
           </div>
         </div>
       </div>
@@ -41,10 +48,7 @@ const TeamPage = ({ data }) => {
                 </tr>
               </thead>
               <tbody>
-                {(activeTab === "firstHalf"
-                  ? data.team.playersFirstHalf
-                  : data.team.playersSecondHalf
-                ).map(
+                {players.map(
                   ({
                     player: {
                       id,
@@ -54,10 +58,18 @@ const TeamPage = ({ data }) => {
                     },
                     position,
                   }) => {
-                    const { score, won, lost, gamesPlayed } =
+                    const playerScores =
                       activeTab === "firstHalf"
                         ? playerScoresFirstHalf
                         : playerScoresSecondHalf
+
+                    const { score, won, lost, gamesPlayed } = playerScores || {
+                      score: null,
+                      won: null,
+                      lost: null,
+                      gamesPlayed: null,
+                    }
+
                     return (
                       <tr key={id}>
                         <td>{position}</td>
@@ -82,30 +94,37 @@ const TeamPage = ({ data }) => {
 export const query = graphql`
   query TeamPageQuery($teamId: String!) {
     team(id: { eq: $teamId }) {
+      league {
+        shortName
+      }
       name
       playersFirstHalf {
         position
         player {
-          id
-          name
-          playerScoresFirstHalf {
-            score
-            won
-            lost
-            gamesPlayed
+          ... on Player {
+            id
+            name
+            playerScoresFirstHalf {
+              score
+              won
+              lost
+              gamesPlayed
+            }
           }
         }
       }
       playersSecondHalf {
         position
         player {
-          id
-          name
-          playerScoresSecondHalf {
-            score
-            won
-            lost
-            gamesPlayed
+          ... on Player {
+            id
+            name
+            playerScoresSecondHalf {
+              score
+              won
+              lost
+              gamesPlayed
+            }
           }
         }
       }
