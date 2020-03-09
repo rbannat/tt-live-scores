@@ -87,7 +87,6 @@ export const query = graphql`
   query {
     league {
       name
-      link
       association {
         name
       }
