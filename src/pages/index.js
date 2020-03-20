@@ -4,27 +4,11 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import GameDay from "../components/gameDay"
+import groupFixturesByDate from "../utils/groupFixturesByDate"
 
 const IndexPage = ({ data }) => {
-  const fixturesByDate = data.allFixture.edges.reduce(
-    (fixturesByDate, { node: fixture }) => {
-      const date = fixture.date.split("T")[0]
-      if (!fixturesByDate[date]) {
-        fixturesByDate[date] = []
-      }
-      fixturesByDate[date].push({
-        date: fixture.date,
-        homeTeamName: fixture.homeTeam.shortName,
-        homeTeamId: fixture.homeTeam.id,
-        guestTeamId: fixture.guestTeam.id,
-        guestTeamName: fixture.guestTeam.shortName,
-        result: fixture.result,
-        link: fixture.link,
-      })
-      return fixturesByDate
-    },
-    {}
-  )
+  const fixturesByDate = data.fixtures.edges.reduce(groupFixturesByDate, {})
+  const resultsByDate = data.results.edges.reduce(groupFixturesByDate, {})
   return (
     <Layout>
       <SEO title="Übersicht" />
@@ -38,7 +22,7 @@ const IndexPage = ({ data }) => {
       <section className="section">
         <div className="container">
           <h2 className="title is-4">Neueste Ergebnisse</h2>
-          {Object.keys(fixturesByDate)
+          {Object.keys(resultsByDate)
             .filter(date => date < new Date().toISOString().split("T")[0])
             .reverse()
             .slice(0, 3)
@@ -47,7 +31,7 @@ const IndexPage = ({ data }) => {
                 <GameDay
                   key={index}
                   date={date}
-                  fixtures={fixturesByDate[date]}
+                  fixtures={resultsByDate[date]}
                 ></GameDay>
               )
             })}
@@ -78,29 +62,46 @@ export const query = graphql`
         name
       }
     }
-    allFixture {
+    results: allFixture(
+      sort: { fields: date }
+      filter: { result: { ne: null } }
+    ) {
       edges {
         node {
-          date
-          result
-          guestTeam {
-            ... on Team {
-              id
-              name
-              shortName
-            }
-          }
-          homeTeam {
-            ... on Team {
-              id
-              name
-              shortName
-            }
-          }
-          link
+          ...fixtureData
         }
       }
     }
+    fixtures: allFixture(
+      sort: { fields: date }
+      filter: { result: { eq: null } }
+    ) {
+      edges {
+        node {
+          ...fixtureData
+        }
+      }
+    }
+  }
+
+  fragment fixtureData on Fixture {
+    date
+    result
+    guestTeam {
+      ... on Team {
+        id
+        name
+        shortName
+      }
+    }
+    homeTeam {
+      ... on Team {
+        id
+        name
+        shortName
+      }
+    }
+    link
   }
 `
 
