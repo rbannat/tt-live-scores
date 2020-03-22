@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
+import headerStyles from "./header.module.scss"
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false)
@@ -39,7 +40,7 @@ const Header = () => {
             onClick={() => setIsActive(!isActive)}
             aria-label="menu"
             aria-expanded={isActive ? "true" : "false"}
-            data-target="navbarBasicExample"
+            data-target="mainMenu"
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -48,14 +49,14 @@ const Header = () => {
         </div>
 
         <div
-          id="navbarBasicExample"
+          id="mainMenu"
           className={isActive ? "navbar-menu is-active" : "navbar-menu"}
         >
           <div className="navbar-start">
             <Link to="/" className="navbar-item">
               Übersicht
             </Link>
-            <div className={`navbar-item has-dropdown is-hoverable`}>
+            <div className={`navbar-item has-dropdown is-active`}>
               <a
                 className="navbar-link"
                 onClick={() =>
@@ -69,23 +70,19 @@ const Header = () => {
                   activeSubmenu === "men" ? "" : "is-hidden"
                 }`}
               >
-                {data.allLeague.edges.map(({ node: league }) => (
-                  <Link
-                    key={league.id}
-                    to={`/league/${league.id}`}
-                    className="navbar-item"
-                  >
-                    {league.shortName}
-                  </Link>
-                ))}
+                <div className={headerStyles.subMenuTwoColumns}>
+                  {data.allLeague.edges.map(({ node: league }) => (
+                    <Link
+                      key={league.id}
+                      to={`/league/${league.id}`}
+                      className={`${headerStyles.subMenuNavbarItem} navbar-item`}
+                    >
+                      {league.shortName}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-            {/* <Link to="/table" className="navbar-item">
-              Tabelle
-            </Link>
-            <Link to="/schedule" className="navbar-item">
-              Spielplan
-            </Link> */}
           </div>
         </div>
       </nav>
