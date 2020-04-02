@@ -1,7 +1,7 @@
 import React from "react"
 import fixtureStyles from "./fixture.module.scss"
 import { FaExternalLinkAlt } from "react-icons/fa"
-import { Link } from "gatsby"
+import { graphql, Link } from "gatsby"
 
 const Fixture = ({
   homeTeamId,
@@ -52,5 +52,27 @@ const Fixture = ({
     </div>
   )
 }
+
+export const fixtureDataFragment = graphql`
+  fragment FixtureData on Fixture {
+    date
+    result
+    guestTeam {
+      ... on Team {
+        id
+        name
+        shortName
+      }
+    }
+    homeTeam {
+      ... on Team {
+        id
+        name
+        shortName
+      }
+    }
+    link
+  }
+`
 
 export default Fixture

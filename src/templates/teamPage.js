@@ -2,9 +2,17 @@ import React, { useState } from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import GameDay from "../components/gameDay"
+import groupFixturesByDate from "../utils/groupFixturesByDate"
 
 const TeamPage = ({ data }) => {
   const [activeTab, setActiveTab] = useState("firstHalf")
+  const fixturesByDate = data.team.fixtures
+    .filter((fixture) => !fixture.result)
+    .reduce(groupFixturesByDate, {})
+  const resultsByDate = data.team.fixtures
+    .filter((fixture) => fixture.result)
+    .reduce(groupFixturesByDate, {})
   const players =
     data && data.team
       ? activeTab === "firstHalf"
@@ -34,6 +42,8 @@ const TeamPage = ({ data }) => {
               </li>
             </ul>
           </div>
+
+          <h3 className="title is-3">Spieler</h3>
 
           <div className="table-container">
             <table className="table is-fullwidth">
@@ -85,6 +95,33 @@ const TeamPage = ({ data }) => {
               </tbody>
             </table>
           </div>
+
+          <h3 className="title is-3">Neueste Ergebnisse</h3>
+          {Object.keys(resultsByDate)
+            .filter((date) => date < new Date().toISOString().split("T")[0])
+            .reverse()
+            .map((date, index) => {
+              return (
+                <GameDay
+                  key={index}
+                  date={date}
+                  fixtures={resultsByDate[date]}
+                ></GameDay>
+              )
+            })}
+
+          <h3 className="title is-3">Nächste Spiele</h3>
+          {Object.keys(fixturesByDate)
+            .filter((date) => date >= new Date().toISOString().split("T")[0])
+            .map((date, index) => {
+              return (
+                <GameDay
+                  key={index}
+                  date={date}
+                  fixtures={fixturesByDate[date]}
+                ></GameDay>
+              )
+            })}
         </div>
       </section>
     </Layout>
@@ -127,6 +164,9 @@ export const query = graphql`
             }
           }
         }
+      }
+      fixtures {
+        ...FixtureData
       }
     }
   }

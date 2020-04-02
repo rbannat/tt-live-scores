@@ -1,4 +1,4 @@
-export default function groupFixturesByDate(fixturesByDate, { node: fixture }) {
+export default function groupFixturesByDate(fixturesByDate, fixture) {
   const date = fixture.date.split("T")[0]
   if (!fixturesByDate[date]) {
     fixturesByDate[date] = []

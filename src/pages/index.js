@@ -7,8 +7,12 @@ import GameDay from "../components/gameDay"
 import groupFixturesByDate from "../utils/groupFixturesByDate"
 
 const IndexPage = ({ data }) => {
-  const fixturesByDate = data.fixtures.edges.reduce(groupFixturesByDate, {})
-  const resultsByDate = data.results.edges.reduce(groupFixturesByDate, {})
+  const fixturesByDate = data.fixtures.edges
+    .map((edge) => edge.node)
+    .reduce(groupFixturesByDate, {})
+  const resultsByDate = data.results.edges
+    .map((edge) => edge.node)
+    .reduce(groupFixturesByDate, {})
   return (
     <Layout>
       <SEO title="Übersicht" />
@@ -23,7 +27,7 @@ const IndexPage = ({ data }) => {
         <div className="container">
           <h2 className="title is-4">Neueste Ergebnisse</h2>
           {Object.keys(resultsByDate)
-            .filter(date => date < new Date().toISOString().split("T")[0])
+            .filter((date) => date < new Date().toISOString().split("T")[0])
             .reverse()
             .slice(0, 3)
             .map((date, index) => {
@@ -37,7 +41,7 @@ const IndexPage = ({ data }) => {
             })}
           <h2 className="title is-4">Nächste Spiele</h2>
           {Object.keys(fixturesByDate)
-            .filter(date => date >= new Date().toISOString().split("T")[0])
+            .filter((date) => date >= new Date().toISOString().split("T")[0])
             .slice(0, 2)
             .map((date, index) => {
               return (
@@ -68,7 +72,7 @@ export const query = graphql`
     ) {
       edges {
         node {
-          ...fixtureData
+          ...FixtureData
         }
       }
     }
@@ -78,30 +82,10 @@ export const query = graphql`
     ) {
       edges {
         node {
-          ...fixtureData
+          ...FixtureData
         }
       }
     }
-  }
-
-  fragment fixtureData on Fixture {
-    date
-    result
-    guestTeam {
-      ... on Team {
-        id
-        name
-        shortName
-      }
-    }
-    homeTeam {
-      ... on Team {
-        id
-        name
-        shortName
-      }
-    }
-    link
   }
 `
 
