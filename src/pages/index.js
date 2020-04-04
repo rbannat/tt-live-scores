@@ -3,16 +3,9 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import GameDay from "../components/gameDay"
-import groupFixturesByDate from "../utils/groupFixturesByDate"
+import Fixture from "../components/fixture"
 
 const IndexPage = ({ data }) => {
-  const fixturesByDate = data.fixtures.edges
-    .map((edge) => edge.node)
-    .reduce(groupFixturesByDate, {})
-  const resultsByDate = data.results.edges
-    .map((edge) => edge.node)
-    .reduce(groupFixturesByDate, {})
   return (
     <Layout>
       <SEO title="Übersicht" />
@@ -25,33 +18,50 @@ const IndexPage = ({ data }) => {
       </div>
       <section className="section">
         <div className="container">
-          <h2 className="title is-4">Neueste Ergebnisse</h2>
-          {Object.keys(resultsByDate)
-            .filter((date) => date < new Date().toISOString().split("T")[0])
-            .reverse()
-            .slice(0, 3)
-            .map((date, index) => {
-              return (
-                <GameDay
-                  key={index}
-                  date={date}
-                  fixtures={resultsByDate[date]}
-                ></GameDay>
-              )
-            })}
-          <h2 className="title is-4">Nächste Spiele</h2>
-          {Object.keys(fixturesByDate)
-            .filter((date) => date >= new Date().toISOString().split("T")[0])
-            .slice(0, 2)
-            .map((date, index) => {
-              return (
-                <GameDay
-                  key={index}
-                  date={date}
-                  fixtures={fixturesByDate[date]}
-                ></GameDay>
-              )
-            })}
+          <div className="columns">
+            <div className="column">
+              <h2 className="title is-4">Neueste Ergebnisse</h2>
+              {data.results.edges.map(
+                ({ node: { id, homeTeam, guestTeam, result, date, link } }) => {
+                  return (
+                    <Fixture
+                      key={id}
+                      homeTeam={homeTeam}
+                      guestTeam={guestTeam}
+                      date={date}
+                      result={result}
+                      link={link}
+                    ></Fixture>
+                  )
+                }
+              )}
+            </div>
+            <div className="column">
+              <h2 className="title is-4">Nächste Spiele</h2>
+              {data.fixtures.edges
+                .filter(
+                  ({ node: { date } }) =>
+                    date >= new Date().toISOString().split("T")[0]
+                )
+                .slice(0, 5)
+                .map(
+                  ({
+                    node: { id, homeTeam, guestTeam, result, date, link },
+                  }) => {
+                    return (
+                      <Fixture
+                        key={id}
+                        homeTeam={homeTeam}
+                        guestTeam={guestTeam}
+                        date={date}
+                        result={result}
+                        link={link}
+                      ></Fixture>
+                    )
+                  }
+                )}
+            </div>
+          </div>
         </div>
       </section>
     </Layout>
@@ -67,7 +77,8 @@ export const query = graphql`
       }
     }
     results: allFixture(
-      sort: { fields: date }
+      limit: 5
+      sort: { fields: date, order: DESC }
       filter: { result: { ne: null } }
     ) {
       edges {

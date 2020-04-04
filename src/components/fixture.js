@@ -3,35 +3,33 @@ import fixtureStyles from "./fixture.module.scss"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { graphql, Link } from "gatsby"
 
-const Fixture = ({
-  homeTeamId,
-  guestTeamId,
-  homeTeamName,
-  guestTeamName,
-  result,
-  date,
-  link,
-}) => {
+const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
+  const isResult = result && result !== "Vorbericht"
+  const date = new Date(dateString)
+  const day = date.toLocaleDateString("de-DE", {
+    weekday: "short",
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+  })
+  const time = date.toLocaleTimeString("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit",
+  })
+
   return (
     <div className={`box`}>
       <div className={fixtureStyles.container}>
-        <div className={`${fixtureStyles.team} has-text-right`}>
-          <Link className="single-line-truncate" to={`/team/${homeTeamId}`}>
-            <span className={`is-size-6`}>{homeTeamName}</span>
+        <div className={`${fixtureStyles.team} has-text-centered`}>
+          <Link to={`/team/${homeTeam.id}`}>
+            <span className={`is-size-6`}>{homeTeam.shortName}</span>
           </Link>
         </div>
         <div className={`${fixtureStyles.resultContainer} has-text-centered`}>
           <div>
-            <div className={`is-size-6`}>
-              {new Date(date).toLocaleTimeString("de-DE", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </div>
+            <div className={`is-size-7`}>{day}</div>
             <div className={`is-size-4 has-text-weight-bold`}>
-              {result && result !== "Vorbericht"
-                ? `${result[0]} : ${result[1]}`
-                : "vs."}
+              {isResult ? `${result[0]} - ${result[1]}` : time}
             </div>
             <a
               className="is-size-7"
@@ -43,9 +41,9 @@ const Fixture = ({
             </a>
           </div>
         </div>
-        <div className={`${fixtureStyles.team} has-text-left`}>
-          <Link className="single-line-truncate" to={`/team/${guestTeamId}`}>
-            <span className={`is-size-6`}>{guestTeamName}</span>
+        <div className={`${fixtureStyles.team} has-text-centered`}>
+          <Link to={`/team/${guestTeam.id}`}>
+            <span className={`is-size-6`}>{guestTeam.shortName}</span>
           </Link>
         </div>
       </div>
@@ -55,6 +53,7 @@ const Fixture = ({
 
 export const fixtureDataFragment = graphql`
   fragment FixtureData on Fixture {
+    id
     date
     result
     guestTeam {

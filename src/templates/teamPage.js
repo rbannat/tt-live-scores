@@ -2,17 +2,20 @@ import React, { useState } from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import GameDay from "../components/gameDay"
-import groupFixturesByDate from "../utils/groupFixturesByDate"
+import Fixture from "../components/fixture"
 
 const TeamPage = ({ data }) => {
   const [activeTab, setActiveTab] = useState("firstHalf")
-  const fixturesByDate = data.team.fixtures
-    .filter((fixture) => !fixture.result)
-    .reduce(groupFixturesByDate, {})
-  const resultsByDate = data.team.fixtures
-    .filter((fixture) => fixture.result)
-    .reduce(groupFixturesByDate, {})
+  const fixtures = data.team.fixtures.filter(
+    (fixture) =>
+      !fixture.result && fixture.date >= new Date().toISOString().split("T")[0]
+  )
+  const results = data.team.fixtures
+    .filter(
+      (fixture) =>
+        fixture.result && fixture.date < new Date().toISOString().split("T")[0]
+    )
+    .reverse()
   const players =
     data && data.team
       ? activeTab === "firstHalf"
@@ -96,32 +99,42 @@ const TeamPage = ({ data }) => {
             </table>
           </div>
 
-          <h3 className="title is-3">Neueste Ergebnisse</h3>
-          {Object.keys(resultsByDate)
-            .filter((date) => date < new Date().toISOString().split("T")[0])
-            .reverse()
-            .map((date, index) => {
-              return (
-                <GameDay
-                  key={index}
-                  date={date}
-                  fixtures={resultsByDate[date]}
-                ></GameDay>
-              )
-            })}
-
-          <h3 className="title is-3">Nächste Spiele</h3>
-          {Object.keys(fixturesByDate)
-            .filter((date) => date >= new Date().toISOString().split("T")[0])
-            .map((date, index) => {
-              return (
-                <GameDay
-                  key={index}
-                  date={date}
-                  fixtures={fixturesByDate[date]}
-                ></GameDay>
-              )
-            })}
+          <div className="columns">
+            <div className="column">
+              <h3 className="title is-3">Neueste Ergebnisse</h3>
+              {results.map(
+                ({ id, homeTeam, guestTeam, result, date, link }) => {
+                  return (
+                    <Fixture
+                      key={id}
+                      homeTeam={homeTeam}
+                      guestTeam={guestTeam}
+                      date={date}
+                      result={result}
+                      link={link}
+                    ></Fixture>
+                  )
+                }
+              )}
+            </div>
+            <div className="column">
+              <h3 className="title is-3">Nächste Spiele</h3>
+              {fixtures.map(
+                ({ id, homeTeam, guestTeam, result, date, link }) => {
+                  return (
+                    <Fixture
+                      key={id}
+                      homeTeam={homeTeam}
+                      guestTeam={guestTeam}
+                      date={date}
+                      result={result}
+                      link={link}
+                    ></Fixture>
+                  )
+                }
+              )}
+            </div>
+          </div>
         </div>
       </section>
     </Layout>
