@@ -4,7 +4,6 @@ import { FaExternalLinkAlt } from "react-icons/fa"
 import { graphql, Link } from "gatsby"
 
 const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
-  const isResult = result && result !== "Vorbericht"
   const date = new Date(dateString)
   const day = date.toLocaleDateString("de-DE", {
     weekday: "short",
@@ -29,7 +28,7 @@ const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
           <div>
             <div className={`is-size-7`}>{day}</div>
             <div className={`is-size-4 has-text-weight-bold`}>
-              {isResult ? `${result[0]} - ${result[1]}` : time}
+              {result ? `${result[0]} - ${result[1]}` : time}
             </div>
             <a
               className="is-size-7"
