@@ -16,12 +16,13 @@ const TeamPage = ({ data }) => {
         fixture.result && fixture.date < new Date().toISOString().split("T")[0]
     )
     .reverse()
-  const players =
+  const players = sortPlayersByPosition(
     data && data.team
       ? activeTab === "firstHalf"
-        ? data.team.playersFirstHalf
-        : data.team.playersSecondHalf
+        ? data.playersFirstHalf.edges
+        : data.playersSecondHalf.edges
       : []
+  )
   return (
     <Layout>
       <SEO title={data.team.name} />
@@ -63,26 +64,13 @@ const TeamPage = ({ data }) => {
               <tbody>
                 {players.map(
                   ({
-                    player: {
-                      id,
-                      name,
-                      playerScoresFirstHalf,
-                      playerScoresSecondHalf,
-                    },
+                    player: { id, name },
+                    score,
+                    won,
+                    lost,
+                    gamesPlayed,
                     position,
                   }) => {
-                    const playerScores =
-                      activeTab === "firstHalf"
-                        ? playerScoresFirstHalf
-                        : playerScoresSecondHalf
-
-                    const { score, won, lost, gamesPlayed } = playerScores || {
-                      score: null,
-                      won: null,
-                      lost: null,
-                      gamesPlayed: null,
-                    }
-
                     return (
                       <tr key={id}>
                         <td>{position}</td>
@@ -141,6 +129,18 @@ const TeamPage = ({ data }) => {
   )
 }
 
+function sortPlayersByPosition(players) {
+  const substitutes = []
+  players = players.reduce((players, { node: player }) => {
+    if (player.position.length > 1) {
+      substitutes.push(player)
+      return players
+    }
+    return [...players, player]
+  }, [])
+  return [...players, ...substitutes]
+}
+
 export const query = graphql`
   query TeamPageQuery($teamId: String!) {
     team(id: { eq: $teamId }) {
@@ -148,38 +148,46 @@ export const query = graphql`
         shortName
       }
       name
-      playersFirstHalf {
-        position
-        player {
-          ... on Player {
-            id
-            name
-            playerScoresFirstHalf {
-              score
-              won
-              lost
-              gamesPlayed
-            }
-          }
-        }
-      }
-      playersSecondHalf {
-        position
-        player {
-          ... on Player {
-            id
-            name
-            playerScoresSecondHalf {
-              score
-              won
-              lost
-              gamesPlayed
-            }
-          }
-        }
-      }
       fixtures {
         ...FixtureData
+      }
+    }
+
+    playersFirstHalf: allPlayerScore(
+      filter: { team: { id: { eq: $teamId } }, isSecondHalf: { eq: false } }
+      sort: { fields: position }
+    ) {
+      edges {
+        node {
+          position
+          score
+          won
+          lost
+          gamesPlayed
+          player {
+            id
+            name
+          }
+        }
+      }
+    }
+
+    playersSecondHalf: allPlayerScore(
+      filter: { team: { id: { eq: $teamId } }, isSecondHalf: { eq: true } }
+      sort: { fields: position }
+    ) {
+      edges {
+        node {
+          position
+          score
+          won
+          lost
+          gamesPlayed
+          player {
+            id
+            name
+          }
+        }
       }
     }
   }
