@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 
-const Table = ({ teams }) => {
+const LeagueTable = ({ teams }) => {
   return (
     <div className="table-container">
       <table className="table is-fullwidth">
@@ -18,7 +18,7 @@ const Table = ({ teams }) => {
           </tr>
         </thead>
         <tbody>
-          {teams.map(team => {
+          {teams.map((team) => {
             return (
               <tr key={team.id}>
                 <td>{team.position}</td>
@@ -46,4 +46,4 @@ const Table = ({ teams }) => {
   )
 }
 
-export default Table
+export default LeagueTable

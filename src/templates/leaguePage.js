@@ -2,30 +2,25 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Table from "../components/table"
+import LeagueTable from "../components/leagueTable"
+import Hero from "../components/hero"
 
-export default ({ data }) => {
+const LeaguePage = ({ data }) => {
+  const teams = data.allTeam.edges.map(({ node }) => node)
   return (
     <Layout>
       <SEO title={data.league.name} />
-      <div className="hero is-primary">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">{data.league.name}</h1>
-            <h2 className="subtitle">Tabelle</h2>
-          </div>
-        </div>
-      </div>
+      <Hero title={data.league.name} subtitle="Tabelle"></Hero>
       <section className="section">
         <div className="container">
-          <Table
-            teams={data.allTeam.edges.map(({ node }) => ({ ...node }))}
-          ></Table>
+          <LeagueTable teams={teams}></LeagueTable>
         </div>
       </section>
     </Layout>
   )
 }
+
+export default LeaguePage
 
 export const query = graphql`
   query LeaguePageQuery($leagueId: String!) {
