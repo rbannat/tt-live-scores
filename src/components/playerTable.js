@@ -1,7 +1,7 @@
 import React from "react"
 
 const PlayerTable = ({ players }) => (
-  <div className="table-container">
+  <div className="table-container u-grow">
     <table className="table is-fullwidth">
       <thead>
         <tr>

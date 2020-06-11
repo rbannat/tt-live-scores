@@ -17,34 +17,32 @@ const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
   })
 
   return (
-    <div className={`box`}>
-      <div className={fixtureStyles.container}>
-        <div className={`${fixtureStyles.team} has-text-centered`}>
-          <Link to={`/team/${homeTeam.id}`}>
-            <span className={`is-size-6`}>{homeTeam.shortName}</span>
-          </Link>
-        </div>
-        <div className={`${fixtureStyles.resultContainer} has-text-centered`}>
-          <div>
-            <div className={`is-size-7`}>{day}</div>
-            <div className={`is-size-4 has-text-weight-bold`}>
-              {result ? `${result[0]} - ${result[1]}` : time}
-            </div>
-            <a
-              className="is-size-7"
-              href={link}
-              target="__blank"
-              title="Zur TT-Live Seite"
-            >
-              Zu TT-Live <FaExternalLinkAlt aria-hidden="true" />
-            </a>
+    <div className={fixtureStyles.container}>
+      <div className={`${fixtureStyles.team} has-text-centered`}>
+        <Link to={`/team/${homeTeam.id}`}>
+          <span className={`is-size-6`}>{homeTeam.shortName}</span>
+        </Link>
+      </div>
+      <div className={`${fixtureStyles.resultContainer} has-text-centered`}>
+        <div>
+          <div className={`is-size-7`}>{day}</div>
+          <div className={`is-size-4 has-text-weight-bold`}>
+            {result ? `${result[0]} - ${result[1]}` : time}
           </div>
+          <a
+            className="is-size-7"
+            href={link}
+            target="__blank"
+            title="Zur TT-Live Seite"
+          >
+            Zu TT-Live <FaExternalLinkAlt aria-hidden="true" />
+          </a>
         </div>
-        <div className={`${fixtureStyles.team} has-text-centered`}>
-          <Link to={`/team/${guestTeam.id}`}>
-            <span className={`is-size-6`}>{guestTeam.shortName}</span>
-          </Link>
-        </div>
+      </div>
+      <div className={`${fixtureStyles.team} has-text-centered`}>
+        <Link to={`/team/${guestTeam.id}`}>
+          <span className={`is-size-6`}>{guestTeam.shortName}</span>
+        </Link>
       </div>
     </div>
   )

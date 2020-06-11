@@ -10,14 +10,15 @@ const IndexPage = ({ data }) => {
   const latestResults = data.results.edges.map(
     ({ node: { id, homeTeam, guestTeam, result, date, link } }) => {
       return (
-        <Fixture
-          key={id}
-          homeTeam={homeTeam}
-          guestTeam={guestTeam}
-          date={date}
-          result={result}
-          link={link}
-        ></Fixture>
+        <div key={id} className="panel-block">
+          <Fixture
+            homeTeam={homeTeam}
+            guestTeam={guestTeam}
+            date={date}
+            result={result}
+            link={link}
+          ></Fixture>
+        </div>
       )
     }
   )
@@ -28,14 +29,15 @@ const IndexPage = ({ data }) => {
     .slice(0, 5)
     .map(({ node: { id, homeTeam, guestTeam, result, date, link } }) => {
       return (
-        <Fixture
-          key={id}
-          homeTeam={homeTeam}
-          guestTeam={guestTeam}
-          date={date}
-          result={result}
-          link={link}
-        ></Fixture>
+        <div key={id} className="panel-block">
+          <Fixture
+            homeTeam={homeTeam}
+            guestTeam={guestTeam}
+            date={date}
+            result={result}
+            link={link}
+          ></Fixture>
+        </div>
       )
     })
   return (
@@ -46,12 +48,22 @@ const IndexPage = ({ data }) => {
         <div className="container">
           <div className="columns">
             <div className="column">
-              <h2 className="title is-4">Neueste Ergebnisse</h2>
-              {latestResults}
+              <article className="panel has-background-white">
+                <h2 className="panel-heading">Neueste Ergebnisse</h2>
+                {latestResults}
+              </article>
             </div>
             <div className="column">
-              <h2 className="title is-4">Nächste Spiele</h2>
-              {fixtures}
+              <article className="panel has-background-white">
+                <h2 className="panel-heading">Nächste Spiele</h2>
+                {fixtures.length ? (
+                  fixtures
+                ) : (
+                  <div className="panel-block">
+                    Es sind keine kommenden Spiele verfügbar.
+                  </div>
+                )}
+              </article>
             </div>
           </div>
         </div>

@@ -13,14 +13,16 @@ const TeamPage = ({ data }) => {
       return !result && date >= new Date().toISOString().split("T")[0]
         ? [
             ...fixtures,
-            <Fixture
-              key={id}
-              homeTeam={homeTeam}
-              guestTeam={guestTeam}
-              date={date}
-              result={result}
-              link={link}
-            ></Fixture>,
+            <div key={id} className="panel-block">
+              <Fixture
+                key={id}
+                homeTeam={homeTeam}
+                guestTeam={guestTeam}
+                date={date}
+                result={result}
+                link={link}
+              ></Fixture>
+            </div>,
           ]
         : fixtures
     },
@@ -31,14 +33,15 @@ const TeamPage = ({ data }) => {
       return result && date < new Date().toISOString().split("T")[0]
         ? [
             ...results,
-            <Fixture
-              key={id}
-              homeTeam={homeTeam}
-              guestTeam={guestTeam}
-              date={date}
-              result={result}
-              link={link}
-            ></Fixture>,
+            <div key={id} className="panel-block">
+              <Fixture
+                homeTeam={homeTeam}
+                guestTeam={guestTeam}
+                date={date}
+                result={result}
+                link={link}
+              ></Fixture>
+            </div>,
           ]
         : results
     }, [])
@@ -56,26 +59,44 @@ const TeamPage = ({ data }) => {
       <Hero title={data.team.name} subtitle={data.team.league.shortName}></Hero>
       <section className="section">
         <div className="container">
-          <div className="tabs">
-            <ul>
-              <li className={activeTab === "firstHalf" ? "is-active" : ""}>
-                <a onClick={() => setActiveTab("firstHalf")}>Hinrunde</a>
-              </li>
-              <li className={activeTab === "secondHalf" ? "is-active" : ""}>
-                <a onClick={() => setActiveTab("secondHalf")}>Rückrunde</a>
-              </li>
-            </ul>
-          </div>
-          <h3 className="title is-3">Spieler</h3>
-          <PlayerTable players={players}></PlayerTable>
+          <article className="panel has-background-white">
+            <h2 className="panel-heading">Spieler</h2>
+            <div className="panel-tabs">
+              <a
+                className={activeTab === "firstHalf" ? "is-active" : ""}
+                onClick={() => setActiveTab("firstHalf")}
+              >
+                Hinrunde
+              </a>
+              <a
+                className={activeTab === "secondHalf" ? "is-active" : ""}
+                onClick={() => setActiveTab("secondHalf")}
+              >
+                Rückrunde
+              </a>
+            </div>
+            <div className="panel-block">
+              <PlayerTable players={players}></PlayerTable>
+            </div>
+          </article>
           <div className="columns">
             <div className="column">
-              <h3 className="title is-3">Neueste Ergebnisse</h3>
-              {latestResults}
+              <article className="panel has-background-white">
+                <h2 className="panel-heading">Neueste Ergebnisse</h2>
+                {latestResults}
+              </article>
             </div>
             <div className="column">
-              <h3 className="title is-3">Nächste Spiele</h3>
-              {fixtures}
+              <article className="panel has-background-white">
+                <h2 className="panel-heading">Nächste Spiele</h2>
+                {fixtures.length ? (
+                  fixtures
+                ) : (
+                  <div className="panel-block">
+                    Es sind keine kommenden Spiele verfügbar.
+                  </div>
+                )}
+              </article>
             </div>
           </div>
         </div>

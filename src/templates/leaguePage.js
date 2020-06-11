@@ -10,10 +10,15 @@ const LeaguePage = ({ data }) => {
   return (
     <Layout>
       <SEO title={data.league.name} />
-      <Hero title={data.league.name} subtitle="Tabelle"></Hero>
+      <Hero title={data.league.name}></Hero>
       <section className="section">
         <div className="container">
-          <LeagueTable teams={teams}></LeagueTable>
+          <div className="panel has-background-white">
+            <h2 className="panel-heading">Tabelle</h2>
+            <div className="panel-block">
+              <LeagueTable teams={teams}></LeagueTable>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>

@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 
 const LeagueTable = ({ teams }) => {
   return (
-    <div className="table-container">
+    <div className="table-container u-grow">
       <table className="table is-fullwidth">
         <thead>
           <tr>
@@ -18,7 +18,7 @@ const LeagueTable = ({ teams }) => {
           </tr>
         </thead>
         <tbody>
-          {teams.map((team) => {
+          {teams.map(team => {
             return (
               <tr key={team.id}>
                 <td>{team.position}</td>
