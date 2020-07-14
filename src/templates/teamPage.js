@@ -7,45 +7,53 @@ import Hero from "../components/hero"
 import PlayerTable from "../components/playerTable"
 
 const TeamPage = ({ data }) => {
-  const [activeTab, setActiveTab] = useState("firstHalf")
-  const fixtures = data.team.fixtures.reduce(
-    (fixtures, { id, homeTeam, guestTeam, result, date, link }) => {
-      return !result && date >= new Date().toISOString().split("T")[0]
-        ? [
-            ...fixtures,
-            <div key={id} className="panel-block">
-              <Fixture
-                key={id}
-                homeTeam={homeTeam}
-                guestTeam={guestTeam}
-                date={date}
-                result={result}
-                link={link}
-              ></Fixture>
-            </div>,
-          ]
-        : fixtures
-    },
-    []
+  const firstHalfCompleted = false
+  const [activeTab, setActiveTab] = useState(
+    firstHalfCompleted ? "secondHalf" : "firstHalf"
   )
+  const fixtures = data.team.fixtures
+    ? data.team.fixtures.reduce(
+        (fixtures, { id, homeTeam, guestTeam, result, date, link }) => {
+          return !result && date >= new Date().toISOString().split("T")[0]
+            ? [
+                ...fixtures,
+                <div key={id} className="panel-block">
+                  <Fixture
+                    key={id}
+                    homeTeam={homeTeam}
+                    guestTeam={guestTeam}
+                    date={date}
+                    result={result}
+                    link={link}
+                  ></Fixture>
+                </div>,
+              ]
+            : fixtures
+        },
+        []
+      )
+    : []
   const latestResults = data.team.fixtures
-    .reduce((results, { id, homeTeam, guestTeam, result, date, link }) => {
-      return result && date < new Date().toISOString().split("T")[0]
-        ? [
-            ...results,
-            <div key={id} className="panel-block">
-              <Fixture
-                homeTeam={homeTeam}
-                guestTeam={guestTeam}
-                date={date}
-                result={result}
-                link={link}
-              ></Fixture>
-            </div>,
-          ]
-        : results
-    }, [])
-    .reverse()
+    ? data.team.fixtures.reduce(
+        (results, { id, homeTeam, guestTeam, result, date, link }) => {
+          return result && date < new Date().toISOString().split("T")[0]
+            ? [
+                ...results,
+                <div key={id} className="panel-block">
+                  <Fixture
+                    homeTeam={homeTeam}
+                    guestTeam={guestTeam}
+                    date={date}
+                    result={result}
+                    link={link}
+                  ></Fixture>
+                </div>,
+              ]
+            : results
+        },
+        []
+      )
+    : [].reverse()
   const players = sortPlayersByPosition(
     data && data.team
       ? activeTab === "firstHalf"
@@ -68,12 +76,14 @@ const TeamPage = ({ data }) => {
               >
                 Hinrunde
               </a>
-              <a
-                className={activeTab === "secondHalf" ? "is-active" : ""}
-                onClick={() => setActiveTab("secondHalf")}
-              >
-                Rückrunde
-              </a>
+              {firstHalfCompleted && (
+                <a
+                  className={activeTab === "secondHalf" ? "is-active" : ""}
+                  onClick={() => setActiveTab("secondHalf")}
+                >
+                  Rückrunde
+                </a>
+              )}
             </div>
             <div className="panel-block">
               <PlayerTable players={players}></PlayerTable>
@@ -83,7 +93,13 @@ const TeamPage = ({ data }) => {
             <div className="column">
               <article className="panel has-background-white">
                 <h2 className="panel-heading">Neueste Ergebnisse</h2>
-                {latestResults}
+                {latestResults.length ? (
+                  latestResults
+                ) : (
+                  <div className="panel-block">
+                    Es sind keine Ergebnisse verfügbar.
+                  </div>
+                )}
               </article>
             </div>
             <div className="column">

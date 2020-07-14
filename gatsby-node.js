@@ -1,5 +1,32 @@
 const path = require(`path`)
 
+// Create type defs for when there is no date to infer the type from
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  const typeDefs = `
+    type Fixture implements Node {
+      id: ID!
+      date: Date @dateformat
+      result: [String]
+      guestTeam: Team
+      homeTeam: Team
+      link: String
+    }
+
+    type Team implements Node {
+      fixtures: [Fixture]
+    }
+
+    type PlayerScore implements Node {
+      won: Int
+      lost: Int
+      gamesPlayed: Int
+    }
+  `
+  createTypes(typeDefs)
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 

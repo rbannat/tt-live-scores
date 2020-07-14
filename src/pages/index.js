@@ -50,7 +50,13 @@ const IndexPage = ({ data }) => {
             <div className="column">
               <article className="panel has-background-white">
                 <h2 className="panel-heading">Neueste Ergebnisse</h2>
-                {latestResults}
+                {latestResults.length ? (
+                  latestResults
+                ) : (
+                  <div className="panel-block">
+                    Es sind keine Ergebnisse verfügbar.
+                  </div>
+                )}
               </article>
             </div>
             <div className="column">
