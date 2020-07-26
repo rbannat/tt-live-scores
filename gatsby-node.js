@@ -35,18 +35,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
       {
         allTeam {
-          edges {
-            node {
-              id
-            }
+          nodes {
+            id
           }
         }
 
         allLeague {
-          edges {
-            node {
-              id
-            }
+          nodes {
+            id
           }
         }
       }
@@ -61,7 +57,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // Create pages for each team
   const component = path.resolve(`src/templates/teamPage.js`)
-  result.data.allTeam.edges.forEach(({ node: team }) => {
+  result.data.allTeam.nodes.forEach(team => {
     createPage({
       path: `/team/${team.id}`,
       component,
@@ -72,7 +68,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   })
 
   // Create pages for each league
-  result.data.allLeague.edges.forEach(({ node: league }) => {
+  result.data.allLeague.nodes.forEach(league => {
     createPage({
       path: `/league/${league.id}`,
       component: path.resolve(`src/templates/leaguePage.js`),

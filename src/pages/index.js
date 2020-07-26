@@ -3,43 +3,13 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Fixture from "../components/fixture"
 import Hero from "../components/hero"
+import FixtureList from "../components/fixtureList"
 
 const IndexPage = ({ data }) => {
-  const latestResults = data.results.edges.map(
-    ({ node: { id, homeTeam, guestTeam, result, date, link } }) => {
-      return (
-        <div key={id} className="panel-block">
-          <Fixture
-            homeTeam={homeTeam}
-            guestTeam={guestTeam}
-            date={date}
-            result={result}
-            link={link}
-          ></Fixture>
-        </div>
-      )
-    }
+  const fixtures = data.fixtures.nodes.filter(
+    ({ date }) => date >= new Date().toISOString().split("T")[0]
   )
-  const fixtures = data.fixtures.edges
-    .filter(
-      ({ node: { date } }) => date >= new Date().toISOString().split("T")[0]
-    )
-    .slice(0, 5)
-    .map(({ node: { id, homeTeam, guestTeam, result, date, link } }) => {
-      return (
-        <div key={id} className="panel-block">
-          <Fixture
-            homeTeam={homeTeam}
-            guestTeam={guestTeam}
-            date={date}
-            result={result}
-            link={link}
-          ></Fixture>
-        </div>
-      )
-    })
   return (
     <Layout>
       <SEO title="Übersicht" />
@@ -48,28 +18,18 @@ const IndexPage = ({ data }) => {
         <div className="container">
           <div className="columns">
             <div className="column">
-              <article className="panel has-background-white">
-                <h2 className="panel-heading">Neueste Ergebnisse</h2>
-                {latestResults.length ? (
-                  latestResults
-                ) : (
-                  <div className="panel-block">
-                    Es sind keine Ergebnisse verfügbar.
-                  </div>
-                )}
-              </article>
+              <FixtureList
+                fixtures={data.results.nodes}
+                title={"Neueste Ergebnisse"}
+                noResultsText={"Es sind keine Ergebnisse verfügbar."}
+              ></FixtureList>
             </div>
             <div className="column">
-              <article className="panel has-background-white">
-                <h2 className="panel-heading">Nächste Spiele</h2>
-                {fixtures.length ? (
-                  fixtures
-                ) : (
-                  <div className="panel-block">
-                    Es sind keine kommenden Spiele verfügbar.
-                  </div>
-                )}
-              </article>
+              <FixtureList
+                fixtures={fixtures}
+                title={"Nächste Spiele"}
+                noResultsText={"Es sind keine kommenden Spiele verfügbar."}
+              ></FixtureList>
             </div>
           </div>
         </div>
@@ -87,24 +47,19 @@ export const query = graphql`
       }
     }
     results: allFixture(
-      limit: 5
       sort: { fields: date, order: DESC }
       filter: { result: { ne: null } }
     ) {
-      edges {
-        node {
-          ...FixtureData
-        }
+      nodes {
+        ...FixtureData
       }
     }
     fixtures: allFixture(
       sort: { fields: date }
-      filter: { result: { eq: null } }
+      filter: { result: { eq: null } } # all fixtures without score = upcoming matches
     ) {
-      edges {
-        node {
-          ...FixtureData
-        }
+      nodes {
+        ...FixtureData
       }
     }
   }

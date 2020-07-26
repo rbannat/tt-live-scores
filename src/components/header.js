@@ -13,12 +13,10 @@ const Header = () => {
         }
       }
       allLeague {
-        edges {
-          node {
-            id
-            name
-            shortName
-          }
+        nodes {
+          id
+          name
+          shortName
         }
       }
     }
@@ -71,7 +69,7 @@ const Header = () => {
                 }`}
               >
                 <div className={headerStyles.subMenuTwoColumns}>
-                  {data.allLeague.edges.map(({ node: league }) => (
+                  {data.allLeague.nodes.map(league => (
                     <Link
                       key={league.id}
                       to={`/league/${league.id}`}

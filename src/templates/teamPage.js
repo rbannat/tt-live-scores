@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Fixture from "../components/fixture"
+import FixtureList from "../components/fixtureList"
 import Hero from "../components/hero"
 import PlayerTable from "../components/playerTable"
 
@@ -12,53 +12,28 @@ const TeamPage = ({ data }) => {
     firstHalfCompleted ? "secondHalf" : "firstHalf"
   )
   const fixtures = data.team.fixtures
-    ? data.team.fixtures.reduce(
-        (fixtures, { id, homeTeam, guestTeam, result, date, link }) => {
-          return !result && date >= new Date().toISOString().split("T")[0]
-            ? [
-                ...fixtures,
-                <div key={id} className="panel-block">
-                  <Fixture
-                    key={id}
-                    homeTeam={homeTeam}
-                    guestTeam={guestTeam}
-                    date={date}
-                    result={result}
-                    link={link}
-                  ></Fixture>
-                </div>,
-              ]
-            : fixtures
-        },
-        []
-      )
+    ? data.team.fixtures.reduce((fixtures, fixture) => {
+        return !fixture.result &&
+          fixture.date >= new Date().toISOString().split("T")[0]
+          ? [...fixtures, fixture]
+          : fixtures
+      }, [])
     : []
   const latestResults = data.team.fixtures
-    ? data.team.fixtures.reduce(
-        (results, { id, homeTeam, guestTeam, result, date, link }) => {
-          return result && date < new Date().toISOString().split("T")[0]
-            ? [
-                ...results,
-                <div key={id} className="panel-block">
-                  <Fixture
-                    homeTeam={homeTeam}
-                    guestTeam={guestTeam}
-                    date={date}
-                    result={result}
-                    link={link}
-                  ></Fixture>
-                </div>,
-              ]
-            : results
-        },
-        []
-      )
-    : [].reverse()
+    ? data.team.fixtures
+        .reduce((fixtures, fixture) => {
+          return fixture.result &&
+            fixture.date < new Date().toISOString().split("T")[0]
+            ? [...fixtures, fixture]
+            : fixtures
+        }, [])
+        .reverse()
+    : []
   const players = sortPlayersByPosition(
     data && data.team
       ? activeTab === "firstHalf"
-        ? data.playersFirstHalf.edges
-        : data.playersSecondHalf.edges
+        ? data.playersFirstHalf.nodes
+        : data.playersSecondHalf.nodes
       : []
   )
   return (
@@ -91,28 +66,18 @@ const TeamPage = ({ data }) => {
           </article>
           <div className="columns">
             <div className="column">
-              <article className="panel has-background-white">
-                <h2 className="panel-heading">Neueste Ergebnisse</h2>
-                {latestResults.length ? (
-                  latestResults
-                ) : (
-                  <div className="panel-block">
-                    Es sind keine Ergebnisse verfügbar.
-                  </div>
-                )}
-              </article>
+              <FixtureList
+                fixtures={latestResults}
+                title={"Neueste Ergebnisse"}
+                noResultsText={"Es sind keine Ergebnisse verfügbar."}
+              ></FixtureList>
             </div>
             <div className="column">
-              <article className="panel has-background-white">
-                <h2 className="panel-heading">Nächste Spiele</h2>
-                {fixtures.length ? (
-                  fixtures
-                ) : (
-                  <div className="panel-block">
-                    Es sind keine kommenden Spiele verfügbar.
-                  </div>
-                )}
-              </article>
+              <FixtureList
+                fixtures={fixtures}
+                title={"Nächste Spiele"}
+                noResultsText={"Es sind keine kommenden Spiele verfügbar."}
+              ></FixtureList>
             </div>
           </div>
         </div>
@@ -123,7 +88,7 @@ const TeamPage = ({ data }) => {
 
 function sortPlayersByPosition(players) {
   const substitutes = []
-  players = players.reduce((players, { node: player }) => {
+  players = players.reduce((players, player) => {
     if (player.position.length > 1) {
       substitutes.push(player)
       return players
@@ -149,17 +114,15 @@ export const query = graphql`
       filter: { team: { id: { eq: $teamId } }, isSecondHalf: { eq: false } }
       sort: { fields: position }
     ) {
-      edges {
-        node {
-          position
-          score
-          won
-          lost
-          gamesPlayed
-          player {
-            id
-            name
-          }
+      nodes {
+        position
+        score
+        won
+        lost
+        gamesPlayed
+        player {
+          id
+          name
         }
       }
     }
@@ -168,17 +131,15 @@ export const query = graphql`
       filter: { team: { id: { eq: $teamId } }, isSecondHalf: { eq: true } }
       sort: { fields: position }
     ) {
-      edges {
-        node {
-          position
-          score
-          won
-          lost
-          gamesPlayed
-          player {
-            id
-            name
-          }
+      nodes {
+        position
+        score
+        won
+        lost
+        gamesPlayed
+        player {
+          id
+          name
         }
       }
     }
