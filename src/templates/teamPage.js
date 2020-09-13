@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import FixtureList from "../components/fixtureList"
@@ -36,10 +36,18 @@ const TeamPage = ({ data }) => {
         : data.playersSecondHalf.nodes
       : []
   )
+  const subtitle = (
+    <Link
+    to={`/league/${data.team.league.id}`}
+  >
+    {data.team.league.shortName}
+  </Link>
+  )
+  
   return (
     <Layout>
       <SEO title={data.team.name} />
-      <Hero title={data.team.name} subtitle={data.team.league.shortName}></Hero>
+      <Hero title={data.team.name} subtitle={subtitle}></Hero>
       <section className="section">
         <div className="container">
           <article className="panel has-background-white">
@@ -102,6 +110,7 @@ export const query = graphql`
   query TeamPageQuery($teamId: String!) {
     team(id: { eq: $teamId }) {
       league {
+        id
         shortName
       }
       name
