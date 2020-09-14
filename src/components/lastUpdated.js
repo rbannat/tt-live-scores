@@ -2,16 +2,25 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 const LastUpdated = () => {
-    const data = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     query {
-        siteBuildMetadata {
-            buildTime(locale: "de", formatString: "dd, DD.MM.YYYY HH:mm")
-        }
+      siteBuildMetadata {
+        buildTime
+      }
     }
-`)
-return (
-<div className="is-size-7">Stand: {data.siteBuildMetadata.buildTime} Uhr</div>
-)
+  `)
+  return (
+    <div className="is-size-7">
+      {`Stand: ${new Intl.DateTimeFormat("de-DE", {
+        weekday: "short",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      }).format(new Date(data.siteBuildMetadata.buildTime))} Uhr`}
+    </div>
+  )
 }
 
 export default LastUpdated
