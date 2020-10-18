@@ -75,6 +75,7 @@ module.exports = {
         theme_color: `#6eccae`,
         display: `minimal-ui`,
         icon: `src/images/ping-pong.png`, // This path is relative to the root of the site.
+        cache_busting_mode: "none",
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
