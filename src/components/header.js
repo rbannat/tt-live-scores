@@ -2,6 +2,27 @@ import React, { useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import headerStyles from "./header.module.scss"
 
+const GroupNavLink = ({ group, isActive, handleClick }) => (
+  <div className={`navbar-item has-dropdown is-active`}>
+    <a className="navbar-link" onClick={handleClick}>
+      {group.name}
+    </a>
+    <div className={`navbar-dropdown ${isActive ? "" : "is-hidden"}`}>
+      <div className={headerStyles.subMenuTwoColumns}>
+        {group.leagues.map(league => (
+          <Link
+            key={league.id}
+            to={`/league/${league.id}`}
+            className={`${headerStyles.subMenuNavbarItem} navbar-item`}
+          >
+            {league.shortName}
+          </Link>
+        ))}
+      </div>
+    </div>
+  </div>
+)
+
 const Header = () => {
   const [isActive, setIsActive] = useState(false)
   const [activeSubmenu, setActiveSubmenu] = useState("")
@@ -12,15 +33,20 @@ const Header = () => {
           title
         }
       }
-      allLeague {
+      allGroup {
         nodes {
           id
           name
-          shortName
+          leagues {
+            id
+            name
+            shortName
+          }
         }
       }
     }
   `)
+
   return (
     <header>
       <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -54,33 +80,18 @@ const Header = () => {
             <Link to="/" className="navbar-item">
               Übersicht
             </Link>
-            <div className={`navbar-item has-dropdown is-active`}>
-              <a
-                className="navbar-link"
-                onClick={() =>
-                  setActiveSubmenu(activeSubmenu === "men" ? "" : "men")
+            {data.allGroup.nodes.map(group => (
+              <GroupNavLink
+                key={group.id}
+                group={group}
+                isActive={activeSubmenu === group.name}
+                handleClick={() =>
+                  setActiveSubmenu(
+                    activeSubmenu === group.name ? "" : group.name
+                  )
                 }
-              >
-                Herren
-              </a>
-              <div
-                className={`navbar-dropdown ${
-                  activeSubmenu === "men" ? "" : "is-hidden"
-                }`}
-              >
-                <div className={headerStyles.subMenuTwoColumns}>
-                  {data.allLeague.nodes.map(league => (
-                    <Link
-                      key={league.id}
-                      to={`/league/${league.id}`}
-                      className={`${headerStyles.subMenuNavbarItem} navbar-item`}
-                    >
-                      {league.shortName}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+              />
+            ))}
           </div>
         </div>
       </nav>
