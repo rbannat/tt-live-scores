@@ -1,5 +1,5 @@
 import React from "react"
-import fixtureStyles from "./fixture.module.scss"
+import { container, team, resultContainer } from "./fixture.module.scss"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { graphql, Link } from "gatsby"
 
@@ -17,13 +17,13 @@ const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
   })
 
   return (
-    <div className={fixtureStyles.container}>
-      <div className={`${fixtureStyles.team} has-text-centered`}>
+    <div className={container}>
+      <div className={`${team} has-text-centered`}>
         <Link to={`/team/${homeTeam.id}`}>
           <span className={`is-size-6`}>{homeTeam.shortName}</span>
         </Link>
       </div>
-      <div className={`${fixtureStyles.resultContainer} has-text-centered`}>
+      <div className={`${resultContainer} has-text-centered`}>
         <div>
           <div className={`is-size-7`}>{day}</div>
           <div className={`is-size-4 has-text-weight-bold`}>
@@ -39,7 +39,7 @@ const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
           </a>
         </div>
       </div>
-      <div className={`${fixtureStyles.team} has-text-centered`}>
+      <div className={`${team} has-text-centered`}>
         <Link to={`/team/${guestTeam.id}`}>
           <span className={`is-size-6`}>{guestTeam.shortName}</span>
         </Link>

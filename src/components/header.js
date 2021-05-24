@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
-import headerStyles from "./header.module.scss"
+import { subMenuTwoColumns, subMenuNavbarItem } from "./header.module.scss"
 
 const GroupNavLink = ({ group, isActive, handleClick }) => (
   <div className={`navbar-item has-dropdown is-active`}>
@@ -8,12 +8,12 @@ const GroupNavLink = ({ group, isActive, handleClick }) => (
       {group.name}
     </a>
     <div className={`navbar-dropdown ${isActive ? "" : "is-hidden"}`}>
-      <div className={headerStyles.subMenuTwoColumns}>
+      <div className={subMenuTwoColumns}>
         {group.leagues.map(league => (
           <Link
             key={league.id}
             to={`/league/${league.id}`}
-            className={`${headerStyles.subMenuNavbarItem} navbar-item`}
+            className={`${subMenuNavbarItem} navbar-item`}
           >
             {league.shortName}
           </Link>
