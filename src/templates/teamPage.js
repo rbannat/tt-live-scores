@@ -7,7 +7,7 @@ import Hero from "../components/hero"
 import PlayerTable from "../components/playerTable"
 
 const TeamPage = ({ data }) => {
-  const firstHalfCompleted = false
+  const firstHalfCompleted = true
   const [activeTab, setActiveTab] = useState(
     firstHalfCompleted ? "secondHalf" : "firstHalf"
   )
@@ -37,13 +37,11 @@ const TeamPage = ({ data }) => {
       : []
   )
   const subtitle = (
-    <Link
-    to={`/league/${data.team.league.id}`}
-  >
-    {data.team.league.shortName}
-  </Link>
+    <Link to={`/league/${data.team.league.id}`}>
+      {data.team.league.shortName}
+    </Link>
   )
-  
+
   return (
     <Layout>
       <SEO title={data.team.name} />
