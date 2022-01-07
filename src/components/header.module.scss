@@ -1,16 +1,13 @@
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 
-.subMenuTwoColumns {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.subMenuNavbarItem {
-  width: 50%;
-}
-
 @include desktop {
-  .subMenuTwoColumns {
+  .subMenu {
+    display: flex;
+    flex-wrap: wrap;
     min-width: 350px;
+  }
+
+  .subMenuNavbarItem {
+    width: 50%;
   }
 }
