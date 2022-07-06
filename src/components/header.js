@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { subMenu, subMenuNavbarItem } from "./header.module.scss"
+import Search from "./search"
 
 const GroupNavLink = ({ group, isActive, handleClick }) => (
   <div className={`navbar-item has-dropdown is-active`}>
@@ -55,12 +56,12 @@ const Header = () => {
             {data.site.siteMetadata.title}
           </Link>
 
+          <Search className={"is-align-self-center ml-auto"}></Search>
+
           <a
-            className={
-              isActive
-                ? "navbar-burger burger is-active"
-                : "navbar-burger burger"
-            }
+            className={`ml-1 navbar-burger burger ${
+              isActive ? "is-active" : ""
+            }`}
             onClick={() => setIsActive(!isActive)}
             aria-label="menu"
             aria-expanded={isActive ? "true" : "false"}

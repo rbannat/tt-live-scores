@@ -26,6 +26,9 @@ module.exports = {
         theme_color: `#6eccae`,
         display: `minimal-ui`,
         icon: `src/images/ping-pong.png`, // This path is relative to the root of the site.
+        icon_options: {
+          purpose: `any maskable`,
+        },
         cache_busting_mode: "none",
       },
     },
@@ -33,5 +36,46 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     `gatsby-plugin-offline`,
     `gatsby-plugin-sass`,
+    {
+      resolve: "gatsby-plugin-local-search",
+      options: {
+        name: "pages",
+        engine: "flexsearch",
+        engineOptions: {
+          tokenize: "forward",
+        },
+        query: `
+          {
+            allTeam {
+              nodes {
+                id
+                name
+              }
+            }
+            allLeague {
+              nodes {
+                id
+                name
+              }
+            }
+          }
+        `,
+        ref: "id",
+        index: ["name"],
+        store: ["id", "nodeType", "name"],
+        normalizer: ({ data }) => [
+          ...data.allLeague.nodes.map(node => ({
+            id: node.id,
+            nodeType: "league",
+            name: node.name,
+          })),
+          ...data.allTeam.nodes.map(node => ({
+            id: node.id,
+            nodeType: "team",
+            name: node.name,
+          })),
+        ],
+      },
+    },
   ],
 }
