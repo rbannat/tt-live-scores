@@ -7,7 +7,7 @@ import Hero from "../components/hero"
 import PlayerTable from "../components/playerTable"
 
 const TeamPage = ({ data }) => {
-  const firstHalfCompleted = true
+  const firstHalfCompleted = false
   const [activeTab, setActiveTab] = useState(
     firstHalfCompleted ? "secondHalf" : "firstHalf"
   )
