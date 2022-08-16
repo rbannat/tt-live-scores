@@ -26,9 +26,6 @@ module.exports = {
         theme_color: `#6eccae`,
         display: `minimal-ui`,
         icon: `src/images/ping-pong.png`, // This path is relative to the root of the site.
-        icon_options: {
-          purpose: `any maskable`,
-        },
         cache_busting_mode: "none",
       },
     },
