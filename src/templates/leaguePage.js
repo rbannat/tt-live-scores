@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { SEO } from "../components/seo"
 import LeagueTable from "../components/leagueTable"
 import FixtureList from "../components/fixtureList"
 import Hero from "../components/hero"
@@ -12,7 +12,6 @@ const LeaguePage = ({ data }) => {
   )
   return (
     <Layout>
-      <SEO title={data.league.name} />
       <Hero title={data.league.name}></Hero>
       <section className="section">
         <div className="container">
@@ -46,6 +45,8 @@ const LeaguePage = ({ data }) => {
 
 export default LeaguePage
 
+export const Head = ({ data }) => <SEO title={data.league.name} />
+
 export const query = graphql`
   query LeaguePageQuery($leagueId: String!) {
     league(id: { eq: $leagueId }) {
@@ -53,7 +54,7 @@ export const query = graphql`
     }
     allTeam(
       filter: { league: { id: { eq: $leagueId } } }
-      sort: { fields: position, order: ASC }
+      sort: { position: ASC }
     ) {
       nodes {
         drawn
@@ -74,7 +75,7 @@ export const query = graphql`
       }
     }
     results: allFixture(
-      sort: { fields: date, order: DESC }
+      sort: { date: DESC }
       filter: { result: { ne: null }, league: { id: { eq: $leagueId } } }
     ) {
       nodes {
@@ -82,8 +83,8 @@ export const query = graphql`
       }
     }
     fixtures: allFixture(
-      sort: { fields: date }
-      filter: { result: { eq: null }, league: { id: { eq: $leagueId } } } # all fixtures without score = upcoming matches
+      sort: { date: ASC }
+      filter: { result: { eq: null }, league: { id: { eq: $leagueId } } }
     ) {
       nodes {
         ...FixtureData

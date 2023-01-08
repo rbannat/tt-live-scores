@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { SEO } from "../components/seo"
 import Hero from "../components/hero"
 import FixtureList from "../components/fixtureList"
 
@@ -12,7 +12,6 @@ const IndexPage = ({ data }) => {
   )
   return (
     <Layout>
-      <SEO title="Übersicht" />
       <Hero title={"Übersicht"}></Hero>
       <section className="section">
         <div className="container">
@@ -38,8 +37,10 @@ const IndexPage = ({ data }) => {
   )
 }
 
+export const Head = () => <SEO title="Übersicht" />
+
 export const query = graphql`
-  query {
+  {
     league {
       name
       association {
@@ -47,7 +48,7 @@ export const query = graphql`
       }
     }
     results: allFixture(
-      sort: { fields: date, order: DESC }
+      sort: { date: DESC }
       filter: { result: { ne: null } }
     ) {
       nodes {
@@ -55,8 +56,8 @@ export const query = graphql`
       }
     }
     fixtures: allFixture(
-      sort: { fields: date }
-      filter: { result: { eq: null } } # all fixtures without score = upcoming matches
+      sort: { date: ASC }
+      filter: { result: { eq: null } }
     ) {
       nodes {
         ...FixtureData

@@ -2,10 +2,12 @@ module.exports = {
   siteMetadata: {
     title: `TT-Live Scores`,
     description: `Hier findest du Ergebnisse des Berliner Tisch-Tennis Verband e.V. direkt aus TischtennisLive.`,
-    author: `@rennitlb`,
+    twitterUsername: `@rennitlb`,
+    siteUrl: `https://tt-live-scores.netlify.app`,
+    image: `src/images/ping-pong.png`,
   },
+  trailingSlash: `always`,
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {

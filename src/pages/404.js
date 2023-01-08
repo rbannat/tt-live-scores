@@ -1,12 +1,11 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { SEO } from "../components/seo"
 import Hero from "../components/hero"
 
 const NotFoundPage = () => (
   <Layout>
-    <SEO title="404: Not found" />
     <Hero title={"NOT FOUND"}></Hero>
     <section className="section">
       <div className="container">
@@ -15,5 +14,7 @@ const NotFoundPage = () => (
     </section>
   </Layout>
 )
+
+export const Head = () => <SEO title="404: Not found" />
 
 export default NotFoundPage

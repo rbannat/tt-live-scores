@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { SEO } from "../components/seo"
 import FixtureList from "../components/fixtureList"
 import Hero from "../components/hero"
 import PlayerTable from "../components/playerTable"
 
 const TeamPage = ({ data }) => {
-  const firstHalfCompleted = false
+  const firstHalfCompleted = true
   const [activeTab, setActiveTab] = useState(
     firstHalfCompleted ? "secondHalf" : "firstHalf"
   )
@@ -44,7 +44,6 @@ const TeamPage = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title={data.team.name} />
       <Hero title={data.team.name} subtitle={subtitle}></Hero>
       <section className="section">
         <div className="container">
@@ -104,6 +103,8 @@ function sortPlayersByPosition(players) {
   return [...players, ...substitutes]
 }
 
+export const Head = ({ data }) => <SEO title={data.team.name} />
+
 export const query = graphql`
   query TeamPageQuery($teamId: String!) {
     team(id: { eq: $teamId }) {
@@ -116,10 +117,9 @@ export const query = graphql`
         ...FixtureData
       }
     }
-
     playersFirstHalf: allPlayerScore(
       filter: { team: { id: { eq: $teamId } }, isSecondHalf: { eq: false } }
-      sort: { fields: position }
+      sort: { position: ASC }
     ) {
       nodes {
         position
@@ -133,10 +133,9 @@ export const query = graphql`
         }
       }
     }
-
     playersSecondHalf: allPlayerScore(
       filter: { team: { id: { eq: $teamId } }, isSecondHalf: { eq: true } }
-      sort: { fields: position }
+      sort: { position: ASC }
     ) {
       nodes {
         position
