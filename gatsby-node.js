@@ -13,6 +13,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
 
+        allClub {
+          nodes {
+            id
+          }
+        }
+
         allLeague {
           nodes {
             id
@@ -36,6 +42,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component,
       context: {
         teamId: team.id,
+      },
+    })
+  })
+
+  // Create pages for each club
+  result.data.allClub.nodes.forEach(club => {
+    createPage({
+      path: `/club/${club.id}`,
+      component: path.resolve(`src/templates/clubPage.js`),
+      context: {
+        clubId: club.id,
       },
     })
   })

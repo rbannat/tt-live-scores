@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
-import { subMenu, subMenuNavbarItem } from "./header.module.scss"
+import { subMenu, subMenuNavbarItem, navbarBurger } from "./header.module.scss"
 import Search from "./search"
 
 const GroupNavLink = ({ group, isActive, handleClick }) => (
@@ -52,14 +52,17 @@ const Header = () => {
     <header>
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <Link to="/" className="navbar-item is-size-4">
+          <Link
+            to="/"
+            className="navbar-item is-size-5-mobile is-size-4-tablet"
+          >
             {data.site.siteMetadata.title}
           </Link>
 
           <Search className={"is-align-self-center ml-auto"}></Search>
 
           <a
-            className={`ml-1 navbar-burger burger ${
+            className={`${navbarBurger} ml-1 navbar-burger burger ${
               isActive ? "is-active" : ""
             }`}
             onClick={() => setIsActive(!isActive)}
@@ -80,6 +83,9 @@ const Header = () => {
           <div className="navbar-start">
             <Link to="/" className="navbar-item">
               Übersicht
+            </Link>
+            <Link to="/clubs" className="navbar-item">
+              Vereine
             </Link>
             {data.allGroup.nodes.map(group => (
               <GroupNavLink

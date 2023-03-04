@@ -1,5 +1,9 @@
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 
+.navbarBurger {
+  flex: 0 0 auto;
+}
+
 @include desktop {
   .subMenu {
     display: flex;

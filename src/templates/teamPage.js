@@ -37,9 +37,15 @@ const TeamPage = ({ data }) => {
       : []
   )
   const subtitle = (
-    <Link to={`/league/${data.team.league.id}`}>
-      {data.team.league.shortName}
-    </Link>
+    <>
+      <Link to={`/league/${data.team.league.id}`}>
+        {data.team.league.shortName}
+      </Link>
+      <br />
+      <Link class="is-size-6" to={`/club/${data.team.club.id}`}>
+        {data.team.club.shortName}
+      </Link>
+    </>
   )
 
   return (
@@ -113,6 +119,10 @@ export const query = graphql`
         shortName
       }
       name
+      club {
+        id
+        shortName
+      }
       fixtures {
         ...FixtureData
       }
