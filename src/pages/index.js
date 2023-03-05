@@ -1,36 +1,39 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 import Hero from "../components/hero"
-import FixtureList from "../components/fixtureList"
 
 const IndexPage = ({ data }) => {
-  const fixtures = data.fixtures.nodes.filter(
-    ({ date }) => date >= new Date().toISOString().split("T")[0]
-  )
   return (
     <Layout>
       <Hero title={"Übersicht"}></Hero>
       <section className="section">
-        <div className="container">
-          <div className="columns">
-            <div className="column">
-              <FixtureList
-                fixtures={data.results.nodes}
-                title={"Neueste Ergebnisse"}
-                noResultsText={"Es sind keine Ergebnisse verfügbar."}
-              ></FixtureList>
-            </div>
-            <div className="column">
-              <FixtureList
-                fixtures={fixtures}
-                title={"Nächste Spiele"}
-                noResultsText={"Es sind keine kommenden Spiele verfügbar."}
-              ></FixtureList>
-            </div>
+        <div className="columns is-multiline">
+          <div className="column is-one-quarter">
+            <Link className="is-block notification is-primary" to={`/clubs`}>
+              <span className="title is-size-4">Alle Vereine</span>
+            </Link>
           </div>
+        </div>
+
+        <div className="columns is-multiline">
+          <div className="column is-one-quarter">
+            <Link className="is-block notification is-warning" to={`/leagues`}>
+              <span className="title is-size-4">Alle Ligen</span>
+            </Link>
+          </div>
+          {data.allGroup.nodes.map(group => (
+            <div key={group.id} className="column is-one-quarter">
+              <Link
+                className="is-block notification is-warning"
+                to={`/groups/${group.id}`}
+              >
+                <span className="title is-size-4">{group.name}</span>
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
     </Layout>
@@ -47,20 +50,10 @@ export const query = graphql`
         name
       }
     }
-    results: allFixture(
-      sort: { date: DESC }
-      filter: { result: { ne: null } }
-    ) {
+    allGroup(limit: 5) {
       nodes {
-        ...FixtureData
-      }
-    }
-    fixtures: allFixture(
-      sort: { date: ASC }
-      filter: { result: { eq: null } }
-    ) {
-      nodes {
-        ...FixtureData
+        id
+        name
       }
     }
   }

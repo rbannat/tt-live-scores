@@ -1030,7 +1030,7 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.20.13", "@babel/runtime@^7.20.7", "@babel/runtime@^7.3.4", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.20.13", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.3.4", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.21.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
   integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
@@ -2822,7 +2822,7 @@ axios@^0.21.1:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@^1.2.2:
+axios@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.3.4.tgz#f5760cefd9cfb51fd2481acf88c05f67c4523024"
   integrity sha512-toYm+Bsyl6VC5wSkfkbbNB6ROv7KY93PEBBL6xyDczaIHasAiv4wPqQ/c4RjoQzipxRD2W5g21cOqQulZ7rHwQ==
@@ -5324,7 +5324,7 @@ gatsby-cli@^5.7.0:
     yoga-layout-prebuilt "^1.10.0"
     yurnalist "^2.1.0"
 
-gatsby-core-utils@^4.3.1, gatsby-core-utils@^4.7.0:
+gatsby-core-utils@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-4.7.0.tgz#f2c9d74da334979b0ae847bc6cfe283670c2f752"
   integrity sha512-J8bjc+ASIfkrNbbOTvHbqgPtj/scgmLVB9rGuItZrbJyyHqyB6NLNbJeN8tHL//fjQ8B3vwyoHy6B09TMLQitQ==
@@ -5563,15 +5563,15 @@ gatsby-source-filesystem@^5.7.0:
     valid-url "^1.0.9"
     xstate "^4.35.3"
 
-gatsby-source-ttlive@^3.0.6:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/gatsby-source-ttlive/-/gatsby-source-ttlive-3.0.7.tgz#37bb4c1f613528c9b59a8e832a075af5b84602ee"
-  integrity sha512-AAWcAMAtnqR2xXH1r3713npVlYPh//bkuYhyJcwtv+oemc6/qzvBHJRlteZuOlACgQEjGlxpjQrDrCFO73yb5w==
+gatsby-source-ttlive@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/gatsby-source-ttlive/-/gatsby-source-ttlive-3.1.0.tgz#51d6f724640fdd3dab3a0d29834189bd3eb0bfaa"
+  integrity sha512-oek509mfqB9A5LngFf3TqHAC2sTfKwprqsXzBy8xeVIYLi2Dk5FuabMq8E/eRL3VUMMfkVbOQB433ooCK8pgcQ==
   dependencies:
-    "@babel/runtime" "^7.20.7"
-    axios "^1.2.2"
+    "@babel/runtime" "^7.21.0"
+    axios "^1.3.4"
     bottleneck "^2.19.5"
-    gatsby-core-utils "^4.3.1"
+    gatsby-core-utils "^4.7.0"
     xml2js "^0.4.23"
 
 gatsby-telemetry@^4.7.0:

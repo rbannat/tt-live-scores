@@ -23,7 +23,7 @@ const LeagueTable = ({ teams }) => {
               <tr key={team.id}>
                 <td>{team.position}</td>
                 <td>
-                  <Link to={`/team/${team.id}`}>
+                  <Link to={`/teams/${team.id}`}>
                     <span>{team.shortName}</span>
                   </Link>
                 </td>

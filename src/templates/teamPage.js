@@ -38,11 +38,11 @@ const TeamPage = ({ data }) => {
   )
   const subtitle = (
     <>
-      <Link to={`/league/${data.team.league.id}`}>
-        {data.team.league.shortName}
+      <Link to={`/leagues/${data.team.league.id}`}>
+        {data.team.league.name}
       </Link>
       <br />
-      <Link class="is-size-6" to={`/club/${data.team.club.id}`}>
+      <Link className="is-size-6" to={`/clubs/${data.team.club.id}`}>
         {data.team.club.shortName}
       </Link>
     </>
@@ -50,7 +50,11 @@ const TeamPage = ({ data }) => {
 
   return (
     <Layout>
-      <Hero title={data.team.name} subtitle={subtitle}></Hero>
+      <Hero
+        title={data.team.shortName}
+        subtitle={subtitle}
+        showLastUpdated={true}
+      ></Hero>
       <section className="section">
         <div className="container">
           <article className="panel has-background-white">
@@ -116,9 +120,11 @@ export const query = graphql`
     team(id: { eq: $teamId }) {
       league {
         id
+        name
         shortName
       }
       name
+      shortName
       club {
         id
         shortName

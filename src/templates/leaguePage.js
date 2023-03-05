@@ -12,7 +12,7 @@ const LeaguePage = ({ data }) => {
   )
   return (
     <Layout>
-      <Hero title={data.league.name}></Hero>
+      <Hero title={data.league.name} showLastUpdated={true}></Hero>
       <section className="section">
         <div className="container">
           <div className="panel has-background-white">

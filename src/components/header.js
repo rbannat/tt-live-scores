@@ -1,48 +1,15 @@
 import React, { useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
-import { subMenu, subMenuNavbarItem, navbarBurger } from "./header.module.scss"
+import { navbarBurger } from "./header.module.scss"
 import Search from "./search"
-
-const GroupNavLink = ({ group, isActive, handleClick }) => (
-  <div className={`navbar-item has-dropdown is-active`}>
-    <a className="navbar-link" onClick={handleClick}>
-      {group.name}
-    </a>
-    <div className={`navbar-dropdown ${isActive ? "" : "is-hidden"}`}>
-      <div className={subMenu}>
-        {group.leagues.map(league => (
-          <Link
-            key={league.id}
-            to={`/league/${league.id}`}
-            className={`${subMenuNavbarItem} navbar-item`}
-          >
-            {league.shortName}
-          </Link>
-        ))}
-      </div>
-    </div>
-  </div>
-)
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false)
-  const [activeSubmenu, setActiveSubmenu] = useState("")
   const data = useStaticQuery(graphql`
     query {
       site {
         siteMetadata {
           title
-        }
-      }
-      allGroup {
-        nodes {
-          id
-          name
-          leagues {
-            id
-            name
-            shortName
-          }
         }
       }
     }
@@ -62,6 +29,7 @@ const Header = () => {
           <Search className={"is-align-self-center ml-auto"}></Search>
 
           <a
+            role="button"
             className={`${navbarBurger} ml-1 navbar-burger burger ${
               isActive ? "is-active" : ""
             }`}
@@ -87,18 +55,9 @@ const Header = () => {
             <Link to="/clubs" className="navbar-item">
               Vereine
             </Link>
-            {data.allGroup.nodes.map(group => (
-              <GroupNavLink
-                key={group.id}
-                group={group}
-                isActive={activeSubmenu === group.name}
-                handleClick={() =>
-                  setActiveSubmenu(
-                    activeSubmenu === group.name ? "" : group.name
-                  )
-                }
-              />
-            ))}
+            <Link to="/leagues" className="navbar-item">
+              Ligen
+            </Link>
           </div>
         </div>
       </nav>
