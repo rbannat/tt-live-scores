@@ -19,7 +19,7 @@ const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
   return (
     <div className={container}>
       <div className={`${team} has-text-centered`}>
-        <Link to={`/team/${homeTeam.id}`}>
+        <Link to={`/teams/${homeTeam.id}`}>
           <span className={`is-size-6`}>{homeTeam.shortName}</span>
         </Link>
       </div>
@@ -40,7 +40,7 @@ const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
         </div>
       </div>
       <div className={`${team} has-text-centered`}>
-        <Link to={`/team/${guestTeam.id}`}>
+        <Link to={`/teams/${guestTeam.id}`}>
           <span className={`is-size-6`}>{guestTeam.shortName}</span>
         </Link>
       </div>

@@ -1,7 +1,7 @@
 import React from "react"
 import LastUpdated from "./lastUpdated"
 
-const Hero = ({ title, subtitle, description }) => {
+const Hero = ({ title, subtitle, description, showLastUpdated = false }) => {
   return (
     <>
       <div className="hero is-small is-primary">
@@ -13,9 +13,11 @@ const Hero = ({ title, subtitle, description }) => {
           </div>
         </div>
       </div>
-      <div className="container has-text-right px-5 py-2">
-        <LastUpdated></LastUpdated>
-      </div>
+      {showLastUpdated && (
+        <div className="container has-text-right px-5 py-2">
+          <LastUpdated></LastUpdated>
+        </div>
+      )}
     </>
   )
 }

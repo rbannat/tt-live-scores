@@ -38,11 +38,11 @@ const TeamPage = ({ data }) => {
   )
   const subtitle = (
     <>
-      <Link to={`/league/${data.team.league.id}`}>
+      <Link to={`/leagues/${data.team.league.id}`}>
         {data.team.league.shortName}
       </Link>
       <br />
-      <Link class="is-size-6" to={`/club/${data.team.club.id}`}>
+      <Link class="is-size-6" to={`/clubs/${data.team.club.id}`}>
         {data.team.club.shortName}
       </Link>
     </>

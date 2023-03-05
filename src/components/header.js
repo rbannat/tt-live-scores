@@ -13,7 +13,7 @@ const GroupNavLink = ({ group, isActive, handleClick }) => (
         {group.leagues.map(league => (
           <Link
             key={league.id}
-            to={`/league/${league.id}`}
+            to={`/leagues/${league.id}`}
             className={`${subMenuNavbarItem} navbar-item`}
           >
             {league.shortName}

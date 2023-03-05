@@ -10,17 +10,17 @@ const ClubsPage = ({ data }) => {
     <Layout>
       <Hero title={"Vereine"}></Hero>
       <section className="section">
-        <div className="container">
-          <div class="content">
-            <ul>
-              {data.allClub.nodes.map(club => (
-                <li>
-                  <Link to={`/club/${club.id}`}>{club.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <article class="panel is-primary">
+          {data.allClub.nodes
+            .sort(function (a, b) {
+              return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+            })
+            .map(club => (
+              <Link class="panel-block" to={`/clubs/${club.id}`}>
+                {club.name}
+              </Link>
+            ))}
+        </article>
       </section>
     </Layout>
   )
@@ -30,7 +30,7 @@ export const Head = () => <SEO title="Vereine" />
 
 export const query = graphql`
   {
-    allClub {
+    allClub(sort: { shortName: ASC }) {
       nodes {
         id
         name

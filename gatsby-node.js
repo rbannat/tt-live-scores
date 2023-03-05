@@ -3,8 +3,8 @@ const path = require(`path`)
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  // Query for teams and leagues to create pages
-  const result = await graphql(
+  // Query for teams, leagues, ... to create pages
+  const { data, errors } = await graphql(
     `
       {
         allTeam {
@@ -24,21 +24,27 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             id
           }
         }
+
+        allGroup {
+          nodes {
+            id
+          }
+        }
       }
     `
   )
 
   // Handle errors
-  if (result.errors) {
+  if (errors) {
     reporter.panicOnBuild(`Error while running GraphQL query.`)
     return
   }
 
   // Create pages for each team
   const component = path.resolve(`src/templates/teamPage.js`)
-  result.data.allTeam.nodes.forEach(team => {
+  data.allTeam.nodes.forEach(team => {
     createPage({
-      path: `/team/${team.id}`,
+      path: `/teams/${team.id}`,
       component,
       context: {
         teamId: team.id,
@@ -47,9 +53,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   })
 
   // Create pages for each club
-  result.data.allClub.nodes.forEach(club => {
+  data.allClub.nodes.forEach(club => {
     createPage({
-      path: `/club/${club.id}`,
+      path: `/clubs/${club.id}`,
       component: path.resolve(`src/templates/clubPage.js`),
       context: {
         clubId: club.id,
@@ -58,9 +64,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   })
 
   // Create pages for each league
-  result.data.allLeague.nodes.forEach(league => {
+  data.allGroup.nodes.forEach(group => {
     createPage({
-      path: `/league/${league.id}`,
+      path: `/groups/${group.id}`,
+      component: path.resolve(`src/templates/groupPage.js`),
+      context: {
+        groupId: group.id,
+      },
+    })
+  })
+
+  // Create pages for each league
+  data.allLeague.nodes.forEach(league => {
+    createPage({
+      path: `/leagues/${league.id}`,
       component: path.resolve(`src/templates/leaguePage.js`),
       context: {
         leagueId: league.id,
