@@ -10,21 +10,23 @@ const ClubsPage = ({ data }) => {
     <Layout>
       <Hero title={"Vereine"}></Hero>
       <section className="section">
-        <article className="panel is-primary">
-          {data.allClub.nodes
-            .sort(function (a, b) {
-              return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
-            })
-            .map(club => (
-              <Link
-                key={club.id}
-                className="panel-block"
-                to={`/clubs/${club.id}`}
-              >
-                {club.name}
-              </Link>
-            ))}
-        </article>
+        <div className="container">
+          <article className="panel is-primary">
+            {data.allClub.nodes
+              .sort(function (a, b) {
+                return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+              })
+              .map(club => (
+                <Link
+                  key={club.id}
+                  className="panel-block"
+                  to={`/clubs/${club.id}`}
+                >
+                  {club.name}
+                </Link>
+              ))}
+          </article>
+        </div>
       </section>
     </Layout>
   )

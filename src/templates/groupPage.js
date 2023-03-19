@@ -11,18 +11,20 @@ const GroupPage = ({ data }) => {
     <Layout>
       <Hero title={data.group.name}></Hero>
       <section className="section">
-        <article className="panel">
-          <p className="panel-heading">Staffeln</p>
-          {leagues.map(league => (
-            <Link
-              key={league.id}
-              className="panel-block"
-              to={`/leagues/${league.id}`}
-            >
-              {league.name}
-            </Link>
-          ))}
-        </article>
+        <div className="container">
+          <article className="panel">
+            <p className="panel-heading">Staffeln</p>
+            {leagues.map(league => (
+              <Link
+                key={league.id}
+                className="panel-block"
+                to={`/leagues/${league.id}`}
+              >
+                {league.name}
+              </Link>
+            ))}
+          </article>
+        </div>
       </section>
     </Layout>
   )

@@ -3,6 +3,7 @@ import React from "react"
 import Hero from "../components/hero"
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
+import { useLocalStorage } from "../hooks/use-local-storage"
 
 // Javascript program to convert Roman
 // Numerals to Numberspublic
@@ -70,33 +71,54 @@ function sortByRomanNumeral(a, b) {
 }
 
 const ClubPage = ({ data }) => {
+  function handleFavClick() {
+    if (favoriteClubs?.find(club => club.id === data.club.id)) {
+      setFavoriteClubs(prevState =>
+        prevState.filter(club => club.id !== data.club.id)
+      )
+      return
+    }
+    setFavoriteClubs(prevState => [
+      ...new Set([
+        ...prevState,
+        { id: data.club.id, name: data.club.shortName },
+      ]),
+    ])
+  }
   const groups = data.allTeam.group
+  const [favoriteClubs, setFavoriteClubs] = useLocalStorage("fav-clubs", [])
 
   return (
     <Layout>
-      <Hero title={data.club.name}></Hero>
+      <Hero
+        title={data.club.name}
+        isFav={favoriteClubs?.find(club => club.id === data.club.id)}
+        onFavClick={handleFavClick}
+      ></Hero>
       <section className="section">
-        {groups.map(group => (
-          <article key={group.fieldValue} className="panel is-primary">
-            <p className="panel-heading">{group.fieldValue}</p>
-            {group.nodes
-              .sort((teamA, teamB) =>
-                sortByRomanNumeral(teamA.shortName, teamB.shortName)
-              )
-              .map(team => (
-                <Link
-                  key={team.id}
-                  className="panel-block"
-                  to={`/teams/${team.id}`}
-                >
-                  <div>
-                    {team.shortName} <br />
-                    <span className="is-size-7">{team.league.name}</span>
-                  </div>
-                </Link>
-              ))}
-          </article>
-        ))}
+        <div className="container">
+          {groups.map(group => (
+            <article key={group.fieldValue} className="panel is-primary">
+              <p className="panel-heading">{group.fieldValue}</p>
+              {group.nodes
+                .sort((teamA, teamB) =>
+                  sortByRomanNumeral(teamA.shortName, teamB.shortName)
+                )
+                .map(team => (
+                  <Link
+                    key={team.id}
+                    className="panel-block"
+                    to={`/teams/${team.id}`}
+                  >
+                    <div>
+                      {team.shortName} <br />
+                      <span className="is-size-7">{team.league.name}</span>
+                    </div>
+                  </Link>
+                ))}
+            </article>
+          ))}
+        </div>
       </section>
     </Layout>
   )

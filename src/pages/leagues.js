@@ -10,13 +10,15 @@ const GroupsPage = ({ data }) => {
     <Layout>
       <Hero title={"Ligen"}></Hero>
       <section className="section">
-        <article className="panel is-primary">
-          {data.allGroup.nodes.map(group => (
-            <Link className="panel-block" to={`/groups/${group.id}`}>
-              {group.name}
-            </Link>
-          ))}
-        </article>
+        <div className="container">
+          <article className="panel is-primary">
+            {data.allGroup.nodes.map(group => (
+              <Link className="panel-block" to={`/groups/${group.id}`}>
+                {group.name}
+              </Link>
+            ))}
+          </article>
+        </div>
       </section>
     </Layout>
   )

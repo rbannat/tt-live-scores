@@ -5,8 +5,25 @@ import { SEO } from "../components/seo"
 import FixtureList from "../components/fixtureList"
 import Hero from "../components/hero"
 import PlayerTable from "../components/playerTable"
+import { useLocalStorage } from "../hooks/use-local-storage"
 
 const TeamPage = ({ data }) => {
+  function handleFavClick() {
+    if (favoriteTeams?.find(team => team.id === data.team.id)) {
+      setFavoriteTeams(prevState =>
+        prevState.filter(team => team.id !== data.team.id)
+      )
+      return
+    }
+    setFavoriteTeams(prevState => [
+      ...new Set([
+        ...prevState,
+        { id: data.team.id, name: data.team.shortName },
+      ]),
+    ])
+  }
+  const [favoriteTeams, setFavoriteTeams] = useLocalStorage("fav-teams", [])
+
   const firstHalfCompleted = true
   const [activeTab, setActiveTab] = useState(
     firstHalfCompleted ? "secondHalf" : "firstHalf"
@@ -54,6 +71,8 @@ const TeamPage = ({ data }) => {
         title={data.team.shortName}
         subtitle={subtitle}
         showLastUpdated={true}
+        isFav={favoriteTeams?.find(team => team.id === data.team.id)}
+        onFavClick={handleFavClick}
       ></Hero>
       <section className="section">
         <div className="container">
@@ -118,6 +137,7 @@ export const Head = ({ data }) => <SEO title={data.team.name} />
 export const query = graphql`
   query TeamPageQuery($teamId: String!) {
     team(id: { eq: $teamId }) {
+      id
       league {
         id
         name
