@@ -27,8 +27,17 @@
     "sass": "^1.58.3"
   },
   "devDependencies": {
+    "@graphql-eslint/eslint-plugin": "^3.18.0",
+    "@types/node": "^20.2.0",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "eslint": "^8.40.0",
     "eslint-config-react-app": "^7.0.0",
-    "prettier": "^2.8.4"
+    "gatsby-plugin-dts-css-modules": "^3.0.0",
+    "prettier": "^2.8.4",
+    "typescript": "^5.0.4"
   },
   "keywords": [
     "gatsby"
@@ -41,7 +50,9 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \"",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",

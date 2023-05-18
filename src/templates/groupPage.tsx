@@ -1,4 +1,4 @@
-import { graphql, Link } from "gatsby"
+import { graphql, HeadProps, Link } from "gatsby"
 import React from "react"
 import Hero from "../components/hero"
 import Layout from "../components/layout"
@@ -30,10 +30,12 @@ const GroupPage = ({ data }) => {
   )
 }
 
-export const Head = ({ data }) => <SEO title={data.group.name} />
+export const Head = ({ data }: HeadProps<Queries.GroupPageQuery>) => (
+  <SEO title={data.group?.name ?? ""} />
+)
 
 export const query = graphql`
-  query GroupPageQuery($groupId: String!) {
+  query GroupPage($groupId: String!) {
     group(id: { eq: $groupId }) {
       id
       name

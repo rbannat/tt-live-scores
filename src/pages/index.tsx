@@ -1,12 +1,13 @@
-import React from "react"
-import { graphql, Link } from "gatsby"
+import * as React from "react"
+import { graphql, Link, PageProps } from "gatsby"
+import "./styles.scss"
 
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 import Hero from "../components/hero"
 import { useLocalStorage } from "../hooks/use-local-storage"
 
-const IndexPage = ({ data }) => {
+const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
   const [favoriteClubs] = useLocalStorage("fav-clubs", [])
   const [favoriteTeams] = useLocalStorage("fav-teams", [])
 
@@ -86,7 +87,7 @@ const IndexPage = ({ data }) => {
 export const Head = () => <SEO title="Übersicht" />
 
 export const query = graphql`
-  {
+  query IndexPage {
     league {
       name
       association {

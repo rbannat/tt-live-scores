@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link, graphql } from "gatsby"
+import { HeadProps, Link, PageProps, graphql } from "gatsby"
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 import FixtureList from "../components/fixtureList"
@@ -7,7 +7,7 @@ import Hero from "../components/hero"
 import PlayerTable from "../components/playerTable"
 import { useLocalStorage } from "../hooks/use-local-storage"
 
-const TeamPage = ({ data }) => {
+const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   function handleFavClick() {
     if (favoriteTeams?.find(team => team.id === data.team.id)) {
       setFavoriteTeams(prevState =>
@@ -132,10 +132,12 @@ function sortPlayersByPosition(players) {
   return [...players, ...substitutes]
 }
 
-export const Head = ({ data }) => <SEO title={data.team.name} />
+export const Head = ({ data }: HeadProps<Queries.TeamPageQuery>) => (
+  <SEO title={data.team?.name ?? ""} />
+)
 
 export const query = graphql`
-  query TeamPageQuery($teamId: String!) {
+  query TeamPage($teamId: String!) {
     team(id: { eq: $teamId }) {
       id
       league {

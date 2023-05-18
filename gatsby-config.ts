@@ -1,4 +1,7 @@
-module.exports = {
+import type { GatsbyConfig } from "gatsby"
+
+const config: GatsbyConfig = {
+  graphqlTypegen: true,
   siteMetadata: {
     title: `TT-Live Scores`,
     description: `Hier findest du Ergebnisse des Berliner Tisch-Tennis Verband e.V. direkt aus TischtennisLive.`,
@@ -91,6 +94,7 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     `gatsby-plugin-offline`,
     `gatsby-plugin-sass`,
+    "gatsby-plugin-dts-css-modules",
     {
       resolve: "gatsby-plugin-local-search",
       options: {
@@ -121,12 +125,12 @@ module.exports = {
         normalizer: ({ data }) => [
           ...data.allLeague.nodes.map(node => ({
             id: node.id,
-            nodeType: "league",
+            nodeType: "leagues",
             name: node.name,
           })),
           ...data.allTeam.nodes.map(node => ({
             id: node.id,
-            nodeType: "team",
+            nodeType: "teams",
             name: node.name,
           })),
         ],
@@ -134,3 +138,5 @@ module.exports = {
     },
   ],
 }
+
+export default config

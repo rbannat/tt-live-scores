@@ -1,18 +1,18 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { HeadProps, PageProps, graphql } from "gatsby"
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 import LeagueTable from "../components/leagueTable"
 import FixtureList from "../components/fixtureList"
 import Hero from "../components/hero"
 
-const LeaguePage = ({ data }) => {
+const LeaguePage = ({ data }: PageProps<Queries.LeaguePageQuery>) => {
   const fixtures = data.fixtures.nodes.filter(
     ({ date }) => date >= new Date().toISOString().split("T")[0]
   )
   return (
     <Layout>
-      <Hero title={data.league.name} showLastUpdated={true}></Hero>
+      <Hero title={data.league?.name ?? ""} showLastUpdated={true}></Hero>
       <section className="section">
         <div className="container">
           <div className="panel has-background-white">
@@ -45,10 +45,12 @@ const LeaguePage = ({ data }) => {
 
 export default LeaguePage
 
-export const Head = ({ data }) => <SEO title={data.league.name} />
+export const Head = ({ data }: HeadProps<Queries.LeaguePageQuery>) => (
+  <SEO title={data.league?.name ?? ""} />
+)
 
 export const query = graphql`
-  query LeaguePageQuery($leagueId: String!) {
+  query LeaguePage($leagueId: String!) {
     league(id: { eq: $leagueId }) {
       name
     }

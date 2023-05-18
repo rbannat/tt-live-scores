@@ -3,7 +3,21 @@ import { container, team, resultContainer } from "./fixture.module.scss"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { graphql, Link } from "gatsby"
 
-const Fixture = ({ guestTeam, homeTeam, result, date: dateString, link }) => {
+type FixtureProps = {
+  guestTeam: any
+  homeTeam: any
+  result: string[]
+  date: string
+  link: string
+}
+
+const Fixture = ({
+  guestTeam,
+  homeTeam,
+  result,
+  date: dateString,
+  link,
+}: FixtureProps) => {
   const date = new Date(dateString)
   const day = date.toLocaleDateString("de-DE", {
     weekday: "short",

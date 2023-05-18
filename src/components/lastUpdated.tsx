@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 const LastUpdated = () => {
   const data = useStaticQuery(graphql`
-    query {
+    query LastUpdated {
       siteBuildMetadata {
         buildTime
       }
