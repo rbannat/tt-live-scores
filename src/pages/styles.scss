@@ -1,15 +1,11 @@
 @charset "utf-8";
 
+// If need, change your variables before importing Bulma
 $body-background-color: hsl(0, 0%, 96%);
 $section-padding: 2rem 1.5rem;
 $table-cell-padding: 0.75em 0.75em;
-@import "../../node_modules/bulma/bulma.sass";
 
-.single-line-truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+@import "~bulma/bulma.sass";
 
 .u-grow {
   flex: 1;

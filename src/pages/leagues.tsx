@@ -1,11 +1,11 @@
-import { graphql, Link } from "gatsby"
-import React from "react"
+import * as React from "react"
+import { graphql, Link, PageProps } from "gatsby"
 
 import Hero from "../components/hero"
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 
-const GroupsPage = ({ data }) => {
+const GroupsPage = ({ data }: PageProps<Queries.GroupsPageQuery>) => {
   return (
     <Layout>
       <Hero title={"Ligen"}></Hero>
@@ -27,7 +27,7 @@ const GroupsPage = ({ data }) => {
 export const Head = () => <SEO title="Ligen" />
 
 export const query = graphql`
-  {
+  query GroupsPage {
     allGroup {
       nodes {
         id

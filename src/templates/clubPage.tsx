@@ -1,4 +1,4 @@
-import { graphql, Link } from "gatsby"
+import { graphql, HeadProps, Link, PageProps } from "gatsby"
 import React from "react"
 import Hero from "../components/hero"
 import Layout from "../components/layout"
@@ -9,7 +9,7 @@ import { useLocalStorage } from "../hooks/use-local-storage"
 // Numerals to Numberspublic
 // This function returns value of
 // a Roman symbol
-function value(r) {
+function value(r: string) {
   if (r === "I") return 1
   if (r === "V") return 5
   if (r === "X") return 10
@@ -22,17 +22,17 @@ function value(r) {
 
 // Finds decimal value of a given
 // romal numeral
-function romanToDecimal(str) {
+function romanToDecimal(str: string) {
   // Initialize result
   let res = 0
 
   for (let i = 0; i < str.length; i++) {
     // Getting value of symbol s[i]
-    let s1 = value(str.charAt(i))
+    const s1 = value(str.charAt(i))
 
     // Getting value of symbol s[i+1]
     if (i + 1 < str.length) {
-      let s2 = value(str.charAt(i + 1))
+      const s2 = value(str.charAt(i + 1))
 
       // Comparing both values
       if (s1 >= s2) {
@@ -70,7 +70,7 @@ function sortByRomanNumeral(a, b) {
   return a < b ? -1 : 1
 }
 
-const ClubPage = ({ data }) => {
+const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
   function handleFavClick() {
     if (favoriteClubs?.find(club => club.id === data.club.id)) {
       setFavoriteClubs(prevState =>
@@ -124,10 +124,12 @@ const ClubPage = ({ data }) => {
   )
 }
 
-export const Head = ({ data }) => <SEO title={data.club.name} />
+export const Head = ({ data }: HeadProps<Queries.ClubPageQuery>) => (
+  <SEO title={data.club?.name ?? ""} />
+)
 
 export const query = graphql`
-  query ClubPageQuery($clubId: String!) {
+  query ClubPage($clubId: String!) {
     club(id: { eq: $clubId }) {
       id
       name

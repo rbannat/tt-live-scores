@@ -1,15 +1,22 @@
 import React from "react"
-import LastUpdated from "./lastUpdated"
 import { hero } from "./hero.module.scss"
 import { FaRegHeart, FaHeart } from "react-icons/fa"
+import LastUpdated from "./lastUpdated"
 
+type HeroProps = {
+  title: string
+  subtitle?: string
+  showLastUpdated?: boolean
+  isFav?: boolean
+  onFavClick?: () => void
+}
 const Hero = ({
   title,
   subtitle,
   showLastUpdated = false,
   isFav,
   onFavClick,
-}) => {
+}: HeroProps) => {
   return (
     <>
       <div className={`${hero} hero is-small is-primary`}>

@@ -4,18 +4,21 @@ import { useFlexSearch } from "react-use-flexsearch"
 import { Formik, Form, Field } from "formik"
 import { FaSearch } from "react-icons/fa"
 
-const Search = ({ className }) => {
-  const [query, setQuery] = useState(null)
-  const data = useStaticQuery(graphql`
-    query {
+type SearchProps = {
+  className: string
+}
+const Search = ({ className }: SearchProps) => {
+  const [query, setQuery] = useState<string | null>(null)
+  const data: Queries.SearchQuery = useStaticQuery(graphql`
+    query Search {
       localSearchPages {
         index
         store
       }
     }
   `)
-  const index = data.localSearchPages.index
-  const store = data.localSearchPages.store
+  const index = data.localSearchPages?.index
+  const store = data.localSearchPages?.store
   const results = useFlexSearch(query, index, store, { limit: 10 })
 
   return (

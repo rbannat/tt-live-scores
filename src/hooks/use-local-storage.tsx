@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 
-export const useLocalStorage = (storageKey, fallbackState) => {
-  const initialState =
+export const useLocalStorage = (storageKey: string, fallbackState: string) => {
+  const initialState: string =
     typeof window !== `undefined`
-      ? JSON.parse(localStorage.getItem(storageKey)) ?? fallbackState
+      ? JSON.parse(localStorage.getItem(storageKey) ?? "") ?? fallbackState
       : fallbackState
   const [value, setValue] = useState(initialState)
 

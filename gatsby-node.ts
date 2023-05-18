@@ -1,12 +1,17 @@
-const path = require(`path`)
+import path from "path"
+import { GatsbyNode } from "gatsby"
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+export const createPages: GatsbyNode["createPages"] = async ({
+  graphql,
+  actions,
+  reporter,
+}) => {
   const { createPage } = actions
 
   // Query for teams, leagues, ... to create pages
   const { data, errors } = await graphql(
     `
-      {
+      query Pages {
         allTeam {
           nodes {
             id
@@ -41,7 +46,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // Create pages for each team
-  const component = path.resolve(`src/templates/teamPage.js`)
+  const component = path.resolve(`src/templates/teamPage.tsx`)
   data.allTeam.nodes.forEach(team => {
     createPage({
       path: `/teams/${team.id}`,
@@ -56,7 +61,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   data.allClub.nodes.forEach(club => {
     createPage({
       path: `/clubs/${club.id}`,
-      component: path.resolve(`src/templates/clubPage.js`),
+      component: path.resolve(`src/templates/clubPage.tsx`),
       context: {
         clubId: club.id,
       },
@@ -67,7 +72,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   data.allGroup.nodes.forEach(group => {
     createPage({
       path: `/groups/${group.id}`,
-      component: path.resolve(`src/templates/groupPage.js`),
+      component: path.resolve(`src/templates/groupPage.tsx`),
       context: {
         groupId: group.id,
       },
@@ -78,7 +83,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   data.allLeague.nodes.forEach(league => {
     createPage({
       path: `/leagues/${league.id}`,
-      component: path.resolve(`src/templates/leaguePage.js`),
+      component: path.resolve(`src/templates/leaguePage.tsx`),
       context: {
         leagueId: league.id,
       },

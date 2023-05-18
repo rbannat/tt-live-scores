@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
-import { navbarBurger } from "./header.module.scss"
 import Search from "./search"
+import { navbarBurger } from "./header.module.scss"
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false)
   const data = useStaticQuery(graphql`
-    query {
+    query Site {
       site {
         siteMetadata {
           title
