@@ -5898,9 +5898,9 @@ gatsby-source-filesystem@^5.7.0:
     xstate "^4.37.2"
 
 gatsby-source-ttlive@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/gatsby-source-ttlive/-/gatsby-source-ttlive-3.1.0.tgz#51d6f724640fdd3dab3a0d29834189bd3eb0bfaa"
-  integrity sha512-oek509mfqB9A5LngFf3TqHAC2sTfKwprqsXzBy8xeVIYLi2Dk5FuabMq8E/eRL3VUMMfkVbOQB433ooCK8pgcQ==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/gatsby-source-ttlive/-/gatsby-source-ttlive-3.1.1.tgz#902eb12c505eb77282e948761e19a246562b50e8"
+  integrity sha512-Ddh4hpAg4INzxceZMHkSCLrdglYqu1osfebJSIsdkzEOynsVJoxufrVYffI+8eN7speObCgg7UdrZc3xwGj/kg==
   dependencies:
     "@babel/runtime" "^7.21.0"
     axios "^1.3.4"
