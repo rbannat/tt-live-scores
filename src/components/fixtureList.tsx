@@ -1,14 +1,30 @@
-import React from "react"
-import Pagination from "./pagination"
-import usePagination from "./usePagination"
-import Fixture from "./fixture"
+import React from 'react'
+import Pagination from './pagination'
+import usePagination from './usePagination'
+import Fixture from './fixture'
 
-const FixtureList = ({ fixtures, title, noResultsText }) => {
+const FixtureList = ({
+  fixtures,
+  title,
+  noResultsText,
+}: {
+  fixtures: readonly Queries.FixtureDataFragment[]
+  title: string
+  noResultsText: string
+}) => {
   const items = fixtures.map(
-    ({ id, homeTeam, guestTeam, result, date, link }) => {
+    ({
+      id,
+      homeTeam,
+      guestTeam,
+      result,
+      date,
+      link,
+    }: Queries.FixtureDataFragment) => {
       return (
         <div key={id} className="panel-block">
           <Fixture
+            id={id}
             homeTeam={homeTeam}
             guestTeam={guestTeam}
             date={date}
@@ -17,7 +33,7 @@ const FixtureList = ({ fixtures, title, noResultsText }) => {
           ></Fixture>
         </div>
       )
-    }
+    },
   )
   const pagination = usePagination({
     items,
