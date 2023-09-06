@@ -1,19 +1,25 @@
-import * as React from "react"
-import { graphql, Link, PageProps } from "gatsby"
-import "./styles.scss"
+import * as React from 'react'
+import { graphql, Link, PageProps } from 'gatsby'
+import './styles.scss'
 
-import Layout from "../components/layout"
-import { SEO } from "../components/seo"
-import Hero from "../components/hero"
-import { useLocalStorage } from "../hooks/use-local-storage"
+import Layout from '../components/layout'
+import { SEO } from '../components/seo'
+import Hero from '../components/hero'
+import { useLocalStorage } from 'usehooks-ts'
 
 const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
-  const [favoriteClubs] = useLocalStorage("fav-clubs", [])
-  const [favoriteTeams] = useLocalStorage("fav-teams", [])
+  const [favoriteClubs] = useLocalStorage(
+    'fav-clubs',
+    [] as Array<{ id: string; name: string }>,
+  )
+  const [favoriteTeams] = useLocalStorage(
+    'fav-teams',
+    [] as Array<{ id: string; name: string }>,
+  )
 
   return (
     <Layout>
-      <Hero title={"Übersicht"}></Hero>
+      <Hero title={'Übersicht'}></Hero>
       <section className="section">
         <div className="container">
           {favoriteTeams?.length > 0 && (

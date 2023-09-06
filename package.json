@@ -24,19 +24,20 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-use-flexsearch": "^0.1.1",
-    "sass": "^1.58.3"
+    "sass": "^1.58.3",
+    "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "^3.18.0",
     "@types/node": "^20.2.0",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
+    "@typescript-eslint/eslint-plugin": "^6.6.0",
+    "@typescript-eslint/parser": "^6.6.0",
     "eslint": "^8.40.0",
     "eslint-config-react-app": "^7.0.0",
     "gatsby-plugin-dts-css-modules": "^3.0.0",
-    "prettier": "^2.8.4",
+    "prettier": "^3.0.3",
     "typescript": "^5.0.4"
   },
   "keywords": [

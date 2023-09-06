@@ -1,22 +1,22 @@
-import { graphql, HeadProps, Link, PageProps } from "gatsby"
-import React from "react"
-import Hero from "../components/hero"
-import Layout from "../components/layout"
-import { SEO } from "../components/seo"
-import { useLocalStorage } from "../hooks/use-local-storage"
+import { graphql, HeadProps, Link, PageProps } from 'gatsby'
+import React from 'react'
+import Hero from '../components/hero'
+import Layout from '../components/layout'
+import { SEO } from '../components/seo'
+import { useLocalStorage } from 'usehooks-ts'
 
 // Javascript program to convert Roman
 // Numerals to Numberspublic
 // This function returns value of
 // a Roman symbol
 function value(r: string) {
-  if (r === "I") return 1
-  if (r === "V") return 5
-  if (r === "X") return 10
-  if (r === "L") return 50
-  if (r === "C") return 100
-  if (r === "D") return 500
-  if (r === "M") return 1000
+  if (r === 'I') return 1
+  if (r === 'V') return 5
+  if (r === 'X') return 10
+  if (r === 'L') return 50
+  if (r === 'C') return 100
+  if (r === 'D') return 500
+  if (r === 'M') return 1000
   return -1
 }
 
@@ -74,19 +74,22 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
   function handleFavClick() {
     if (favoriteClubs?.find(club => club.id === data.club.id)) {
       setFavoriteClubs(prevState =>
-        prevState.filter(club => club.id !== data.club.id)
+        prevState.filter(club => club.id !== data.club.id),
       )
       return
     }
     setFavoriteClubs(prevState => [
       ...new Set([
         ...prevState,
-        { id: data.club.id, name: data.club.shortName },
+        { id: data.club.id, name: data.club.shortName ?? '' },
       ]),
     ])
   }
   const groups = data.allTeam.group
-  const [favoriteClubs, setFavoriteClubs] = useLocalStorage("fav-clubs", [])
+  const [favoriteClubs, setFavoriteClubs] = useLocalStorage(
+    'fav-clubs',
+    [] as Array<{ id: string; name: string }>,
+  )
 
   return (
     <Layout>
@@ -102,7 +105,7 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
               <p className="panel-heading">{group.fieldValue}</p>
               {group.nodes
                 .sort((teamA, teamB) =>
-                  sortByRomanNumeral(teamA.shortName, teamB.shortName)
+                  sortByRomanNumeral(teamA.shortName, teamB.shortName),
                 )
                 .map(team => (
                   <Link
@@ -125,7 +128,7 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
 }
 
 export const Head = ({ data }: HeadProps<Queries.ClubPageQuery>) => (
-  <SEO title={data.club?.name ?? ""} />
+  <SEO title={data.club?.name ?? ''} />
 )
 
 export const query = graphql`
