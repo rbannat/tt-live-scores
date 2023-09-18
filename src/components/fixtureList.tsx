@@ -8,33 +8,26 @@ const FixtureList = ({
   title,
   noResultsText,
 }: {
-  fixtures: readonly Queries.FixtureDataFragment[]
+  fixtures: NonNullable<Queries.FixtureDataFragment[]>
   title: string
   noResultsText: string
 }) => {
-  const items = fixtures.map(
-    ({
-      id,
-      homeTeam,
-      guestTeam,
-      result,
-      date,
-      link,
-    }: Queries.FixtureDataFragment) => {
-      return (
-        <div key={id} className="panel-block">
+  const items = fixtures.map((fixture: Queries.FixtureDataFragment | null) => {
+    return (
+      fixture && (
+        <div key={fixture.id} className="panel-block">
           <Fixture
-            id={id}
-            homeTeam={homeTeam}
-            guestTeam={guestTeam}
-            date={date}
-            result={result}
-            link={link}
+            id={fixture.id}
+            homeTeam={fixture.homeTeam}
+            guestTeam={fixture.guestTeam}
+            date={fixture.date}
+            result={fixture.result}
+            link={fixture.link}
           ></Fixture>
         </div>
       )
-    },
-  )
+    )
+  })
   const pagination = usePagination({
     items,
     itemsPerPage: 5,

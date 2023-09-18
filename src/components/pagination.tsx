@@ -1,13 +1,22 @@
-import React from "react"
+import React from 'react'
+import usePagination from './usePagination'
 
-const Pagination = ({ next, prev, jump, currentPage, maxPage }) => {
+type PaginationProps = ReturnType<typeof usePagination>
+
+const Pagination = ({
+  next,
+  prev,
+  jump,
+  currentPage,
+  maxPage,
+}: PaginationProps) => {
   const getRange = (start, end) => {
     return Array(end - start + 1)
       .fill()
       .map((v, i) => i + start)
   }
 
-  const paginate = (currentPage, pageCount) => {
+  const paginate = (currentPage: number, pageCount: number) => {
     let delta
     if (pageCount <= 7) {
       // delta === 7: [1 2 3 4 5 6 7]
@@ -32,19 +41,19 @@ const Pagination = ({ next, prev, jump, currentPage, maxPage }) => {
       currentPage > delta
         ? getRange(
             Math.min(range.start, pageCount - delta),
-            Math.min(range.end, pageCount)
+            Math.min(range.end, pageCount),
           )
         : getRange(1, Math.min(pageCount, delta + 1))
 
-    const withDots = (value, pair) =>
+    const withDots = (value: number, pair: (string | number)[]) =>
       pages.length + 1 !== pageCount ? pair : [value]
 
     if (pages[0] !== 1) {
-      pages = withDots(1, [1, "..."]).concat(pages)
+      pages = withDots(1, [1, '...']).concat(pages)
     }
 
     if (pages[pages.length - 1] < pageCount) {
-      pages = pages.concat(withDots(pageCount, ["...", pageCount]))
+      pages = pages.concat(withDots(pageCount, ['...', pageCount]))
     }
 
     return pages
@@ -56,22 +65,24 @@ const Pagination = ({ next, prev, jump, currentPage, maxPage }) => {
       aria-label="pagination"
     >
       <a
-        className="pagination-previous"
-        disabled={currentPage === 1}
+        className={`pagination-previous ${
+          currentPage === 1 ? 'is-disabled' : ''
+        }`}
         onClick={() => prev()}
       >
         Vorherige
       </a>
       <a
-        className="pagination-next"
-        disabled={maxPage === currentPage}
+        className={`pagination-next ${
+          maxPage === currentPage ? 'is-disabled' : ''
+        }`}
         onClick={() => next()}
       >
         Nächste Seite
       </a>
       <ul className="pagination-list">
         {paginate(currentPage, maxPage).map((page, index) =>
-          page === "..." ? (
+          page === '...' ? (
             <li key={`${page}${index}`}>
               <span className="pagination-ellipsis">&hellip;</span>
             </li>
@@ -79,7 +90,7 @@ const Pagination = ({ next, prev, jump, currentPage, maxPage }) => {
             <li key={page}>
               <a
                 className={`pagination-link ${
-                  currentPage === page ? "is-current" : ""
+                  currentPage === page ? 'is-current' : ''
                 }`}
                 aria-label={`Gehe zu Seite ${page}`}
                 onClick={() => jump(page)}
@@ -87,7 +98,7 @@ const Pagination = ({ next, prev, jump, currentPage, maxPage }) => {
                 {page}
               </a>
             </li>
-          )
+          ),
         )}
       </ul>
     </nav>

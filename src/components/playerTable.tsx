@@ -1,6 +1,11 @@
-import React from "react"
+import React from 'react'
 
-const PlayerTable = ({ players }) => (
+type PlayerTableProps = {
+  players:
+    | Queries.TeamPageQuery['playersFirstHalf']['nodes']
+    | Queries.TeamPageQuery['playersSecondHalf']['nodes']
+}
+const PlayerTable = ({ players }: PlayerTableProps) => (
   <div className="table-container u-grow">
     <table className="table is-fullwidth">
       <thead>
@@ -14,27 +19,18 @@ const PlayerTable = ({ players }) => (
         </tr>
       </thead>
       <tbody>
-        {players.map(
-          ({
-            player: { id, name },
-            score,
-            won,
-            lost,
-            gamesPlayed,
-            position,
-          }) => {
-            return (
-              <tr key={id}>
-                <td>{position}</td>
-                <td>{name}</td>
-                <td>{gamesPlayed}</td>
-                <td>{won}</td>
-                <td>{lost}</td>
-                <td>{score}</td>
-              </tr>
-            )
-          }
-        )}
+        {players.map(({ player, score, won, lost, gamesPlayed, position }) => {
+          return (
+            <tr key={player?.id}>
+              <td>{position}</td>
+              <td>{player?.name}</td>
+              <td>{gamesPlayed}</td>
+              <td>{won}</td>
+              <td>{lost}</td>
+              <td>{score}</td>
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   </div>

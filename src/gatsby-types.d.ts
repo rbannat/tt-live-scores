@@ -2191,7 +2191,7 @@ type PlayerScore = Node & {
   readonly isSecondHalf: Maybe<Scalars['Boolean']>;
   readonly lost: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
-  readonly performance: Maybe<Scalars['Int']>;
+  readonly performance: Maybe<Scalars['Float']>;
   readonly pk1Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly pk2Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly player: Maybe<Player>;
@@ -2272,7 +2272,7 @@ type PlayerScoreFilterInput = {
   readonly isSecondHalf: InputMaybe<BooleanQueryOperatorInput>;
   readonly lost: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
-  readonly performance: InputMaybe<IntQueryOperatorInput>;
+  readonly performance: InputMaybe<FloatQueryOperatorInput>;
   readonly pk1Diff: InputMaybe<IntQueryOperatorInput>;
   readonly pk2Diff: InputMaybe<IntQueryOperatorInput>;
   readonly player: InputMaybe<PlayerFilterInput>;
@@ -2737,7 +2737,7 @@ type Query_playerScoreArgs = {
   isSecondHalf: InputMaybe<BooleanQueryOperatorInput>;
   lost: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
-  performance: InputMaybe<IntQueryOperatorInput>;
+  performance: InputMaybe<FloatQueryOperatorInput>;
   pk1Diff: InputMaybe<IntQueryOperatorInput>;
   pk2Diff: InputMaybe<IntQueryOperatorInput>;
   player: InputMaybe<PlayerFilterInput>;

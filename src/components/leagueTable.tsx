@@ -1,7 +1,11 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react'
+import { Link } from 'gatsby'
 
-const LeagueTable = ({ teams }) => {
+const LeagueTable = ({
+  teams,
+}: {
+  teams: Queries.LeaguePageQuery['allTeam']['nodes']
+}) => {
   return (
     <div className="table-container u-grow">
       <table className="table is-fullwidth">
@@ -9,12 +13,10 @@ const LeagueTable = ({ teams }) => {
           <tr>
             <th>#</th>
             <th>Mannschaft</th>
-            <th>Sp</th>
-            <th className="is-hidden-touch">S</th>
-            <th className="is-hidden-touch">U</th>
-            <th className="is-hidden-touch">N</th>
+            <th>S</th>
+            <th>U</th>
+            <th>N</th>
             <th>Pkt</th>
-            <th>Diff</th>
           </tr>
         </thead>
         <tbody>
@@ -27,15 +29,11 @@ const LeagueTable = ({ teams }) => {
                     <span>{team.shortName}</span>
                   </Link>
                 </td>
-                <td>{team.gamesPlayed}</td>
-                <td className="is-hidden-touch">{team.won}</td>
-                <td className="is-hidden-touch">{team.drawn}</td>
-                <td className="is-hidden-touch">{team.lost}</td>
-                <td>{team.pointsWon}</td>
+                <td>{team.won}</td>
+                <td>{team.drawn}</td>
+                <td>{team.lost}</td>
                 <td>
-                  {team.pointsDiff > 0
-                    ? `+${team.pointsDiff}`
-                    : team.pointsDiff}
+                  {team.pointsWon}:{team.pointsLost}
                 </td>
               </tr>
             )

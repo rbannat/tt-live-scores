@@ -1,11 +1,11 @@
-import React from "react"
-import { hero } from "./hero.module.scss"
-import { FaRegHeart, FaHeart } from "react-icons/fa"
-import LastUpdated from "./lastUpdated"
+import React from 'react'
+import { hero } from './hero.module.scss'
+import { FaRegHeart, FaHeart } from 'react-icons/fa'
+import LastUpdated from './lastUpdated'
 
 type HeroProps = {
   title: string
-  subtitle?: string
+  subtitle?: React.ReactElement
   showLastUpdated?: boolean
   isFav?: boolean
   onFavClick?: () => void

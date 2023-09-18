@@ -9,16 +9,16 @@ import { useLocalStorage } from 'usehooks-ts'
 
 const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   function handleFavClick() {
-    if (favoriteTeams?.find(team => team.id === data.team.id)) {
+    if (favoriteTeams?.find(team => team.id === data.team?.id)) {
       setFavoriteTeams(prevState =>
-        prevState.filter(team => team.id !== data.team.id),
+        prevState.filter(team => team.id !== data.team?.id),
       )
       return
     }
     setFavoriteTeams(prevState => [
       ...new Set([
         ...prevState,
-        { id: data.team.id, name: data.team.shortName ?? '' },
+        { id: data.team?.id ?? '', name: data.team?.shortName ?? '' },
       ]),
     ])
   }
@@ -31,23 +31,20 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   const [activeTab, setActiveTab] = useState(
     firstHalfCompleted ? 'secondHalf' : 'firstHalf',
   )
-  const fixtures = data.team.fixtures
-    ? data.team.fixtures.reduce((fixtures, fixture) => {
-        return !fixture.result &&
-          fixture.date >= new Date().toISOString().split('T')[0]
-          ? [...fixtures, fixture]
-          : fixtures
-      }, [])
-    : []
-  const latestResults = data.team.fixtures
+
+  const fixtures = data.team?.fixtures
     ? data.team.fixtures
-        .reduce((fixtures, fixture) => {
-          return fixture.result &&
-            fixture.date < new Date().toISOString().split('T')[0]
-            ? [...fixtures, fixture]
-            : fixtures
-        }, [])
-        .reverse()
+        .reduce<NonNullable<Queries.FixtureDataFragment[]>>(
+          (fixtures, fixture) => {
+            return fixture ? [...(fixtures ? fixtures : []), fixture] : fixtures
+          },
+          [],
+        )
+        .sort((a, b) => {
+          return a.date && b.date
+            ? new Date(a.date).getTime() - new Date(b.date).getTime()
+            : 0
+        })
     : []
   const players = sortPlayersByPosition(
     data && data.team
@@ -58,12 +55,12 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   )
   const subtitle = (
     <>
-      <Link to={`/leagues/${data.team.league.id}`}>
-        {data.team.league.name}
+      <Link to={`/leagues/${data.team?.league?.id}`}>
+        {data.team?.league?.name}
       </Link>
       <br />
-      <Link className="is-size-6" to={`/clubs/${data.team.club.id}`}>
-        {data.team.club.shortName}
+      <Link className="is-size-6" to={`/clubs/${data.team?.club?.id}`}>
+        {data.team?.club?.shortName}
       </Link>
     </>
   )
@@ -71,16 +68,16 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   return (
     <Layout>
       <Hero
-        title={data.team.shortName}
+        title={data.team?.shortName ?? ''}
         subtitle={subtitle}
         showLastUpdated={true}
-        isFav={favoriteTeams?.find(team => team.id === data.team.id)}
+        isFav={favoriteTeams.some(team => team.id === data.team?.id)}
         onFavClick={handleFavClick}
       ></Hero>
       <section className="section">
         <div className="container">
           <article className="panel has-background-white">
-            <h2 className="panel-heading">Spieler</h2>
+            <h2 className="panel-heading">Team</h2>
             <div className="panel-tabs">
               <a
                 className={activeTab === 'firstHalf' ? 'is-active' : ''}
@@ -104,16 +101,9 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
           <div className="columns">
             <div className="column">
               <FixtureList
-                fixtures={latestResults}
-                title={'Neueste Ergebnisse'}
-                noResultsText={'Es sind keine Ergebnisse verfügbar.'}
-              ></FixtureList>
-            </div>
-            <div className="column">
-              <FixtureList
                 fixtures={fixtures}
-                title={'Nächste Spiele'}
-                noResultsText={'Es sind keine kommenden Spiele verfügbar.'}
+                title={'Spiele'}
+                noResultsText={'Es sind keine Spiele geplant.'}
               ></FixtureList>
             </div>
           </div>
@@ -123,16 +113,18 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   )
 }
 
-function sortPlayersByPosition(players) {
-  const substitutes = []
-  players = players.reduce((players, player) => {
-    if (player.position.length > 1) {
-      substitutes.push(player)
-      return players
-    }
-    return [...players, player]
-  }, [])
-  return [...players, ...substitutes]
+function sortPlayersByPosition(
+  players:
+    | Queries.TeamPageQuery['playersFirstHalf']['nodes']
+    | Queries.TeamPageQuery['playersSecondHalf']['nodes'],
+) {
+  const originalPlayers = players.filter(
+    player => !player.position?.length || player.position?.length <= 1,
+  )
+  const substitutes = players.filter(
+    player => player.position?.length && player.position?.length > 1,
+  )
+  return [...originalPlayers, ...substitutes]
 }
 
 export const Head = ({ data }: HeadProps<Queries.TeamPageQuery>) => (
