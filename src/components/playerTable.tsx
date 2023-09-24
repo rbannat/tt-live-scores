@@ -13,24 +13,37 @@ const PlayerTable = ({ players }: PlayerTableProps) => (
           <th>Pos</th>
           <th>Name</th>
           <th>Sp</th>
-          <th>S</th>
-          <th>N</th>
-          <th>Score</th>
+          <th>PK 1</th>
+          <th>PK 2</th>
+          <th>Ges</th>
+          <th>LivePZ</th>
         </tr>
       </thead>
       <tbody>
-        {players.map(({ player, score, won, lost, gamesPlayed, position }) => {
-          return (
-            <tr key={player?.id}>
-              <td>{position}</td>
-              <td>{player?.name}</td>
-              <td>{gamesPlayed}</td>
-              <td>{won}</td>
-              <td>{lost}</td>
-              <td>{score}</td>
-            </tr>
-          )
-        })}
+        {players.map(
+          ({
+            player,
+            score,
+            won,
+            lost,
+            gamesPlayed,
+            position,
+            pk1Diff,
+            pk2Diff,
+          }) => {
+            return (
+              <tr key={player?.id}>
+                <td>{position}</td>
+                <td>{player?.name}</td>
+                <td>{gamesPlayed}</td>
+                <td>{pk1Diff?.join(':')}</td>
+                <td>{pk2Diff?.join(':')}</td>
+                <td>{won && [won, lost].join(':')}</td>
+                <td>{score}</td>
+              </tr>
+            )
+          },
+        )}
       </tbody>
     </table>
   </div>

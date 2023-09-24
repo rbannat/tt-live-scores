@@ -6,6 +6,7 @@ import Layout from '../components/layout'
 import { SEO } from '../components/seo'
 import Hero from '../components/hero'
 import { useLocalStorage } from 'usehooks-ts'
+import { FaHeart } from 'react-icons/fa'
 
 const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
   const [favoriteClubs] = useLocalStorage(
@@ -23,7 +24,12 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
       <section className="section">
         <div className="container">
           {favoriteTeams?.length > 0 && (
-            <h2 className="title is-4">Meine Teams</h2>
+            <h2 className="title is-4">
+              Meine Teams{' '}
+              <span className="icon has-text-danger">
+                <FaHeart aria-hidden="true" />
+              </span>
+            </h2>
           )}
           <div className="columns is-multiline">
             {favoriteTeams &&
@@ -40,7 +46,12 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
           </div>
 
           {favoriteClubs?.length > 0 && (
-            <h2 className="title is-4">Meine Vereine</h2>
+            <h2 className="title is-4">
+              Meine Vereine{' '}
+              <span className="icon has-text-danger">
+                <FaHeart aria-hidden="true" />
+              </span>
+            </h2>
           )}
           <div className="columns is-multiline">
             {favoriteClubs &&

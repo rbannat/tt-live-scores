@@ -7,10 +7,12 @@ const FixtureList = ({
   fixtures,
   title,
   noResultsText,
+  itemsPerPage = 5,
 }: {
   fixtures: NonNullable<Queries.FixtureDataFragment[]>
   title: string
   noResultsText: string
+  itemsPerPage?: number
 }) => {
   const items = fixtures.map((fixture: Queries.FixtureDataFragment | null) => {
     return (
@@ -30,7 +32,7 @@ const FixtureList = ({
   })
   const pagination = usePagination({
     items,
-    itemsPerPage: 5,
+    itemsPerPage,
   })
   return (
     <article className="panel has-background-white">

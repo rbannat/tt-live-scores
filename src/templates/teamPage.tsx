@@ -104,6 +104,7 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
                 fixtures={fixtures}
                 title={'Spiele'}
                 noResultsText={'Es sind keine Spiele geplant.'}
+                itemsPerPage={100}
               ></FixtureList>
             </div>
           </div>
@@ -159,6 +160,8 @@ export const query = graphql`
         score
         won
         lost
+        pk1Diff
+        pk2Diff
         gamesPlayed
         player {
           id
@@ -175,6 +178,8 @@ export const query = graphql`
         score
         won
         lost
+        pk1Diff
+        pk2Diff
         gamesPlayed
         player {
           id
