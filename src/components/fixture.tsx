@@ -37,6 +37,8 @@ const Fixture = ({
 
   const isHomeTeamWinner =
     result && result[0] !== null && result[1] !== null && result[0] > result[1]
+  const isGuestTeamWinner =
+    result && result[0] !== null && result[1] !== null && result[0] < result[1]
 
   return (
     <div
@@ -65,7 +67,7 @@ const Fixture = ({
         </div>
         <div
           className={`${team} ${
-            result && !isHomeTeamWinner ? 'has-text-weight-bold' : ''
+            result && isGuestTeamWinner ? 'has-text-weight-bold' : ''
           }`}
         >
           {guestTeam?.id && (
