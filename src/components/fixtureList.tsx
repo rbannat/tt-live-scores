@@ -7,17 +7,19 @@ const FixtureList = ({
   fixtures,
   title,
   noResultsText,
+  isPaginated = true,
   itemsPerPage = 5,
 }: {
   fixtures: NonNullable<Queries.FixtureDataFragment[]>
   title: string
   noResultsText: string
+  isPaginated?: boolean
   itemsPerPage?: number
 }) => {
   const items = fixtures.map((fixture: Queries.FixtureDataFragment | null) => {
     return (
       fixture && (
-        <div key={fixture.id} className="panel-block">
+        <div key={fixture.id} className="box">
           <Fixture
             id={fixture.id}
             homeTeam={fixture.homeTeam}
@@ -35,23 +37,29 @@ const FixtureList = ({
     itemsPerPage,
   })
   return (
-    <article className="panel has-background-white">
-      <h2 className="panel-heading">{title}</h2>
+    <section>
+      <h2 className="title is-4">{title}</h2>
       {items.length ? (
         <>
-          {pagination.currentItems()}
-          <div className="panel-block">
-            <div>
-              <Pagination {...pagination}></Pagination>
-            </div>
-          </div>
+          {isPaginated ? (
+            <>
+              {pagination.currentItems()}
+              <div className="panel-block">
+                <div>
+                  <Pagination {...pagination}></Pagination>
+                </div>
+              </div>
+            </>
+          ) : (
+            items
+          )}
         </>
       ) : (
-        <div className="panel-block">
+        <div className="block">
           {noResultsText || `Es sind keine Ergebnisse verfügbar.`}
         </div>
       )}
-    </article>
+    </section>
   )
 }
 

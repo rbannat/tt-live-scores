@@ -8,7 +8,7 @@ const LeagueTable = ({
 }) => {
   return (
     <div className="table-container u-grow">
-      <table className="table is-fullwidth">
+      <table className="table is-fullwidth is-narrow is-striped">
         <thead>
           <tr>
             <th>#</th>

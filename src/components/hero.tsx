@@ -1,7 +1,6 @@
 import React from 'react'
 import { favButton, hero } from './hero.module.scss'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
-import LastUpdated from './lastUpdated'
 
 type HeroProps = {
   title: string
@@ -10,13 +9,7 @@ type HeroProps = {
   isFav?: boolean
   onFavClick?: () => void
 }
-const Hero = ({
-  title,
-  subtitle,
-  showLastUpdated = false,
-  isFav,
-  onFavClick,
-}: HeroProps) => {
+const Hero = ({ title, subtitle, isFav, onFavClick }: HeroProps) => {
   return (
     <>
       <div className={`${hero} hero is-small is-primary`}>
@@ -45,11 +38,6 @@ const Hero = ({
           </div>
         </div>
       </div>
-      {showLastUpdated && (
-        <div className="container has-text-right px-5 py-2">
-          <LastUpdated></LastUpdated>
-        </div>
-      )}
     </>
   )
 }

@@ -74,40 +74,38 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
         isFav={favoriteTeams.some(team => team.id === data.team?.id)}
         onFavClick={handleFavClick}
       ></Hero>
+
       <section className="section">
         <div className="container">
-          <article className="panel has-background-white">
-            <h2 className="panel-heading">Team</h2>
-            <div className="panel-tabs">
-              <a
-                className={activeTab === 'firstHalf' ? 'is-active' : ''}
-                onClick={() => setActiveTab('firstHalf')}
-              >
-                Hinrunde
-              </a>
-              {firstHalfCompleted && (
-                <a
-                  className={activeTab === 'secondHalf' ? 'is-active' : ''}
-                  onClick={() => setActiveTab('secondHalf')}
-                >
-                  Rückrunde
-                </a>
-              )}
+          <h2 className="title is-4">Team</h2>
+          <div className="block">
+            <div className="tabs">
+              <ul>
+                <li className={activeTab === 'firstHalf' ? 'is-active' : ''}>
+                  <a onClick={() => setActiveTab('firstHalf')}>Hinrunde</a>
+                </li>
+                <li className={activeTab === 'secondHalf' ? 'is-active' : ''}>
+                  <a
+                    className={activeTab === 'secondHalf' ? 'is-active' : ''}
+                    onClick={() =>
+                      firstHalfCompleted && setActiveTab('secondHalf')
+                    }
+                  >
+                    Rückrunde
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div className="panel-block">
-              <PlayerTable players={players}></PlayerTable>
-            </div>
-          </article>
-          <div className="columns">
-            <div className="column">
-              <FixtureList
-                fixtures={fixtures}
-                title={'Spiele'}
-                noResultsText={'Es sind keine Spiele geplant.'}
-                itemsPerPage={100}
-              ></FixtureList>
-            </div>
+
+            <PlayerTable players={players}></PlayerTable>
           </div>
+
+          <FixtureList
+            fixtures={fixtures}
+            title={'Spiele'}
+            noResultsText={'Es sind keine Spiele geplant.'}
+            isPaginated={false}
+          ></FixtureList>
         </div>
       </section>
     </Layout>

@@ -7,7 +7,7 @@ type PlayerTableProps = {
 }
 const PlayerTable = ({ players }: PlayerTableProps) => (
   <div className="table-container u-grow">
-    <table className="table is-fullwidth">
+    <table className="table is-fullwidth is-narrow is-striped">
       <thead>
         <tr>
           <th>Pos</th>
@@ -38,7 +38,7 @@ const PlayerTable = ({ players }: PlayerTableProps) => (
                 <td>{gamesPlayed}</td>
                 <td>{pk1Diff?.join(':')}</td>
                 <td>{pk2Diff?.join(':')}</td>
-                <td>{won && [won, lost].join(':')}</td>
+                <td>{(won || lost) && [won, lost].join(':')}</td>
                 <td>{score}</td>
               </tr>
             )

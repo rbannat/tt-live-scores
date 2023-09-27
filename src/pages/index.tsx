@@ -34,7 +34,7 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
           <div className="columns is-multiline">
             {favoriteTeams &&
               favoriteTeams.map(favoriteTeam => (
-                <div className="column is-one-quarter">
+                <div key={favoriteTeam.id} className="column is-one-quarter">
                   <Link
                     className="is-block notification is-primary"
                     to={`/teams/${favoriteTeam.id}`}
@@ -56,7 +56,7 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
           <div className="columns is-multiline">
             {favoriteClubs &&
               favoriteClubs.map(favoriteClub => (
-                <div className="column is-one-quarter">
+                <div key={favoriteClub.id} className="column is-one-quarter">
                   <Link
                     className="is-block notification is-primary"
                     to={`/clubs/${favoriteClub.id}`}
