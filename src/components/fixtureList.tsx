@@ -9,26 +9,49 @@ const FixtureList = ({
   noResultsText,
   isPaginated = true,
   itemsPerPage = 5,
+  teamId,
 }: {
   fixtures: NonNullable<Queries.FixtureDataFragment[]>
   title: string
   noResultsText: string
   isPaginated?: boolean
   itemsPerPage?: number
+  teamId?: string
 }) => {
   const items = fixtures.map((fixture: Queries.FixtureDataFragment | null) => {
+    const hasResult =
+      !!fixture?.result &&
+      fixture.result[0] !== null &&
+      fixture.result[1] !== null
+    const hasTeam =
+      teamId &&
+      (fixture?.homeTeam?.id === teamId || fixture?.guestTeam?.id === teamId)
+    const variant =
+      hasTeam && hasResult
+        ? (fixture?.homeTeam?.id === teamId &&
+            fixture.result[0] !== null &&
+            fixture.result[1] !== null &&
+            fixture.result[0] > fixture.result[1]) ||
+          (fixture?.guestTeam?.id === teamId &&
+            fixture.result[0] !== null &&
+            fixture.result[1] !== null &&
+            fixture.result[1] > fixture.result[0])
+          ? 'win'
+          : 'lose'
+        : undefined
+
     return (
       fixture && (
-        <div key={fixture.id} className="box">
-          <Fixture
-            id={fixture.id}
-            homeTeam={fixture.homeTeam}
-            guestTeam={fixture.guestTeam}
-            date={fixture.date}
-            result={fixture.result}
-            link={fixture.link}
-          ></Fixture>
-        </div>
+        <Fixture
+          key={fixture.id}
+          id={fixture.id}
+          homeTeam={fixture.homeTeam}
+          guestTeam={fixture.guestTeam}
+          date={fixture.date}
+          result={fixture.result}
+          link={fixture.link}
+          variant={variant}
+        ></Fixture>
       )
     )
   })

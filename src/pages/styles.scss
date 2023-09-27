@@ -9,3 +9,10 @@ $table-cell-padding: 0.75em 0.75em;
 .u-grow {
   flex: 1;
 }
+
+:root {
+  --success: #{$success};
+  --success-dark: #{$success-dark};
+  --danger: #{$danger};
+  --danger-dark: #{$danger-dark};
+}

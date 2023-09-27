@@ -4,11 +4,15 @@ import {
   team,
   dateContainer,
   teamsContainer,
+  lose,
+  win,
 } from './fixture.module.scss'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import { graphql, Link } from 'gatsby'
 
-type FixtureProps = Queries.FixtureDataFragment
+type FixtureProps = Queries.FixtureDataFragment & {
+  variant?: 'win' | 'lose'
+}
 
 const Fixture = ({
   guestTeam,
@@ -16,6 +20,7 @@ const Fixture = ({
   result,
   date: dateString,
   link,
+  variant,
 }: FixtureProps) => {
   const date = new Date(dateString)
   const day = date.toLocaleDateString('de-DE', {
@@ -33,7 +38,11 @@ const Fixture = ({
     result && result[0] !== null && result[1] !== null && result[0] > result[1]
 
   return (
-    <div className={container}>
+    <div
+      className={`box ${container} ${
+        variant === 'win' ? win : variant === 'lose' ? lose : ''
+      }`}
+    >
       <div className={`${teamsContainer}`}>
         <div
           className={`${team} mb-2 ${

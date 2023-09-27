@@ -105,6 +105,7 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
             title={'Spiele'}
             noResultsText={'Es sind keine Spiele geplant.'}
             isPaginated={false}
+            teamId={data.team?.id}
           ></FixtureList>
         </div>
       </section>
