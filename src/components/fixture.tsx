@@ -6,12 +6,13 @@ import {
   teamsContainer,
   lose,
   win,
+  draw,
 } from './fixture.module.scss'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import { graphql, Link } from 'gatsby'
 
 type FixtureProps = Queries.FixtureDataFragment & {
-  variant?: 'win' | 'lose'
+  variant?: 'win' | 'lose' | 'draw'
 }
 
 const Fixture = ({
@@ -40,7 +41,13 @@ const Fixture = ({
   return (
     <div
       className={`box ${container} ${
-        variant === 'win' ? win : variant === 'lose' ? lose : ''
+        variant === 'win'
+          ? win
+          : variant === 'lose'
+          ? lose
+          : variant === 'draw'
+          ? draw
+          : ''
       }`}
     >
       <div className={`${teamsContainer}`}>

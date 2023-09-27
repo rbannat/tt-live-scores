@@ -28,14 +28,18 @@ const FixtureList = ({
       (fixture?.homeTeam?.id === teamId || fixture?.guestTeam?.id === teamId)
     const variant =
       hasTeam && hasResult
-        ? (fixture?.homeTeam?.id === teamId &&
-            fixture.result[0] !== null &&
-            fixture.result[1] !== null &&
-            fixture.result[0] > fixture.result[1]) ||
-          (fixture?.guestTeam?.id === teamId &&
-            fixture.result[0] !== null &&
-            fixture.result[1] !== null &&
-            fixture.result[1] > fixture.result[0])
+        ? fixture.result[0] !== null &&
+          fixture.result[1] !== null &&
+          fixture.result[0] === fixture.result[1]
+          ? 'draw'
+          : (fixture?.homeTeam?.id === teamId &&
+              fixture.result[0] !== null &&
+              fixture.result[1] !== null &&
+              fixture.result[0] > fixture.result[1]) ||
+            (fixture?.guestTeam?.id === teamId &&
+              fixture.result[0] !== null &&
+              fixture.result[1] !== null &&
+              fixture.result[1] > fixture.result[0])
           ? 'win'
           : 'lose'
         : undefined

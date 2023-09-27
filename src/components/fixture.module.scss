@@ -26,6 +26,12 @@
   }
 }
 
+.draw {
+  &::before {
+    border-left-color: var(--grey);
+  }
+}
+
 .teamsContainer {
   flex: 1;
   padding-right: 0.75rem;
