@@ -1,20 +1,24 @@
 .container {
   display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.teamsContainer {
   flex: 1;
+  padding-right: 0.75rem;
+  border-right: 1px solid #eee;
 }
 
 .team {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   min-width: 0;
 }
 
-.resultContainer {
-  flex: 1;
+.dateContainer {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex: 0 1 auto;
   min-width: 0;
 }

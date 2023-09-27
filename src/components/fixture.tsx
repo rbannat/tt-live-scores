@@ -1,5 +1,10 @@
 import React from 'react'
-import { container, team, resultContainer } from './fixture.module.scss'
+import {
+  container,
+  team,
+  dateContainer,
+  teamsContainer,
+} from './fixture.module.scss'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import { graphql, Link } from 'gatsby'
 
@@ -24,21 +29,43 @@ const Fixture = ({
     minute: '2-digit',
   })
 
+  const isHomeTeamWinner =
+    result && result[0] !== null && result[1] !== null && result[0] > result[1]
+
   return (
     <div className={container}>
-      <div className={`${team} has-text-centered`}>
-        {homeTeam?.id && (
-          <Link to={`/teams/${homeTeam.id}`}>
-            <span className={`is-size-6`}>{homeTeam.shortName}</span>
-          </Link>
-        )}
+      <div className={`${teamsContainer}`}>
+        <div
+          className={`${team} mb-2 ${
+            result && isHomeTeamWinner ? 'has-text-weight-bold' : ''
+          }`}
+        >
+          {homeTeam?.id && (
+            <Link to={`/teams/${homeTeam.id}`}>
+              <span className={`is-size-6`}>{homeTeam.shortName}</span>
+            </Link>
+          )}
+          <span>{result && `${result[0]}`}</span>
+        </div>
+        <div
+          className={`${team} ${
+            result && !isHomeTeamWinner ? 'has-text-weight-bold' : ''
+          }`}
+        >
+          {guestTeam?.id && (
+            <Link to={`/teams/${guestTeam.id}`}>
+              <span className={`is-size-6`}>{guestTeam.shortName}</span>
+            </Link>
+          )}
+          <span>{result && `${result[1]}`}</span>
+        </div>
       </div>
-      <div className={`${resultContainer} has-text-centered`}>
+      <div className={`${dateContainer}`}>
         <div>
           <div className={`is-size-7`}>{day}</div>
-          <div className={`is-size-4 has-text-weight-bold`}>
-            {result ? `${result[0]} - ${result[1]}` : time}
-          </div>
+          {!result && (
+            <div className="has-text-centered has-text-weight-bold">{time}</div>
+          )}
           {link && (
             <a
               className="is-size-7"
@@ -50,13 +77,6 @@ const Fixture = ({
             </a>
           )}
         </div>
-      </div>
-      <div className={`${team} has-text-centered`}>
-        {guestTeam?.id && (
-          <Link to={`/teams/${guestTeam.id}`}>
-            <span className={`is-size-6`}>{guestTeam.shortName}</span>
-          </Link>
-        )}
       </div>
     </div>
   )

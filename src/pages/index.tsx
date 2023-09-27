@@ -24,9 +24,9 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
       <section className="section">
         <div className="container">
           {favoriteTeams?.length > 0 && (
-            <h2 className="title is-4">
+            <h2 className="title is-4 is-flex is-align-items-center">
               Meine Teams{' '}
-              <span className="icon has-text-danger">
+              <span className="icon has-text-danger ml-2">
                 <FaHeart aria-hidden="true" />
               </span>
             </h2>
@@ -46,9 +46,9 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
           </div>
 
           {favoriteClubs?.length > 0 && (
-            <h2 className="title is-4">
+            <h2 className="title is-4 is-flex is-align-items-center">
               Meine Vereine{' '}
-              <span className="icon has-text-danger">
+              <span className="icon has-text-danger ml-2">
                 <FaHeart aria-hidden="true" />
               </span>
             </h2>
