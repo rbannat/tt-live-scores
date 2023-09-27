@@ -77,22 +77,18 @@ const Fixture = ({
         </div>
       </div>
       <div className={`${dateContainer}`}>
-        <div>
-          <div className={`is-size-7`}>{day}</div>
-          {!result && (
-            <div className="has-text-centered has-text-weight-bold">{time}</div>
-          )}
-          {link && (
-            <a
-              className="is-size-7"
-              href={link}
-              target="__blank"
-              title="Zur TT-Live Seite"
-            >
-              Zu TT-Live <FaExternalLinkAlt aria-hidden="true" />
-            </a>
-          )}
-        </div>
+        <div className={`is-size-7`}>{day}</div>
+        {!result && <div className="has-text-weight-bold">{time}</div>}
+        {link && (
+          <a
+            className="is-size-7"
+            href={link}
+            target="__blank"
+            title="Zur TT-Live Seite"
+          >
+            Zu TT-Live <FaExternalLinkAlt aria-hidden="true" />
+          </a>
+        )}
       </div>
     </div>
   )
