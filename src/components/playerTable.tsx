@@ -1,3 +1,4 @@
+import { Link } from 'gatsby'
 import React from 'react'
 
 type PlayerTableProps = {
@@ -34,7 +35,10 @@ const PlayerTable = ({ players }: PlayerTableProps) => (
             return (
               <tr key={player?.id}>
                 <td>{position}</td>
-                <td>{player?.name}</td>
+                <td>
+                  {' '}
+                  <Link to={`/players/${player?.id}`}>{player?.name}</Link>
+                </td>
                 <td>{gamesPlayed}</td>
                 <td>{pk1Diff?.join(':')}</td>
                 <td>{pk2Diff?.join(':')}</td>

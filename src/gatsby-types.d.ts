@@ -2194,6 +2194,8 @@ type PlayerScore = Node & {
   readonly performance: Maybe<Scalars['Float']>;
   readonly pk1Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly pk2Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
+  readonly pk3Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
+  readonly pk4Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly player: Maybe<Player>;
   readonly position: Maybe<Scalars['String']>;
   readonly score: Maybe<Scalars['Int']>;
@@ -2257,6 +2259,8 @@ type PlayerScoreFieldSelector = {
   readonly performance: InputMaybe<FieldSelectorEnum>;
   readonly pk1Diff: InputMaybe<FieldSelectorEnum>;
   readonly pk2Diff: InputMaybe<FieldSelectorEnum>;
+  readonly pk3Diff: InputMaybe<FieldSelectorEnum>;
+  readonly pk4Diff: InputMaybe<FieldSelectorEnum>;
   readonly player: InputMaybe<PlayerFieldSelector>;
   readonly position: InputMaybe<FieldSelectorEnum>;
   readonly score: InputMaybe<FieldSelectorEnum>;
@@ -2275,6 +2279,8 @@ type PlayerScoreFilterInput = {
   readonly performance: InputMaybe<FloatQueryOperatorInput>;
   readonly pk1Diff: InputMaybe<IntQueryOperatorInput>;
   readonly pk2Diff: InputMaybe<IntQueryOperatorInput>;
+  readonly pk3Diff: InputMaybe<IntQueryOperatorInput>;
+  readonly pk4Diff: InputMaybe<IntQueryOperatorInput>;
   readonly player: InputMaybe<PlayerFilterInput>;
   readonly position: InputMaybe<StringQueryOperatorInput>;
   readonly score: InputMaybe<IntQueryOperatorInput>;
@@ -2338,6 +2344,8 @@ type PlayerScoreSortInput = {
   readonly performance: InputMaybe<SortOrderEnum>;
   readonly pk1Diff: InputMaybe<SortOrderEnum>;
   readonly pk2Diff: InputMaybe<SortOrderEnum>;
+  readonly pk3Diff: InputMaybe<SortOrderEnum>;
+  readonly pk4Diff: InputMaybe<SortOrderEnum>;
   readonly player: InputMaybe<PlayerSortInput>;
   readonly position: InputMaybe<SortOrderEnum>;
   readonly score: InputMaybe<SortOrderEnum>;
@@ -2740,6 +2748,8 @@ type Query_playerScoreArgs = {
   performance: InputMaybe<FloatQueryOperatorInput>;
   pk1Diff: InputMaybe<IntQueryOperatorInput>;
   pk2Diff: InputMaybe<IntQueryOperatorInput>;
+  pk3Diff: InputMaybe<IntQueryOperatorInput>;
+  pk4Diff: InputMaybe<IntQueryOperatorInput>;
   player: InputMaybe<PlayerFilterInput>;
   position: InputMaybe<StringQueryOperatorInput>;
   score: InputMaybe<IntQueryOperatorInput>;
@@ -3955,6 +3965,13 @@ type PlaceholderImageQueryVariables = Exact<{ [key: string]: never; }>;
 
 type PlaceholderImageQuery = { readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
 
+type PlayerPageQueryVariables = Exact<{
+  playerId: Scalars['String'];
+}>;
+
+
+type PlayerPageQuery = { readonly player: { readonly id: string, readonly name: string | null } | null, readonly allPlayerScore: { readonly wonTotal: number | null, readonly lostTotal: number | null, readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly isSecondHalf: boolean | null, readonly gamesPlayed: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly won: number | null, readonly lost: number | null, readonly score: number | null, readonly team: { readonly id: string, readonly name: string | null, readonly club: { readonly id: string, readonly shortName: string | null } | null } | null }> } };
+
 type SearchQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3980,7 +3997,7 @@ type TeamPageQuery = { readonly team: { readonly id: string, readonly name: stri
 type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type PagesQuery = { readonly allTeam: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allLeague: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string }> } };
+type PagesQuery = { readonly allTeam: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allLeague: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allPlayer: { readonly nodes: ReadonlyArray<{ readonly id: string }> } };
 
 
 }

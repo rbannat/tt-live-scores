@@ -1,4 +1,4 @@
-import type { GatsbyConfig } from "gatsby"
+import type { GatsbyConfig } from 'gatsby'
 
 const config: GatsbyConfig = {
   graphqlTypegen: true,
@@ -33,75 +33,75 @@ const config: GatsbyConfig = {
         icon: `src/images/ping-pong.png`, // This path is relative to the root of the site.
         icons: [
           {
-            src: "/favicons/maskable_icon_x48.png",
-            sizes: "48x48",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x48.png',
+            sizes: '48x48',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "/favicons/maskable_icon_x72.png",
-            sizes: "72x72",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x72.png',
+            sizes: '72x72',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "/favicons/maskable_icon_x96.png",
-            sizes: "96x96",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x96.png',
+            sizes: '96x96',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "/favicons/maskable_icon_x144.png",
-            sizes: "144x144",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x144.png',
+            sizes: '144x144',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "/favicons/maskable_icon_x192.png",
-            sizes: "192x192",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "/favicons/maskable_icon_x256.png",
-            sizes: "256x256",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x256.png',
+            sizes: '256x256',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "/favicons/maskable_icon_x384.png",
-            sizes: "384x384",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x384.png',
+            sizes: '384x384',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "/favicons/maskable_icon_x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
+            src: '/favicons/maskable_icon_x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
           },
           {
-            src: "src/images/ping-pong.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any",
+            src: 'src/images/ping-pong.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
           },
         ],
-        cache_busting_mode: "none",
+        cache_busting_mode: 'none',
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     `gatsby-plugin-offline`,
     `gatsby-plugin-sass`,
-    "gatsby-plugin-dts-css-modules",
+    'gatsby-plugin-dts-css-modules',
     {
-      resolve: "gatsby-plugin-local-search",
+      resolve: 'gatsby-plugin-local-search',
       options: {
-        name: "pages",
-        engine: "flexsearch",
+        name: 'pages',
+        engine: 'flexsearch',
         engineOptions: {
-          tokenize: "forward",
+          tokenize: 'forward',
         },
         query: `
           {
@@ -117,20 +117,31 @@ const config: GatsbyConfig = {
                 name
               }
             }
+            allPlayer {
+              nodes {
+                id
+                name
+              }
+            }
           }
         `,
-        ref: "id",
-        index: ["name"],
-        store: ["id", "nodeType", "name"],
+        ref: 'id',
+        index: ['name'],
+        store: ['id', 'nodeType', 'name'],
         normalizer: ({ data }) => [
           ...data.allLeague.nodes.map(node => ({
             id: node.id,
-            nodeType: "leagues",
+            nodeType: 'leagues',
             name: node.name,
           })),
           ...data.allTeam.nodes.map(node => ({
             id: node.id,
-            nodeType: "teams",
+            nodeType: 'teams',
+            name: node.name,
+          })),
+          ...data.allPlayer.nodes.map(node => ({
+            id: node.id,
+            nodeType: 'players',
             name: node.name,
           })),
         ],

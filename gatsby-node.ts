@@ -1,7 +1,7 @@
-import path from "path"
-import { GatsbyNode } from "gatsby"
+import path from 'path'
+import { GatsbyNode } from 'gatsby'
 
-export const createPages: GatsbyNode["createPages"] = async ({
+export const createPages: GatsbyNode['createPages'] = async ({
   graphql,
   actions,
   reporter,
@@ -9,35 +9,39 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const { createPage } = actions
 
   // Query for teams, leagues, ... to create pages
-  const { data, errors } = await graphql(
-    `
-      query Pages {
-        allTeam {
-          nodes {
-            id
-          }
-        }
-
-        allClub {
-          nodes {
-            id
-          }
-        }
-
-        allLeague {
-          nodes {
-            id
-          }
-        }
-
-        allGroup {
-          nodes {
-            id
-          }
+  const { data, errors } = await graphql(`
+    query Pages {
+      allTeam {
+        nodes {
+          id
         }
       }
-    `
-  )
+
+      allClub {
+        nodes {
+          id
+        }
+      }
+
+      allLeague {
+        nodes {
+          id
+        }
+      }
+
+      allGroup {
+        nodes {
+          id
+        }
+      }
+
+      allPlayer {
+        nodes {
+          id
+        }
+      }
+    }
+  `)
 
   // Handle errors
   if (errors) {
@@ -86,6 +90,17 @@ export const createPages: GatsbyNode["createPages"] = async ({
       component: path.resolve(`src/templates/leaguePage.tsx`),
       context: {
         leagueId: league.id,
+      },
+    })
+  })
+
+  // Create pages for each player
+  data.allPlayer.nodes.forEach(player => {
+    createPage({
+      path: `/players/${player.id}`,
+      component: path.resolve(`src/templates/playerPage.tsx`),
+      context: {
+        playerId: player.id,
       },
     })
   })
