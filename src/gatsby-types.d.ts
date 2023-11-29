@@ -2194,8 +2194,6 @@ type PlayerScore = Node & {
   readonly performance: Maybe<Scalars['Float']>;
   readonly pk1Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly pk2Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
-  readonly pk3Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
-  readonly pk4Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly player: Maybe<Player>;
   readonly position: Maybe<Scalars['String']>;
   readonly score: Maybe<Scalars['Int']>;
@@ -2259,8 +2257,6 @@ type PlayerScoreFieldSelector = {
   readonly performance: InputMaybe<FieldSelectorEnum>;
   readonly pk1Diff: InputMaybe<FieldSelectorEnum>;
   readonly pk2Diff: InputMaybe<FieldSelectorEnum>;
-  readonly pk3Diff: InputMaybe<FieldSelectorEnum>;
-  readonly pk4Diff: InputMaybe<FieldSelectorEnum>;
   readonly player: InputMaybe<PlayerFieldSelector>;
   readonly position: InputMaybe<FieldSelectorEnum>;
   readonly score: InputMaybe<FieldSelectorEnum>;
@@ -2279,8 +2275,6 @@ type PlayerScoreFilterInput = {
   readonly performance: InputMaybe<FloatQueryOperatorInput>;
   readonly pk1Diff: InputMaybe<IntQueryOperatorInput>;
   readonly pk2Diff: InputMaybe<IntQueryOperatorInput>;
-  readonly pk3Diff: InputMaybe<IntQueryOperatorInput>;
-  readonly pk4Diff: InputMaybe<IntQueryOperatorInput>;
   readonly player: InputMaybe<PlayerFilterInput>;
   readonly position: InputMaybe<StringQueryOperatorInput>;
   readonly score: InputMaybe<IntQueryOperatorInput>;
@@ -2344,8 +2338,6 @@ type PlayerScoreSortInput = {
   readonly performance: InputMaybe<SortOrderEnum>;
   readonly pk1Diff: InputMaybe<SortOrderEnum>;
   readonly pk2Diff: InputMaybe<SortOrderEnum>;
-  readonly pk3Diff: InputMaybe<SortOrderEnum>;
-  readonly pk4Diff: InputMaybe<SortOrderEnum>;
   readonly player: InputMaybe<PlayerSortInput>;
   readonly position: InputMaybe<SortOrderEnum>;
   readonly score: InputMaybe<SortOrderEnum>;
@@ -2748,8 +2740,6 @@ type Query_playerScoreArgs = {
   performance: InputMaybe<FloatQueryOperatorInput>;
   pk1Diff: InputMaybe<IntQueryOperatorInput>;
   pk2Diff: InputMaybe<IntQueryOperatorInput>;
-  pk3Diff: InputMaybe<IntQueryOperatorInput>;
-  pk4Diff: InputMaybe<IntQueryOperatorInput>;
   player: InputMaybe<PlayerFilterInput>;
   position: InputMaybe<StringQueryOperatorInput>;
   score: InputMaybe<IntQueryOperatorInput>;
