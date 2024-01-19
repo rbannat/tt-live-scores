@@ -7,9 +7,9 @@ import { Button, Modal, Form } from 'react-bulma-components'
 import { calculateTtr } from '../utils/ttr'
 import { useLocalStorage } from 'usehooks-ts'
 import { FaCalculator } from 'react-icons/fa'
+import { firstHalfCompleted } from '../utils/constants'
 
 const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
-  const firstHalfCompleted = false
   const [activeTab, setActiveTab] = useState(
     firstHalfCompleted ? 'secondHalf' : 'firstHalf',
   )

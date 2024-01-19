@@ -6,6 +6,7 @@ import FixtureList from '../components/fixtureList'
 import Hero from '../components/hero'
 import PlayerTable from '../components/playerTable'
 import { useLocalStorage } from 'usehooks-ts'
+import { firstHalfCompleted } from '../utils/constants'
 
 const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   function handleFavClick() {
@@ -27,7 +28,6 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     [] as Array<{ id: string; name: string }>,
   )
 
-  const firstHalfCompleted = false
   const [activeTab, setActiveTab] = useState(
     firstHalfCompleted ? 'secondHalf' : 'firstHalf',
   )
