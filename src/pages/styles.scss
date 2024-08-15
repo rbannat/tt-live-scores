@@ -1,19 +1,16 @@
 @charset "utf-8";
 
-// If need, change your variables before importing Bulma
-$section-padding: 2rem 1.5rem;
-$table-cell-padding: 0.75em 0.75em;
-
-@import '~bulma/bulma.sass';
+@use 'bulma/sass' with (
+  $section-padding: 2rem 1.5rem,
+  $table-cell-padding: 0.75em 0.75em
+);
 
 .u-grow {
   flex: 1;
 }
 
 :root {
-  --success: #{$success};
-  --success-dark: #{$success-dark};
-  --danger: #{$danger};
-  --danger-dark: #{$danger-dark};
-  --grey: #{$grey};
+  --success: var(--bulma-success);
+  --danger: var(--bulma-danger);
+  --grey: var(--bulma-grey);
 }

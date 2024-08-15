@@ -1,1 +1,1 @@
-export const firstHalfCompleted = true
+export const firstHalfCompleted = false
