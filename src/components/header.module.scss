@@ -1,3 +1,8 @@
 .navbarBurger {
   flex: 0 0 auto;
 }
+
+/// reset buger color, so it is not blue by default
+.navbar {
+  --bulma-navbar-burger-color: ;
+}

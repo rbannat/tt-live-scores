@@ -21,7 +21,7 @@ const Hero = ({ title, subtitle, isFav, onFavClick }: HeroProps) => {
               </h1>
               {onFavClick && (
                 <button
-                  className={`button is-danger is-inverted ${favButton}`}
+                  className={`button is-danger is-large has-background-inherit is-inverted ${favButton}`}
                   onClick={onFavClick}
                 >
                   <span className="icon">

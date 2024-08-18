@@ -72,9 +72,9 @@ function sortByRomanNumeral(a, b) {
 
 const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
   function handleFavClick() {
-    if (favoriteClubs?.find(club => club.id === data.club.id)) {
+    if (favoriteClubs?.find(club => club.id === data.club?.id)) {
       setFavoriteClubs(prevState =>
-        prevState.filter(club => club.id !== data.club.id),
+        prevState.filter(club => club.id !== data.club?.id),
       )
       return
     }

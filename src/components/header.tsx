@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
-import Search from "./search"
-import { navbarBurger } from "./header.module.scss"
+import React, { useState } from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import Search from './search'
+import { navbarBurger, navbar } from './header.module.scss'
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false)
@@ -17,7 +17,11 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="navbar" role="navigation" aria-label="main navigation">
+      <nav
+        className={`navbar ${navbar}`}
+        role="navigation"
+        aria-label="main navigation"
+      >
         <div className="navbar-brand">
           <Link
             to="/"
@@ -26,27 +30,29 @@ const Header = () => {
             {data.site.siteMetadata.title}
           </Link>
 
-          <Search className={"is-align-self-center ml-auto"}></Search>
+          <Search className={'is-align-self-center ml-auto'}></Search>
 
-          <a
-            role="button"
+          <button
             className={`${navbarBurger} ml-1 navbar-burger burger ${
-              isActive ? "is-active" : ""
+              isActive ? 'is-active' : ''
             }`}
             onClick={() => setIsActive(!isActive)}
-            aria-label="menu"
-            aria-expanded={isActive ? "true" : "false"}
+            aria-label="Toggle menu"
+            aria-expanded={isActive ? 'true' : 'false'}
+            aria-controls="mainMenu"
             data-target="mainMenu"
+            type="button"
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </a>
+            <span aria-hidden="true"></span>
+          </button>
         </div>
 
         <div
           id="mainMenu"
-          className={isActive ? "navbar-menu is-active" : "navbar-menu"}
+          className={isActive ? 'navbar-menu is-active' : 'navbar-menu'}
         >
           <div className="navbar-start">
             <Link to="/" className="navbar-item">

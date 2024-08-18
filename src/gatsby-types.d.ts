@@ -2193,10 +2193,10 @@ type PlayerScore = Node & {
   readonly isSecondHalf: Maybe<Scalars['Boolean']>;
   readonly lost: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
-  readonly pk1Diff: Maybe<Scalars['Int']>;
-  readonly pk2Diff: Maybe<Scalars['Int']>;
-  readonly pk3Diff: Maybe<Scalars['Int']>;
-  readonly pk4Diff: Maybe<Scalars['Int']>;
+  readonly pk1Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
+  readonly pk2Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
+  readonly pk3Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
+  readonly pk4Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly player: Maybe<Player>;
   readonly position: Maybe<Scalars['String']>;
   readonly score: Maybe<Scalars['Int']>;
@@ -3967,7 +3967,7 @@ type PlayerPageQueryVariables = Exact<{
 }>;
 
 
-type PlayerPageQuery = { readonly player: { readonly id: string, readonly name: string | null } | null, readonly allPlayerScore: { readonly wonTotal: number | null, readonly lostTotal: number | null, readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly isSecondHalf: boolean | null, readonly gamesPlayed: number | null, readonly pk1Diff: number | null, readonly pk2Diff: number | null, readonly won: number | null, readonly lost: number | null, readonly score: number | null, readonly team: { readonly id: string, readonly name: string | null, readonly club: { readonly id: string, readonly shortName: string | null } | null } | null }> } };
+type PlayerPageQuery = { readonly player: { readonly id: string, readonly name: string | null } | null, readonly allPlayerScore: { readonly wonTotal: number | null, readonly lostTotal: number | null, readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly isSecondHalf: boolean | null, readonly gamesPlayed: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly won: number | null, readonly lost: number | null, readonly score: number | null, readonly team: { readonly id: string, readonly name: string | null, readonly club: { readonly id: string, readonly shortName: string | null } | null } | null }> } };
 
 type SearchQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3989,7 +3989,7 @@ type TeamPageQueryVariables = Exact<{
 }>;
 
 
-type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null } | null> | null } | null, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: number | null, readonly pk2Diff: number | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: number | null, readonly pk2Diff: number | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> } };
+type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null } | null> | null } | null, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> } };
 
 type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 

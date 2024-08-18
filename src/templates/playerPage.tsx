@@ -47,7 +47,7 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
   const subtitle = (
     <>
       <Link
-        className="is-size-6"
+        className="is-size-6 has-text-inherit"
         to={`/clubs/${playerScores[0].team?.club?.id}`}
       >
         {playerScores[0].team?.club?.shortName}
