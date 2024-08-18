@@ -17,7 +17,7 @@
     "gatsby-plugin-sass": "^6.7.0",
     "gatsby-plugin-sharp": "^5.7.0",
     "gatsby-source-filesystem": "^5.7.0",
-    "gatsby-source-ttlive": "^3.2.2",
+    "gatsby-source-ttlive": "^3.2.3",
     "gatsby-transformer-sharp": "^5.7.0",
     "gatsby-transformer-xml": "^5.7.0",
     "prop-types": "^15.8.1",

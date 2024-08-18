@@ -6401,10 +6401,10 @@ gatsby-source-filesystem@^5.7.0:
     valid-url "^1.0.9"
     xstate "^4.38.0"
 
-gatsby-source-ttlive@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/gatsby-source-ttlive/-/gatsby-source-ttlive-3.2.2.tgz#b28d5ae2a8267243d2d5bcd51ad1513d5c192abe"
-  integrity sha512-DqEIZ3/5u3Rd26uv/rMU7TBucfPiEzIETUufYAa73WbjNAaFTUspr94rGysFo6l/sbK92JIldFiBB1HzyfaVqw==
+gatsby-source-ttlive@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/gatsby-source-ttlive/-/gatsby-source-ttlive-3.2.3.tgz#a3f447ec340ce56ea84b5d7521d204d9dc4b150f"
+  integrity sha512-6dZMZb1ACbV4ot0BZYr7367hJsHk3Bd/8GwvibINQwI8uOS3ORLLYzICe87cgeT1tUXvucMueWLQInrHUcuUFA==
   dependencies:
     "@babel/runtime" "^7.22.5"
     axios "^1.3.4"
