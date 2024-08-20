@@ -1,14 +1,20 @@
-import * as React from "react"
-import { graphql, Link, PageProps } from "gatsby"
+import * as React from 'react'
+import { graphql, Link, PageProps } from 'gatsby'
 
-import Hero from "../components/hero"
-import Layout from "../components/layout"
-import { SEO } from "../components/seo"
+import Hero from '../components/hero'
+import Layout from '../components/layout'
+import { SEO } from '../components/seo'
+import ClubLogo from '../components/clubLogo'
 
 const ClubsPage = ({ data }: PageProps<Queries.ClubsPageQuery>) => {
+  function renderLogoByClubId(id: string, logos) {
+    const logo = logos.find(logo => logo.clubId === id)
+    return logo && <ClubLogo logo={logo.image} />
+  }
+
   return (
     <Layout>
-      <Hero title={"Vereine"}></Hero>
+      <Hero title={'Vereine'}></Hero>
       <section className="section">
         <div className="container">
           <article className="panel is-primary">
@@ -22,6 +28,7 @@ const ClubsPage = ({ data }: PageProps<Queries.ClubsPageQuery>) => {
                   className="panel-block"
                   to={`/clubs/${club.id}`}
                 >
+                  {renderLogoByClubId(club.id, data.logos.nodes)}
                   {club.name}
                 </Link>
               ))}
@@ -41,6 +48,20 @@ export const query = graphql`
         id
         name
         shortName
+      }
+    }
+    logos: allClubLogosJson {
+      nodes {
+        clubId
+        image {
+          childImageSharp {
+            gatsbyImageData(
+              width: 24
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+            )
+          }
+        }
       }
     }
   }

@@ -90,11 +90,11 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
     'fav-clubs',
     [] as Array<{ id: string; name: string }>,
   )
-
   return (
     <Layout>
       <Hero
         title={data.club.name}
+        clubLogo={data?.logo?.image}
         isFav={favoriteClubs?.find(club => club.id === data.club.id)}
         onFavClick={handleFavClick}
       ></Hero>
@@ -154,6 +154,17 @@ export const query = graphql`
               name
             }
           }
+        }
+      }
+    }
+    logo: clubLogosJson(clubId: { eq: $clubId }) {
+      image {
+        childImageSharp {
+          gatsbyImageData(
+            width: 50
+            placeholder: BLURRED
+            formats: [AUTO, WEBP, AVIF]
+          )
         }
       }
     }

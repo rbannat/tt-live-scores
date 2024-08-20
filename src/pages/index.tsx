@@ -7,6 +7,7 @@ import { SEO } from '../components/seo'
 import Hero from '../components/hero'
 import { useLocalStorage } from 'usehooks-ts'
 import { FaHeart } from 'react-icons/fa'
+import ClubLogo from '../components/clubLogo'
 
 const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
   const [favoriteClubs] = useLocalStorage(
@@ -17,6 +18,17 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
     'fav-teams',
     [] as Array<{ id: string; name: string }>,
   )
+
+  function renderLogoByTeamId(id: string, logos, teams) {
+    const clubId = teams.find(team => team.id === id)?.club.id
+    const logo = logos.find(logo => logo.clubId === clubId)
+    return logo && <ClubLogo logo={logo.image} />
+  }
+
+  function renderLogoByClubId(id: string, logos) {
+    const logo = logos.find(logo => logo.clubId === id)
+    return logo && <ClubLogo logo={logo.image} />
+  }
 
   return (
     <Layout>
@@ -36,9 +48,14 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
               favoriteTeams.map(favoriteTeam => (
                 <div key={favoriteTeam.id} className="column is-one-quarter">
                   <Link
-                    className="is-block notification is-primary"
+                    className="is-block notification is-primary is-flex is-align-items-center"
                     to={`/teams/${favoriteTeam.id}`}
                   >
+                    {renderLogoByTeamId(
+                      favoriteTeam.id,
+                      data.logos.nodes,
+                      data.teams.nodes,
+                    )}
                     <span className="title is-size-4">{favoriteTeam.name}</span>
                   </Link>
                 </div>
@@ -58,9 +75,10 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
               favoriteClubs.map(favoriteClub => (
                 <div key={favoriteClub.id} className="column is-one-quarter">
                   <Link
-                    className="is-block notification is-primary"
+                    className="is-block notification is-primary is-flex is-align-items-center"
                     to={`/clubs/${favoriteClub.id}`}
                   >
+                    {renderLogoByClubId(favoriteClub.id, data.logos.nodes)}
                     <span className="title is-size-4">{favoriteClub.name}</span>
                   </Link>
                 </div>
@@ -115,6 +133,28 @@ export const query = graphql`
       nodes {
         id
         name
+      }
+    }
+    teams: allTeam {
+      nodes {
+        id
+        club {
+          id
+        }
+      }
+    }
+    logos: allClubLogosJson {
+      nodes {
+        clubId
+        image {
+          childImageSharp {
+            gatsbyImageData(
+              width: 24
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+            )
+          }
+        }
       }
     }
   }

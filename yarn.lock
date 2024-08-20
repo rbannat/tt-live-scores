@@ -6239,7 +6239,7 @@ gatsby-plugin-fontawesome-css@^1.2.0:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-fontawesome-css/-/gatsby-plugin-fontawesome-css-1.2.0.tgz#fc828dd1d39ff46d7a22f1389642ba65d4755a18"
   integrity sha512-Me7zFKPDmFQAWZmC2MQN7vWSHGFneu6FeIylkVinSMh89C0wPeoF165rpfuEdpgG0HScNg0fSh3xCIxYr5gPOQ==
 
-gatsby-plugin-image@^3.7.0:
+gatsby-plugin-image@^3.13.1:
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-image/-/gatsby-plugin-image-3.13.1.tgz#5c6e03b1c21bb0dbc076f589aea9911086b25bde"
   integrity sha512-v5jGXxjr//iLk7LzpW6RW/9H4KNVezxee2Sgy9mxvdvekTuFQLYoQmtk2jOZINMZMP3Vm+Rl3MqWWVMfhHuWFw==
@@ -6429,6 +6429,14 @@ gatsby-telemetry@^4.13.1:
     is-docker "^2.2.1"
     lodash "^4.17.21"
     node-fetch "^2.6.11"
+
+gatsby-transformer-json@^5.13.1:
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/gatsby-transformer-json/-/gatsby-transformer-json-5.13.1.tgz#bfae37eb6ebfe8b99e15891f112c6add928353f9"
+  integrity sha512-e+k6tlHamAYwwBph/Hs7Yx+/6t6m6GndmMQEDSZQOfp6h3oQttR7Uvl+Gj8P6HZ5zg370NRXNDT7CrsNZ5fqvg==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+    bluebird "^3.7.2"
 
 gatsby-transformer-sharp@^5.7.0:
   version "5.13.1"

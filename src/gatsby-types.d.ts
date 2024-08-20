@@ -292,6 +292,132 @@ type ClubGroupConnection_sumArgs = {
   field: ClubFieldSelector;
 };
 
+type ClubLogosJson = Node & {
+  readonly children: ReadonlyArray<Node>;
+  readonly clubId: Maybe<Scalars['String']>;
+  readonly id: Scalars['ID'];
+  readonly image: Maybe<File>;
+  readonly internal: Internal;
+  readonly parent: Maybe<Node>;
+};
+
+type ClubLogosJsonConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<ClubLogosJsonEdge>;
+  readonly group: ReadonlyArray<ClubLogosJsonGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<ClubLogosJson>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type ClubLogosJsonConnection_distinctArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+
+type ClubLogosJsonConnection_groupArgs = {
+  field: ClubLogosJsonFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type ClubLogosJsonConnection_maxArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+
+type ClubLogosJsonConnection_minArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+
+type ClubLogosJsonConnection_sumArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+type ClubLogosJsonEdge = {
+  readonly next: Maybe<ClubLogosJson>;
+  readonly node: ClubLogosJson;
+  readonly previous: Maybe<ClubLogosJson>;
+};
+
+type ClubLogosJsonFieldSelector = {
+  readonly children: InputMaybe<NodeFieldSelector>;
+  readonly clubId: InputMaybe<FieldSelectorEnum>;
+  readonly id: InputMaybe<FieldSelectorEnum>;
+  readonly image: InputMaybe<FileFieldSelector>;
+  readonly internal: InputMaybe<InternalFieldSelector>;
+  readonly parent: InputMaybe<NodeFieldSelector>;
+};
+
+type ClubLogosJsonFilterInput = {
+  readonly children: InputMaybe<NodeFilterListInput>;
+  readonly clubId: InputMaybe<StringQueryOperatorInput>;
+  readonly id: InputMaybe<StringQueryOperatorInput>;
+  readonly image: InputMaybe<FileFilterInput>;
+  readonly internal: InputMaybe<InternalFilterInput>;
+  readonly parent: InputMaybe<NodeFilterInput>;
+};
+
+type ClubLogosJsonFilterListInput = {
+  readonly elemMatch: InputMaybe<ClubLogosJsonFilterInput>;
+};
+
+type ClubLogosJsonGroupConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<ClubLogosJsonEdge>;
+  readonly field: Scalars['String'];
+  readonly fieldValue: Maybe<Scalars['String']>;
+  readonly group: ReadonlyArray<ClubLogosJsonGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<ClubLogosJson>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type ClubLogosJsonGroupConnection_distinctArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+
+type ClubLogosJsonGroupConnection_groupArgs = {
+  field: ClubLogosJsonFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type ClubLogosJsonGroupConnection_maxArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+
+type ClubLogosJsonGroupConnection_minArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+
+type ClubLogosJsonGroupConnection_sumArgs = {
+  field: ClubLogosJsonFieldSelector;
+};
+
+type ClubLogosJsonSortInput = {
+  readonly children: InputMaybe<NodeSortInput>;
+  readonly clubId: InputMaybe<SortOrderEnum>;
+  readonly id: InputMaybe<SortOrderEnum>;
+  readonly image: InputMaybe<FileSortInput>;
+  readonly internal: InputMaybe<InternalSortInput>;
+  readonly parent: InputMaybe<NodeSortInput>;
+};
+
 type ClubSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
@@ -632,9 +758,13 @@ type File = Node & {
   readonly blksize: Maybe<Scalars['Int']>;
   readonly blocks: Maybe<Scalars['Int']>;
   readonly changeTime: Scalars['Date'];
+  /** Returns the first child node of type ClubLogosJson or null if there are no children of given type on this node */
+  readonly childClubLogosJson: Maybe<ClubLogosJson>;
   /** Returns the first child node of type ImageSharp or null if there are no children of given type on this node */
   readonly childImageSharp: Maybe<ImageSharp>;
   readonly children: ReadonlyArray<Node>;
+  /** Returns all children nodes filtered by type ClubLogosJson */
+  readonly childrenClubLogosJson: Maybe<ReadonlyArray<Maybe<ClubLogosJson>>>;
   /** Returns all children nodes filtered by type ImageSharp */
   readonly childrenImageSharp: Maybe<ReadonlyArray<Maybe<ImageSharp>>>;
   readonly ctime: Scalars['Date'];
@@ -779,8 +909,10 @@ type FileFieldSelector = {
   readonly blksize: InputMaybe<FieldSelectorEnum>;
   readonly blocks: InputMaybe<FieldSelectorEnum>;
   readonly changeTime: InputMaybe<FieldSelectorEnum>;
+  readonly childClubLogosJson: InputMaybe<ClubLogosJsonFieldSelector>;
   readonly childImageSharp: InputMaybe<ImageSharpFieldSelector>;
   readonly children: InputMaybe<NodeFieldSelector>;
+  readonly childrenClubLogosJson: InputMaybe<ClubLogosJsonFieldSelector>;
   readonly childrenImageSharp: InputMaybe<ImageSharpFieldSelector>;
   readonly ctime: InputMaybe<FieldSelectorEnum>;
   readonly ctimeMs: InputMaybe<FieldSelectorEnum>;
@@ -822,8 +954,10 @@ type FileFilterInput = {
   readonly blksize: InputMaybe<IntQueryOperatorInput>;
   readonly blocks: InputMaybe<IntQueryOperatorInput>;
   readonly changeTime: InputMaybe<DateQueryOperatorInput>;
+  readonly childClubLogosJson: InputMaybe<ClubLogosJsonFilterInput>;
   readonly childImageSharp: InputMaybe<ImageSharpFilterInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
+  readonly childrenClubLogosJson: InputMaybe<ClubLogosJsonFilterListInput>;
   readonly childrenImageSharp: InputMaybe<ImageSharpFilterListInput>;
   readonly ctime: InputMaybe<DateQueryOperatorInput>;
   readonly ctimeMs: InputMaybe<FloatQueryOperatorInput>;
@@ -906,8 +1040,10 @@ type FileSortInput = {
   readonly blksize: InputMaybe<SortOrderEnum>;
   readonly blocks: InputMaybe<SortOrderEnum>;
   readonly changeTime: InputMaybe<SortOrderEnum>;
+  readonly childClubLogosJson: InputMaybe<ClubLogosJsonSortInput>;
   readonly childImageSharp: InputMaybe<ImageSharpSortInput>;
   readonly children: InputMaybe<NodeSortInput>;
+  readonly childrenClubLogosJson: InputMaybe<ClubLogosJsonSortInput>;
   readonly childrenImageSharp: InputMaybe<ImageSharpSortInput>;
   readonly ctime: InputMaybe<SortOrderEnum>;
   readonly ctimeMs: InputMaybe<SortOrderEnum>;
@@ -1108,6 +1244,25 @@ type GatsbyImageDataQueryOperatorInput = {
   readonly ne: InputMaybe<Scalars['GatsbyImageData']>;
   readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['GatsbyImageData']>>>;
 };
+
+type GatsbyImageFormat =
+  | 'auto'
+  | 'avif'
+  | 'jpg'
+  | ''
+  | 'png'
+  | 'webp';
+
+type GatsbyImageLayout =
+  | 'constrained'
+  | 'fixed'
+  | 'fullWidth';
+
+type GatsbyImagePlaceholder =
+  | 'blurred'
+  | 'dominantColor'
+  | 'none'
+  | 'tracedSVG';
 
 type Group = Node & {
   readonly children: ReadonlyArray<Node>;
@@ -2383,6 +2538,7 @@ type PotraceTurnPolicy =
 type Query = {
   readonly allAssociation: AssociationConnection;
   readonly allClub: ClubConnection;
+  readonly allClubLogosJson: ClubLogosJsonConnection;
   readonly allDirectory: DirectoryConnection;
   readonly allFile: FileConnection;
   readonly allFixture: FixtureConnection;
@@ -2400,6 +2556,7 @@ type Query = {
   readonly allTeam: TeamConnection;
   readonly association: Maybe<Association>;
   readonly club: Maybe<Club>;
+  readonly clubLogosJson: Maybe<ClubLogosJson>;
   readonly directory: Maybe<Directory>;
   readonly file: Maybe<File>;
   readonly fixture: Maybe<Fixture>;
@@ -2431,6 +2588,14 @@ type Query_allClubArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<ReadonlyArray<InputMaybe<ClubSortInput>>>;
+};
+
+
+type Query_allClubLogosJsonArgs = {
+  filter: InputMaybe<ClubLogosJsonFilterInput>;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+  sort: InputMaybe<ReadonlyArray<InputMaybe<ClubLogosJsonSortInput>>>;
 };
 
 
@@ -2576,6 +2741,16 @@ type Query_clubArgs = {
 };
 
 
+type Query_clubLogosJsonArgs = {
+  children: InputMaybe<NodeFilterListInput>;
+  clubId: InputMaybe<StringQueryOperatorInput>;
+  id: InputMaybe<StringQueryOperatorInput>;
+  image: InputMaybe<FileFilterInput>;
+  internal: InputMaybe<InternalFilterInput>;
+  parent: InputMaybe<NodeFilterInput>;
+};
+
+
 type Query_directoryArgs = {
   absolutePath: InputMaybe<StringQueryOperatorInput>;
   accessTime: InputMaybe<DateQueryOperatorInput>;
@@ -2627,8 +2802,10 @@ type Query_fileArgs = {
   blksize: InputMaybe<IntQueryOperatorInput>;
   blocks: InputMaybe<IntQueryOperatorInput>;
   changeTime: InputMaybe<DateQueryOperatorInput>;
+  childClubLogosJson: InputMaybe<ClubLogosJsonFilterInput>;
   childImageSharp: InputMaybe<ImageSharpFilterInput>;
   children: InputMaybe<NodeFilterListInput>;
+  childrenClubLogosJson: InputMaybe<ClubLogosJsonFilterListInput>;
   childrenImageSharp: InputMaybe<ImageSharpFilterListInput>;
   ctime: InputMaybe<DateQueryOperatorInput>;
   ctimeMs: InputMaybe<FloatQueryOperatorInput>;
@@ -3893,12 +4070,12 @@ type ClubPageQueryVariables = Exact<{
 }>;
 
 
-type ClubPageQuery = { readonly club: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly allTeam: { readonly group: ReadonlyArray<{ readonly fieldValue: string | null, readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly name: string | null, readonly group: { readonly name: string | null } | null } | null }> }> } };
+type ClubPageQuery = { readonly club: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly allTeam: { readonly group: ReadonlyArray<{ readonly fieldValue: string | null, readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly name: string | null, readonly group: { readonly name: string | null } | null } | null }> }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
 
 type ClubsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type ClubsPageQuery = { readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null }> } };
+type ClubsPageQuery = { readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null }> }, readonly logos: { readonly nodes: ReadonlyArray<{ readonly clubId: string | null, readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null }> } };
 
 type FixtureDataFragment = { readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null };
 
@@ -3943,7 +4120,7 @@ type GroupsPageQuery = { readonly allGroup: { readonly nodes: ReadonlyArray<{ re
 type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexPageQuery = { readonly league: { readonly name: string | null, readonly association: { readonly name: string | null } | null } | null, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null }> } };
+type IndexPageQuery = { readonly league: { readonly name: string | null, readonly association: { readonly name: string | null } | null } | null, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null }> }, readonly teams: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly club: { readonly id: string } | null }> }, readonly logos: { readonly nodes: ReadonlyArray<{ readonly clubId: string | null, readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null }> } };
 
 type LastUpdatedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3986,15 +4163,16 @@ type SiteMetadataQuery = { readonly site: { readonly siteMetadata: { readonly ti
 
 type TeamPageQueryVariables = Exact<{
   teamId: Scalars['String'];
+  clubId: Scalars['String'];
 }>;
 
 
-type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null } | null> | null } | null, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> } };
+type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null } | null> | null } | null, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
 
 type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type PagesQuery = { readonly allTeam: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allLeague: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allPlayer: { readonly nodes: ReadonlyArray<{ readonly id: string }> } };
+type PagesQuery = { readonly allTeam: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly club: { readonly id: string } | null }> }, readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allLeague: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string }> }, readonly allPlayer: { readonly nodes: ReadonlyArray<{ readonly id: string }> } };
 
 
 }

@@ -14,6 +14,9 @@ export const createPages: GatsbyNode['createPages'] = async ({
       allTeam {
         nodes {
           id
+          club {
+            id
+          }
         }
       }
 
@@ -57,6 +60,7 @@ export const createPages: GatsbyNode['createPages'] = async ({
       component,
       context: {
         teamId: team.id,
+        clubId: team.club.id,
       },
     })
   })

@@ -75,6 +75,7 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     <Layout>
       <Hero
         title={data.team?.shortName ?? ''}
+        clubLogo={data?.logo?.image}
         subtitle={subtitle}
         showLastUpdated={true}
         isFav={favoriteTeams.some(team => team.id === data.team?.id)}
@@ -138,7 +139,7 @@ export const Head = ({ data }: HeadProps<Queries.TeamPageQuery>) => (
 )
 
 export const query = graphql`
-  query TeamPage($teamId: String!) {
+  query TeamPage($teamId: String!, $clubId: String!) {
     team(id: { eq: $teamId }) {
       id
       league {
@@ -189,6 +190,17 @@ export const query = graphql`
         player {
           id
           name
+        }
+      }
+    }
+    logo: clubLogosJson(clubId: { eq: $clubId }) {
+      image {
+        childImageSharp {
+          gatsbyImageData(
+            width: 50
+            placeholder: BLURRED
+            formats: [AUTO, WEBP, AVIF]
+          )
         }
       }
     }
