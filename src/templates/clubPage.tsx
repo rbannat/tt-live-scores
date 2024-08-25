@@ -94,7 +94,7 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
     <Layout>
       <Hero
         title={data.club.name}
-        clubLogo={data?.logo?.image}
+        clubLogo={data?.logo?.image ?? data.placeholderImage}
         isFav={favoriteClubs?.find(club => club.id === data.club.id)}
         onFavClick={handleFavClick}
       ></Hero>
@@ -161,11 +161,26 @@ export const query = graphql`
       image {
         childImageSharp {
           gatsbyImageData(
-            width: 50
+            height: 64
+            width: 64
+            transformOptions: { fit: CONTAIN }
+            backgroundColor: "white"
             placeholder: BLURRED
             formats: [AUTO, WEBP, AVIF]
           )
         }
+      }
+    }
+    placeholderImage: file(relativePath: { eq: "badge-placeholder.png" }) {
+      childImageSharp {
+        gatsbyImageData(
+          height: 64
+          width: 64
+          transformOptions: { fit: CONTAIN }
+          backgroundColor: "white"
+          placeholder: BLURRED
+          formats: [AUTO, WEBP, AVIF]
+        )
       }
     }
   }

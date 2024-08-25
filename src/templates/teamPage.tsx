@@ -75,7 +75,7 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     <Layout>
       <Hero
         title={data.team?.shortName ?? ''}
-        clubLogo={data?.logo?.image}
+        clubLogo={data?.logo?.image ?? data.placeholderImage}
         subtitle={subtitle}
         showLastUpdated={true}
         isFav={favoriteTeams.some(team => team.id === data.team?.id)}
@@ -197,11 +197,26 @@ export const query = graphql`
       image {
         childImageSharp {
           gatsbyImageData(
-            width: 50
+            height: 64
+            width: 64
+            transformOptions: { fit: CONTAIN }
+            backgroundColor: "white"
             placeholder: BLURRED
             formats: [AUTO, WEBP, AVIF]
           )
         }
+      }
+    }
+    placeholderImage: file(relativePath: { eq: "badge-placeholder.png" }) {
+      childImageSharp {
+        gatsbyImageData(
+          height: 64
+          width: 64
+          transformOptions: { fit: CONTAIN }
+          backgroundColor: "white"
+          placeholder: BLURRED
+          formats: [AUTO, WEBP, AVIF]
+        )
       }
     }
   }

@@ -9,7 +9,7 @@ type ClubLogoProps = {
 export default function ClubLogo({ logo }: ClubLogoProps) {
   const image = getImage(logo)
   return (
-    <div className={`${clubLogoWrapper} mr-4`}>
+    <div className={`${clubLogoWrapper} mr-4 is-flex-shrink-0`}>
       {image && <GatsbyImage image={image} alt={'Club logo'} />}
     </div>
   )

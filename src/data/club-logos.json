@@ -316,6 +316,30 @@
     "image": "../images/club-logos/vfl-fortuna-marzahn.png"
   },
   {
+    "clubId": "7f3a0494-69a4-5400-aa15-288594cb5e2a",
+    "image": "../images/club-logos/spandauer-tischtennis-club.jpg"
+  },
+  {
+    "clubId": "2c3aa09c-c117-52a3-8d3f-210c74aaea6e",
+    "image": "../images/club-logos/tsgl-schoeneiche.jpg"
+  },
+  {
+    "clubId": "e9484f6b-8bca-54f8-b7c4-344f90accb1f",
+    "image": "../images/club-logos/ksf-anadolu-umutspor.jpeg"
+  },
+  {
+    "clubId": "de85636d-41b7-50e2-a755-400e10eb5818",
+    "image": "../images/club-logos/sg-gruene-trift.jpg"
+  },
+  {
+    "clubId": "4acf6bc6-2c34-50c6-8923-6f8751cd8b0c",
+    "image": "../images/club-logos/sv-luftfahrt.png"
+  },
+  {
+    "clubId": "2a3f93a5-e1a5-5db8-ab8f-b0f727a8f964",
+    "image": "../images/club-logos/ttv-friedrichshagen.png"
+  },
+  {
     "clubId": "b6cd5862-d1d5-5d33-a44f-bb77314da3e9",
     "image": "../images/club-logos/vfl-tegel-1891.jpg"
   }
