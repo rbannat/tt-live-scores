@@ -9,11 +9,7 @@ import ClubLogo from '../components/clubLogo'
 const ClubsPage = ({ data }: PageProps<Queries.ClubsPageQuery>) => {
   function renderLogoByClubId(id: string, logos) {
     const logo = logos.find(logo => logo.clubId === id)
-    return logo ? (
-      <ClubLogo logo={logo.image} />
-    ) : (
-      <ClubLogo logo={data.placeholderImage} />
-    )
+    return <ClubLogo logo={logo?.image} />
   }
 
   return (
@@ -52,18 +48,6 @@ export const query = graphql`
         id
         name
         shortName
-      }
-    }
-    placeholderImage: file(relativePath: { eq: "badge-placeholder.png" }) {
-      childImageSharp {
-        gatsbyImageData(
-          height: 32
-          width: 32
-          transformOptions: { fit: CONTAIN }
-          backgroundColor: "white"
-          placeholder: BLURRED
-          formats: [AUTO, WEBP, AVIF]
-        )
       }
     }
     logos: allClubLogosJson {

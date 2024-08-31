@@ -75,7 +75,7 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     <Layout>
       <Hero
         title={data.team?.shortName ?? ''}
-        clubLogo={data?.logo?.image ?? data.placeholderImage}
+        clubLogo={{ image: data?.logo?.image, size: 'large' }}
         subtitle={subtitle}
         showLastUpdated={true}
         isFav={favoriteTeams.some(team => team.id === data.team?.id)}

@@ -8,6 +8,7 @@ import { calculateTtr } from '../utils/ttr'
 import { useLocalStorage } from 'usehooks-ts'
 import { FaCalculator } from 'react-icons/fa'
 import { firstHalfCompleted } from '../utils/constants'
+import { ImageDataLike } from 'gatsby-plugin-image'
 
 const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
   const [activeTab, setActiveTab] = useState(
@@ -59,7 +60,10 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
     <Layout>
       <Hero
         title={data.player?.name ?? ''}
-        showLastUpdated={true}
+        clubLogo={{
+          image: playerScores[0].team?.club?.logo?.image as ImageDataLike,
+          size: 'large',
+        }}
         subtitle={subtitle}
       ></Hero>
 
@@ -291,6 +295,20 @@ export const query = graphql`
           club {
             id
             shortName
+            logo {
+              image {
+                childImageSharp {
+                  gatsbyImageData(
+                    width: 64
+                    height: 64
+                    transformOptions: { fit: CONTAIN }
+                    backgroundColor: "white"
+                    placeholder: BLURRED
+                    formats: [AUTO, WEBP, AVIF]
+                  )
+                }
+              }
+            }
           }
         }
         gamesPlayed

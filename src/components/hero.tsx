@@ -1,15 +1,14 @@
 import React from 'react'
 import { favButton, hero } from './hero.module.scss'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
-import { IGatsbyImageData } from 'gatsby-plugin-image'
+import { ImageDataLike } from 'gatsby-plugin-image'
 import ClubLogo from './clubLogo'
 
 type HeroProps = {
   title: string
   subtitle?: React.ReactElement
-  showLastUpdated?: boolean
   isFav?: boolean
-  clubLogo?: IGatsbyImageData
+  clubLogo?: { image?: ImageDataLike | null; size?: 'large' | 'normal' }
   onFavClick?: () => void
 }
 const Hero = ({ title, subtitle, isFav, onFavClick, clubLogo }: HeroProps) => {
@@ -20,7 +19,9 @@ const Hero = ({ title, subtitle, isFav, onFavClick, clubLogo }: HeroProps) => {
           <div className="container">
             <div className="is-flex is-justify-content-space-between is-align-items-center">
               <div className="is-flex is-align-items-center">
-                {clubLogo && <ClubLogo logo={clubLogo} />}
+                {clubLogo?.image && (
+                  <ClubLogo logo={clubLogo.image} size={clubLogo.size} />
+                )}
                 <div>
                   <h1 className="title mb-0 is-size-4-mobile is-size-3-tablet">
                     {title}

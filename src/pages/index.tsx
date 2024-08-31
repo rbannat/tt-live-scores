@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { graphql, Link, PageProps } from 'gatsby'
 import './styles.scss'
-
 import Layout from '../components/layout'
 import { SEO } from '../components/seo'
 import Hero from '../components/hero'
@@ -19,23 +18,16 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
     [] as Array<{ id: string; name: string }>,
   )
 
-  function renderLogoByTeamId(id: string, logos, teams) {
-    const clubId = teams.find(team => team.id === id)?.club.id
-    const logo = logos.find(logo => logo.clubId === clubId)
-    return logo ? (
-      <ClubLogo logo={logo.image} />
-    ) : (
-      <ClubLogo logo={data.placeholderImage} />
-    )
+  function renderLogoByTeamId(id: string, teams) {
+    const club = teams.find(team => team.id === id)?.club
+    const image = club?.logo?.image
+    return <ClubLogo logo={image} />
   }
 
-  function renderLogoByClubId(id: string, logos) {
-    const logo = logos.find(logo => logo.clubId === id)
-    return logo ? (
-      <ClubLogo logo={logo.image} />
-    ) : (
-      <ClubLogo logo={data.placeholderImage} />
-    )
+  function renderLogoByClubId(id: string, clubs) {
+    const club = clubs.find(club => club.id === id)
+    const image = club?.logo?.image
+    return <ClubLogo logo={image} />
   }
 
   return (
@@ -59,11 +51,7 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
                     className="is-block notification is-primary is-flex is-align-items-center"
                     to={`/teams/${favoriteTeam.id}`}
                   >
-                    {renderLogoByTeamId(
-                      favoriteTeam.id,
-                      data.logos.nodes,
-                      data.teams.nodes,
-                    )}
+                    {renderLogoByTeamId(favoriteTeam.id, data.teams.nodes)}
                     <span className="title is-size-4">{favoriteTeam.name}</span>
                   </Link>
                 </div>
@@ -86,7 +74,7 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
                     className="is-block notification is-primary is-flex is-align-items-center"
                     to={`/clubs/${favoriteClub.id}`}
                   >
-                    {renderLogoByClubId(favoriteClub.id, data.logos.nodes)}
+                    {renderLogoByClubId(favoriteClub.id, data.clubs.nodes)}
                     <span className="title is-size-4">{favoriteClub.name}</span>
                   </Link>
                 </div>
@@ -148,36 +136,38 @@ export const query = graphql`
         id
         club {
           id
-        }
-      }
-    }
-    logos: allClubLogosJson {
-      nodes {
-        clubId
-        image {
-          childImageSharp {
-            gatsbyImageData(
-              width: 32
-              height: 32
-              transformOptions: { fit: CONTAIN }
-              backgroundColor: "white"
-              placeholder: BLURRED
-              formats: [AUTO, WEBP, AVIF]
-            )
+          logo {
+            image {
+              childImageSharp {
+                gatsbyImageData(
+                  width: 32
+                  transformOptions: { fit: CONTAIN }
+                  backgroundColor: "white"
+                  placeholder: BLURRED
+                  formats: [AUTO, WEBP, AVIF]
+                )
+              }
+            }
           }
         }
       }
     }
-    placeholderImage: file(relativePath: { eq: "badge-placeholder.png" }) {
-      childImageSharp {
-        gatsbyImageData(
-          height: 32
-          width: 32
-          transformOptions: { fit: CONTAIN }
-          backgroundColor: "white"
-          placeholder: BLURRED
-          formats: [AUTO, WEBP, AVIF]
-        )
+    clubs: allClub {
+      nodes {
+        id
+        logo {
+          image {
+            childImageSharp {
+              gatsbyImageData(
+                width: 32
+                transformOptions: { fit: CONTAIN }
+                backgroundColor: "white"
+                placeholder: BLURRED
+                formats: [AUTO, WEBP, AVIF]
+              )
+            }
+          }
+        }
       }
     }
   }

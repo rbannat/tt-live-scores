@@ -4,6 +4,7 @@ import Hero from '../components/hero'
 import Layout from '../components/layout'
 import { SEO } from '../components/seo'
 import { useLocalStorage } from 'usehooks-ts'
+import { ImageDataLike } from 'gatsby-plugin-image'
 
 // Javascript program to convert Roman
 // Numerals to Numberspublic
@@ -81,7 +82,7 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
     setFavoriteClubs(prevState => [
       ...new Set([
         ...prevState,
-        { id: data.club.id, name: data.club.shortName ?? '' },
+        { id: data.club?.id ?? '', name: data.club?.shortName ?? '' },
       ]),
     ])
   }
@@ -93,9 +94,9 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
   return (
     <Layout>
       <Hero
-        title={data.club.name}
-        clubLogo={data?.logo?.image ?? data.placeholderImage}
-        isFav={favoriteClubs?.find(club => club.id === data.club.id)}
+        title={data.club?.name ?? ''}
+        clubLogo={{ image: data?.logo?.image as ImageDataLike, size: 'large' }}
+        isFav={favoriteClubs?.some(club => club.id === data.club?.id)}
         onFavClick={handleFavClick}
       ></Hero>
       <section className="section">
@@ -169,18 +170,6 @@ export const query = graphql`
             formats: [AUTO, WEBP, AVIF]
           )
         }
-      }
-    }
-    placeholderImage: file(relativePath: { eq: "badge-placeholder.png" }) {
-      childImageSharp {
-        gatsbyImageData(
-          height: 64
-          width: 64
-          transformOptions: { fit: CONTAIN }
-          backgroundColor: "white"
-          placeholder: BLURRED
-          formats: [AUTO, WEBP, AVIF]
-        )
       }
     }
   }

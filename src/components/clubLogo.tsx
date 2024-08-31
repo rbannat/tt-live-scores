@@ -1,16 +1,34 @@
 import React from 'react'
-import { clubLogoWrapper } from './clubLogo.module.scss'
-import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image'
+import { clubLogoWrapper, large } from './clubLogo.module.scss'
+import {
+  GatsbyImage,
+  getImage,
+  ImageDataLike,
+  StaticImage,
+} from 'gatsby-plugin-image'
 
 type ClubLogoProps = {
-  logo: IGatsbyImageData
+  logo?: ImageDataLike
+  size?: 'normal' | 'large'
 }
 
-export default function ClubLogo({ logo }: ClubLogoProps) {
-  const image = getImage(logo)
+export default function ClubLogo({ logo, size = 'normal' }: ClubLogoProps) {
+  const image = logo && getImage(logo)
   return (
-    <div className={`${clubLogoWrapper} mr-4 is-flex-shrink-0`}>
-      {image && <GatsbyImage image={image} alt={'Club logo'} />}
+    <div
+      className={`${clubLogoWrapper} ${size === 'large' ? large : ''} mr-4 is-flex-shrink-0`}
+    >
+      {image ? (
+        <GatsbyImage image={image} alt={'Club logo'} />
+      ) : (
+        <StaticImage
+          src="../images/badge-placeholder.png"
+          alt="Club logo placeholder"
+          placeholder="blurred"
+          width={64}
+          transformOptions={{ fit: 'contain' }}
+        />
+      )}
     </div>
   )
 }

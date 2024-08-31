@@ -10,6 +10,8 @@ import {
 } from './fixture.module.scss'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import { graphql, Link } from 'gatsby'
+import ClubLogo from './clubLogo'
+import { ImageDataLike } from 'gatsby-plugin-image'
 
 type FixtureProps = Queries.FixtureDataFragment & {
   variant?: 'win' | 'lose' | 'draw'
@@ -46,10 +48,10 @@ const Fixture = ({
         variant === 'win'
           ? win
           : variant === 'lose'
-          ? lose
-          : variant === 'draw'
-          ? draw
-          : ''
+            ? lose
+            : variant === 'draw'
+              ? draw
+              : ''
       }`}
     >
       <div className={`${teamsContainer}`}>
@@ -59,9 +61,16 @@ const Fixture = ({
           }`}
         >
           {homeTeam?.id && (
-            <Link to={`/teams/${homeTeam.id}`}>
-              <span className={`is-size-6`}>{homeTeam.shortName}</span>
-            </Link>
+            <div className="is-flex is-align-items-center">
+              <ClubLogo
+                logo={
+                  (homeTeam.club?.logo?.image as ImageDataLike) ?? undefined
+                }
+              />
+              <Link to={`/teams/${homeTeam.id}`}>
+                <span className={`is-size-6`}>{homeTeam.shortName}</span>
+              </Link>
+            </div>
           )}
           <span>{result && `${result[0]}`}</span>
         </div>
@@ -71,9 +80,16 @@ const Fixture = ({
           }`}
         >
           {guestTeam?.id && (
-            <Link to={`/teams/${guestTeam.id}`}>
-              <span className={`is-size-6`}>{guestTeam.shortName}</span>
-            </Link>
+            <div className="is-flex is-align-items-center">
+              <ClubLogo
+                logo={
+                  (guestTeam.club?.logo?.image as ImageDataLike) ?? undefined
+                }
+              />
+              <Link to={`/teams/${guestTeam.id}`}>
+                <span className={`is-size-6`}>{guestTeam.shortName}</span>
+              </Link>
+            </div>
           )}
           <span>{result && `${result[1]}`}</span>
         </div>
@@ -106,6 +122,22 @@ export const fixtureDataFragment = graphql`
         id
         name
         shortName
+        club {
+          logo {
+            image {
+              childImageSharp {
+                gatsbyImageData(
+                  width: 32
+                  height: 32
+                  transformOptions: { fit: CONTAIN }
+                  backgroundColor: "white"
+                  placeholder: BLURRED
+                  formats: [AUTO, WEBP, AVIF]
+                )
+              }
+            }
+          }
+        }
       }
     }
     homeTeam {
@@ -113,6 +145,22 @@ export const fixtureDataFragment = graphql`
         id
         name
         shortName
+        club {
+          logo {
+            image {
+              childImageSharp {
+                gatsbyImageData(
+                  width: 32
+                  height: 32
+                  transformOptions: { fit: CONTAIN }
+                  backgroundColor: "white"
+                  placeholder: BLURRED
+                  formats: [AUTO, WEBP, AVIF]
+                )
+              }
+            }
+          }
+        }
       }
     }
     link

@@ -180,6 +180,7 @@ type Club = Node & {
   readonly children: ReadonlyArray<Node>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
+  readonly logo: Maybe<ClubLogosJson>;
   readonly name: Maybe<Scalars['String']>;
   readonly parent: Maybe<Node>;
   readonly shortName: Maybe<Scalars['String']>;
@@ -235,6 +236,7 @@ type ClubFieldSelector = {
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
+  readonly logo: InputMaybe<ClubLogosJsonFieldSelector>;
   readonly name: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly shortName: InputMaybe<FieldSelectorEnum>;
@@ -245,6 +247,7 @@ type ClubFilterInput = {
   readonly children: InputMaybe<NodeFilterListInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
+  readonly logo: InputMaybe<ClubLogosJsonFilterInput>;
   readonly name: InputMaybe<StringQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly shortName: InputMaybe<StringQueryOperatorInput>;
@@ -294,6 +297,7 @@ type ClubGroupConnection_sumArgs = {
 
 type ClubLogosJson = Node & {
   readonly children: ReadonlyArray<Node>;
+  readonly club: Maybe<Club>;
   readonly clubId: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
   readonly image: Maybe<File>;
@@ -348,6 +352,7 @@ type ClubLogosJsonEdge = {
 
 type ClubLogosJsonFieldSelector = {
   readonly children: InputMaybe<NodeFieldSelector>;
+  readonly club: InputMaybe<ClubFieldSelector>;
   readonly clubId: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly image: InputMaybe<FileFieldSelector>;
@@ -357,6 +362,7 @@ type ClubLogosJsonFieldSelector = {
 
 type ClubLogosJsonFilterInput = {
   readonly children: InputMaybe<NodeFilterListInput>;
+  readonly club: InputMaybe<ClubFilterInput>;
   readonly clubId: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly image: InputMaybe<FileFilterInput>;
@@ -411,6 +417,7 @@ type ClubLogosJsonGroupConnection_sumArgs = {
 
 type ClubLogosJsonSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
+  readonly club: InputMaybe<ClubSortInput>;
   readonly clubId: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly image: InputMaybe<FileSortInput>;
@@ -422,6 +429,7 @@ type ClubSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
+  readonly logo: InputMaybe<ClubLogosJsonSortInput>;
   readonly name: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly shortName: InputMaybe<SortOrderEnum>;
@@ -2734,6 +2742,7 @@ type Query_clubArgs = {
   children: InputMaybe<NodeFilterListInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
+  logo: InputMaybe<ClubLogosJsonFilterInput>;
   name: InputMaybe<StringQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   shortName: InputMaybe<StringQueryOperatorInput>;
@@ -2743,6 +2752,7 @@ type Query_clubArgs = {
 
 type Query_clubLogosJsonArgs = {
   children: InputMaybe<NodeFilterListInput>;
+  club: InputMaybe<ClubFilterInput>;
   clubId: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   image: InputMaybe<FileFilterInput>;
@@ -4070,14 +4080,14 @@ type ClubPageQueryVariables = Exact<{
 }>;
 
 
-type ClubPageQuery = { readonly club: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly allTeam: { readonly group: ReadonlyArray<{ readonly fieldValue: string | null, readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly name: string | null, readonly group: { readonly name: string | null } | null } | null }> }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null, readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
+type ClubPageQuery = { readonly club: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly allTeam: { readonly group: ReadonlyArray<{ readonly fieldValue: string | null, readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly name: string | null, readonly group: { readonly name: string | null } | null } | null }> }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
 
 type ClubsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type ClubsPageQuery = { readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null }> }, readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null, readonly logos: { readonly nodes: ReadonlyArray<{ readonly clubId: string | null, readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null }> } };
+type ClubsPageQuery = { readonly allClub: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly shortName: string | null }> }, readonly logos: { readonly nodes: ReadonlyArray<{ readonly clubId: string | null, readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null }> } };
 
-type FixtureDataFragment = { readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null };
+type FixtureDataFragment = { readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null };
 
 type GatsbyImageSharpFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
 
@@ -4120,7 +4130,7 @@ type GroupsPageQuery = { readonly allGroup: { readonly nodes: ReadonlyArray<{ re
 type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexPageQuery = { readonly league: { readonly name: string | null, readonly association: { readonly name: string | null } | null } | null, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null }> }, readonly teams: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly club: { readonly id: string } | null }> }, readonly logos: { readonly nodes: ReadonlyArray<{ readonly clubId: string | null, readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null }> }, readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
+type IndexPageQuery = { readonly league: { readonly name: string | null, readonly association: { readonly name: string | null } | null } | null, readonly allGroup: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null }> }, readonly teams: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly club: { readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null }> }, readonly clubs: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
 
 type LastUpdatedQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4132,7 +4142,7 @@ type LeaguePageQueryVariables = Exact<{
 }>;
 
 
-type LeaguePageQuery = { readonly league: { readonly name: string | null } | null, readonly allTeam: { readonly nodes: ReadonlyArray<{ readonly drawn: number | null, readonly gamesPlayed: number | null, readonly id: string, readonly lost: number | null, readonly matchesDiff: number | null, readonly matchesLost: number | null, readonly matchesWon: number | null, readonly name: string | null, readonly shortName: string | null, readonly pointsDiff: number | null, readonly pointsLost: number | null, readonly pointsWon: number | null, readonly position: number | null, readonly setsDiff: number | null, readonly won: number | null }> }, readonly results: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null }> }, readonly fixtures: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null }> } };
+type LeaguePageQuery = { readonly league: { readonly name: string | null } | null, readonly allTeam: { readonly nodes: ReadonlyArray<{ readonly drawn: number | null, readonly gamesPlayed: number | null, readonly id: string, readonly lost: number | null, readonly matchesDiff: number | null, readonly matchesLost: number | null, readonly matchesWon: number | null, readonly name: string | null, readonly shortName: string | null, readonly pointsDiff: number | null, readonly pointsLost: number | null, readonly pointsWon: number | null, readonly position: number | null, readonly setsDiff: number | null, readonly won: number | null }> }, readonly results: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null }> }, readonly fixtures: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null }> } };
 
 type PlaceholderImageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4144,7 +4154,7 @@ type PlayerPageQueryVariables = Exact<{
 }>;
 
 
-type PlayerPageQuery = { readonly player: { readonly id: string, readonly name: string | null } | null, readonly allPlayerScore: { readonly wonTotal: number | null, readonly lostTotal: number | null, readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly isSecondHalf: boolean | null, readonly gamesPlayed: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly won: number | null, readonly lost: number | null, readonly score: number | null, readonly team: { readonly id: string, readonly name: string | null, readonly club: { readonly id: string, readonly shortName: string | null } | null } | null }> } };
+type PlayerPageQuery = { readonly player: { readonly id: string, readonly name: string | null } | null, readonly allPlayerScore: { readonly wonTotal: number | null, readonly lostTotal: number | null, readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly isSecondHalf: boolean | null, readonly gamesPlayed: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly won: number | null, readonly lost: number | null, readonly score: number | null, readonly team: { readonly id: string, readonly name: string | null, readonly club: { readonly id: string, readonly shortName: string | null, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null }> } };
 
 type SearchQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4167,7 +4177,7 @@ type TeamPageQueryVariables = Exact<{
 }>;
 
 
-type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null } | null> | null } | null, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null, readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
+type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null } | null> | null } | null, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null, readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
 
 type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 
