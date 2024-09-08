@@ -15,6 +15,7 @@ import { ImageDataLike } from 'gatsby-plugin-image'
 
 type FixtureProps = Queries.FixtureDataFragment & {
   variant?: 'win' | 'lose' | 'draw'
+  showDate?: boolean
 }
 
 const Fixture = ({
@@ -24,8 +25,9 @@ const Fixture = ({
   date: dateString,
   link,
   variant,
+  showDate = true,
 }: FixtureProps) => {
-  const date = new Date(dateString)
+  const date = new Date(dateString ?? '')
   const day = date.toLocaleDateString('de-DE', {
     weekday: 'short',
     year: '2-digit',
@@ -62,11 +64,13 @@ const Fixture = ({
         >
           {homeTeam?.id && (
             <div className="is-flex is-align-items-center">
-              <ClubLogo
-                logo={
-                  (homeTeam.club?.logo?.image as ImageDataLike) ?? undefined
-                }
-              />
+              <div className="mr-4 is-flex-shrink-0">
+                <ClubLogo
+                  logo={
+                    (homeTeam.club?.logo?.image as ImageDataLike) ?? undefined
+                  }
+                />
+              </div>
               <Link to={`/teams/${homeTeam.id}`}>
                 <span className={`is-size-6`}>{homeTeam.shortName}</span>
               </Link>
@@ -81,11 +85,13 @@ const Fixture = ({
         >
           {guestTeam?.id && (
             <div className="is-flex is-align-items-center">
-              <ClubLogo
-                logo={
-                  (guestTeam.club?.logo?.image as ImageDataLike) ?? undefined
-                }
-              />
+              <div className="mr-4 is-flex-shrink-0">
+                <ClubLogo
+                  logo={
+                    (guestTeam.club?.logo?.image as ImageDataLike) ?? undefined
+                  }
+                />
+              </div>
               <Link to={`/teams/${guestTeam.id}`}>
                 <span className={`is-size-6`}>{guestTeam.shortName}</span>
               </Link>
@@ -95,7 +101,7 @@ const Fixture = ({
         </div>
       </div>
       <div className={`${dateContainer}`}>
-        <div className={`is-size-7`}>{day}</div>
+        {showDate && <div className={`is-size-7`}>{day}</div>}
         {!result && <div className="has-text-weight-bold">{time}</div>}
         {link && (
           <a

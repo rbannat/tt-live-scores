@@ -3,10 +3,12 @@ import { graphql, Link, PageProps } from 'gatsby'
 import './styles.scss'
 import Layout from '../components/layout'
 import { SEO } from '../components/seo'
-import Hero from '../components/hero'
 import { useLocalStorage } from 'usehooks-ts'
-import { FaHeart } from 'react-icons/fa'
 import ClubLogo from '../components/clubLogo'
+import {
+  ScrollContainer,
+  ScrollContainerItem,
+} from '../components/scrollContainer'
 
 const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
   const [favoriteClubs] = useLocalStorage(
@@ -18,104 +20,112 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
     [] as Array<{ id: string; name: string }>,
   )
 
-  function renderLogoByTeamId(id: string, teams) {
+  function renderLogoByTeamId(
+    id: string,
+    teams: Queries.IndexPageQuery['teams']['nodes'],
+  ) {
     const club = teams.find(team => team.id === id)?.club
     const image = club?.logo?.image
-    return <ClubLogo logo={image} />
+    return (
+      <div className="mb-4">
+        <ClubLogo logo={image} size="large" />
+      </div>
+    )
   }
 
-  function renderLogoByClubId(id: string, clubs) {
+  function renderLogoByClubId(
+    id: string,
+    clubs: Queries.IndexPageQuery['clubs']['nodes'],
+  ) {
     const club = clubs.find(club => club.id === id)
     const image = club?.logo?.image
-    return <ClubLogo logo={image} />
+    return (
+      <div className="mb-4">
+        <ClubLogo logo={image} size="large" />
+      </div>
+    )
   }
 
   return (
     <Layout>
-      <Hero title={'Übersicht'}></Hero>
-      <section className="section">
-        <div className="container">
-          {favoriteTeams?.length > 0 && (
-            <h2 className="title is-4 is-flex is-align-items-center">
-              Meine Teams{' '}
-              <span className="icon has-text-danger ml-2">
-                <FaHeart aria-hidden="true" />
-              </span>
-            </h2>
-          )}
-          <div className="columns is-multiline">
-            {favoriteTeams &&
-              favoriteTeams.map(favoriteTeam => (
-                <div key={favoriteTeam.id} className="column is-one-quarter">
-                  <Link
-                    className="is-block notification is-primary is-flex is-align-items-center"
-                    to={`/teams/${favoriteTeam.id}`}
+      <div className="container">
+        <section className="section">
+          <h2 className="title is-4">Meine Teams</h2>
+          {favoriteTeams?.length > 0 ? (
+            <ScrollContainer>
+              {favoriteTeams &&
+                favoriteTeams.map(favoriteTeam => (
+                  <ScrollContainerItem
+                    key={favoriteTeam.id}
+                    toUrl={`/teams/${favoriteTeam.id}`}
                   >
                     {renderLogoByTeamId(favoriteTeam.id, data.teams.nodes)}
-                    <span className="title is-size-4">{favoriteTeam.name}</span>
-                  </Link>
-                </div>
-              ))}
-          </div>
-
-          {favoriteClubs?.length > 0 && (
-            <h2 className="title is-4 is-flex is-align-items-center">
-              Meine Vereine{' '}
-              <span className="icon has-text-danger ml-2">
-                <FaHeart aria-hidden="true" />
-              </span>
-            </h2>
+                    <span className="title is-6">{favoriteTeam.name}</span>
+                  </ScrollContainerItem>
+                ))}
+            </ScrollContainer>
+          ) : (
+            <p>Es wurden keine Favoriten hinzugefügt.</p>
           )}
-          <div className="columns is-multiline">
-            {favoriteClubs &&
-              favoriteClubs.map(favoriteClub => (
-                <div key={favoriteClub.id} className="column is-one-quarter">
-                  <Link
-                    className="is-block notification is-primary is-flex is-align-items-center"
-                    to={`/clubs/${favoriteClub.id}`}
+        </section>
+        <section className="section">
+          <div className="level is-mobile">
+            <div className="level-left">
+              <div className="level-item">
+                <h2 className="title is-4">Meine Vereine</h2>
+              </div>
+            </div>
+            <div className="level-right">
+              <div className="level-item">
+                <Link to={`/clubs`}>Alle Vereine</Link>
+              </div>
+            </div>
+          </div>
+          {favoriteClubs?.length > 0 ? (
+            <ScrollContainer>
+              {favoriteClubs &&
+                favoriteClubs.map(favoriteClub => (
+                  <ScrollContainerItem
+                    key={favoriteClub.id}
+                    toUrl={`/clubs/${favoriteClub.id}`}
                   >
                     {renderLogoByClubId(favoriteClub.id, data.clubs.nodes)}
-                    <span className="title is-size-4">{favoriteClub.name}</span>
-                  </Link>
-                </div>
-              ))}
-          </div>
-
-          <div className="columns is-multiline">
-            <div className="column is-one-quarter">
-              <Link className="is-block notification is-primary" to={`/clubs`}>
-                <span className="title is-size-4">Alle Vereine</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="columns is-multiline">
-            <div className="column is-one-quarter">
-              <Link
-                className="is-block notification is-warning"
-                to={`/leagues`}
-              >
-                <span className="title is-size-4">Alle Ligen</span>
-              </Link>
-            </div>
-            {data.allGroup.nodes.map(group => (
-              <div key={group.id} className="column is-one-quarter">
-                <Link
-                  className="is-block notification is-warning"
-                  to={`/groups/${group.id}`}
-                >
-                  <span className="title is-size-4">{group.name}</span>
-                </Link>
+                    <span className="title is-6">{favoriteClub.name}</span>
+                  </ScrollContainerItem>
+                ))}
+            </ScrollContainer>
+          ) : (
+            <p>Es wurden keine Favoriten hinzugefügt.</p>
+          )}
+        </section>
+        <section className="section">
+          <div className="level is-mobile">
+            <div className="level-left">
+              <div className="level-item">
+                <h2 className="title is-4">Ligen</h2>
               </div>
-            ))}
+            </div>
+            <div className="level-right">
+              <div className="level-item">
+                <Link to={`/leagues`}>Alle Ligen</Link>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+
+          <ScrollContainer>
+            {data.allGroup.nodes.map(group => (
+              <ScrollContainerItem key={group.id} toUrl={`/groups/${group.id}`}>
+                <span className="title is-6">{group.name}</span>
+              </ScrollContainerItem>
+            ))}
+          </ScrollContainer>
+        </section>
+      </div>
     </Layout>
   )
 }
 
-export const Head = () => <SEO title="Übersicht" />
+export const Head = () => <SEO title="Start" />
 
 export const query = graphql`
   query IndexPage {
@@ -140,7 +150,7 @@ export const query = graphql`
             image {
               childImageSharp {
                 gatsbyImageData(
-                  width: 32
+                  width: 64
                   transformOptions: { fit: CONTAIN }
                   backgroundColor: "white"
                   placeholder: BLURRED
@@ -159,7 +169,7 @@ export const query = graphql`
           image {
             childImageSharp {
               gatsbyImageData(
-                width: 32
+                width: 64
                 transformOptions: { fit: CONTAIN }
                 backgroundColor: "white"
                 placeholder: BLURRED

@@ -10,6 +10,7 @@ const FixtureList = ({
   isPaginated = true,
   itemsPerPage = 5,
   teamId,
+  showDate = true,
 }: {
   fixtures: NonNullable<Queries.FixtureDataFragment[]>
   title: string
@@ -17,6 +18,7 @@ const FixtureList = ({
   isPaginated?: boolean
   itemsPerPage?: number
   teamId?: string
+  showDate?: boolean
 }) => {
   const items = fixtures.map((fixture: Queries.FixtureDataFragment | null) => {
     const hasResult =
@@ -33,15 +35,15 @@ const FixtureList = ({
           fixture.result[0] === fixture.result[1]
           ? 'draw'
           : (fixture?.homeTeam?.id === teamId &&
-              fixture.result[0] !== null &&
-              fixture.result[1] !== null &&
-              fixture.result[0] > fixture.result[1]) ||
-            (fixture?.guestTeam?.id === teamId &&
-              fixture.result[0] !== null &&
-              fixture.result[1] !== null &&
-              fixture.result[1] > fixture.result[0])
-          ? 'win'
-          : 'lose'
+                fixture.result[0] !== null &&
+                fixture.result[1] !== null &&
+                fixture.result[0] > fixture.result[1]) ||
+              (fixture?.guestTeam?.id === teamId &&
+                fixture.result[0] !== null &&
+                fixture.result[1] !== null &&
+                fixture.result[1] > fixture.result[0])
+            ? 'win'
+            : 'lose'
         : undefined
 
     return (
@@ -55,6 +57,7 @@ const FixtureList = ({
           result={fixture.result}
           link={fixture.link}
           variant={variant}
+          showDate={showDate}
         ></Fixture>
       )
     )
@@ -65,7 +68,7 @@ const FixtureList = ({
   })
   return (
     <section>
-      <h2 className="title is-4">{title}</h2>
+      <h2 className="title is-5">{title}</h2>
       {items.length ? (
         <>
           {isPaginated ? (

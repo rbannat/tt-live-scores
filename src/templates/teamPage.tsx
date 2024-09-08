@@ -27,8 +27,9 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     'fav-teams',
     [] as Array<{ id: string; name: string }>,
   )
+  const [activeTab, setActiveTab] = useState<'team' | 'matches'>('team')
 
-  const [activeTab, setActiveTab] = useState(
+  const [activeHalfTab, setActiveHalfTab] = useState(
     firstHalfCompleted ? 'secondHalf' : 'firstHalf',
   )
 
@@ -48,7 +49,7 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     : []
   const players = sortPlayersByPosition(
     data && data.team
-      ? activeTab === 'firstHalf'
+      ? activeHalfTab === 'firstHalf'
         ? data.playersFirstHalf.nodes
         : data.playersSecondHalf.nodes
       : [],
@@ -60,13 +61,6 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
         to={`/leagues/${data.team?.league?.id}`}
       >
         {data.team?.league?.name}
-      </Link>
-      <br />
-      <Link
-        className="is-size-6 has-text-inherit"
-        to={`/clubs/${data.team?.club?.id}`}
-      >
-        {data.team?.club?.shortName}
       </Link>
     </>
   )
@@ -84,36 +78,83 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
 
       <section className="section">
         <div className="container">
-          <h2 className="title is-4">Team</h2>
-          <div className="block">
-            <div className="tabs">
-              <ul>
-                <li className={activeTab === 'firstHalf' ? 'is-active' : ''}>
-                  <a onClick={() => setActiveTab('firstHalf')}>Hinrunde</a>
-                </li>
-                <li className={activeTab === 'secondHalf' ? 'is-active' : ''}>
-                  <a
-                    className={activeTab === 'secondHalf' ? 'is-active' : ''}
-                    onClick={() =>
-                      firstHalfCompleted && setActiveTab('secondHalf')
-                    }
-                  >
-                    Rückrunde
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <nav className="breadcrumb is-small" aria-label="breadcrumbs">
+            <ul>
+              <li>
+                <Link to={`/clubs`}>Vereine</Link>
+              </li>
+              <li>
+                <Link to={`/clubs/${data.team?.club?.id}`}>
+                  {data.team?.club?.shortName}
+                </Link>
+              </li>
+              <li className="is-active">
+                <Link to={`/teams/${data.team?.id}`} aria-current="page">
+                  {data.team?.club?.shortName}
+                </Link>
+              </li>
+            </ul>
+          </nav>
 
-            <PlayerTable players={players}></PlayerTable>
+          <div className="tabs is-boxed">
+            <ul>
+              <li className={activeTab === 'team' ? 'is-active' : ''}>
+                <a className="title is-6" onClick={() => setActiveTab('team')}>
+                  Team
+                </a>
+              </li>
+              <li className={activeTab === 'matches' ? 'is-active' : ''}>
+                <a
+                  className="title is-6"
+                  onClick={() => setActiveTab('matches')}
+                >
+                  Spielplan
+                </a>
+              </li>
+            </ul>
           </div>
 
-          <FixtureList
-            fixtures={fixtures}
-            title={'Spiele'}
-            noResultsText={'Es sind keine Spiele geplant.'}
-            isPaginated={false}
-            teamId={data.team?.id}
-          ></FixtureList>
+          {activeTab === 'team' ? (
+            <>
+              {firstHalfCompleted && (
+                <div className="tabs is-small is-toggle">
+                  <ul>
+                    <li
+                      className={
+                        activeHalfTab === 'firstHalf' ? 'is-active' : ''
+                      }
+                    >
+                      <a onClick={() => setActiveHalfTab('firstHalf')}>
+                        Hinrunde
+                      </a>
+                    </li>
+                    <li
+                      className={
+                        activeHalfTab === 'secondHalf' ? 'is-active' : ''
+                      }
+                    >
+                      <a
+                        onClick={() =>
+                          firstHalfCompleted && setActiveHalfTab('secondHalf')
+                        }
+                      >
+                        Rückrunde
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+
+              <PlayerTable players={players}></PlayerTable>
+            </>
+          ) : (
+            <FixtureList
+              fixtures={fixtures}
+              noResultsText={'Es sind keine Spiele geplant.'}
+              isPaginated={false}
+              teamId={data.team?.id}
+            ></FixtureList>
+          )}
         </div>
       </section>
     </Layout>

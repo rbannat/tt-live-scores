@@ -1,29 +1,42 @@
-import { graphql, HeadProps, Link } from "gatsby"
-import React from "react"
-import Hero from "../components/hero"
-import Layout from "../components/layout"
-import { SEO } from "../components/seo"
+import { graphql, HeadProps, Link, PageProps } from 'gatsby'
+import React from 'react'
+import Layout from '../components/layout'
+import { SEO } from '../components/seo'
+import Hero from '../components/hero'
 
-const GroupPage = ({ data }) => {
+const GroupPage = ({ data }: PageProps<Queries.GroupPageQuery>) => {
   const leagues = data.allLeague.nodes
 
   return (
     <Layout>
-      <Hero title={data.group.name}></Hero>
+      <Hero title={data.group?.name ?? ''}></Hero>
       <section className="section">
         <div className="container">
-          <article className="panel">
-            <p className="panel-heading">Staffeln</p>
+          <nav className="breadcrumb is-small" aria-label="breadcrumbs">
+            <ul>
+              <li>
+                <Link to={`/leagues`}>Ligen</Link>
+              </li>
+              <li className="is-active">
+                <Link to={`/groups/${data.group?.id}`} aria-current="page">
+                  {data.group?.name}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <ul>
             {leagues.map(league => (
-              <Link
-                key={league.id}
-                className="panel-block"
-                to={`/leagues/${league.id}`}
-              >
-                {league.name}
-              </Link>
+              <li key={league.id} className="box p-0">
+                <Link
+                  className="is-flex is-align-items-center px-4 py-3 title is-6"
+                  to={`/leagues/${league.id}`}
+                >
+                  {league.shortName}
+                </Link>
+              </li>
             ))}
-          </article>
+          </ul>
         </div>
       </section>
     </Layout>
@@ -31,7 +44,7 @@ const GroupPage = ({ data }) => {
 }
 
 export const Head = ({ data }: HeadProps<Queries.GroupPageQuery>) => (
-  <SEO title={data.group?.name ?? ""} />
+  <SEO title={data.group?.name ?? ''} />
 )
 
 export const query = graphql`
@@ -44,6 +57,7 @@ export const query = graphql`
       nodes {
         id
         name
+        shortName
       }
     }
   }

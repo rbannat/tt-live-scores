@@ -5,3 +5,8 @@
 .favButton {
   border-radius: 50%;
 }
+
+.hero {
+  background-color: var(--bulma-scheme-main);
+  box-shadow: 0 0.125em 0 0 var(--bulma-background);
+}

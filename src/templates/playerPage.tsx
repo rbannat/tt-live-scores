@@ -9,6 +9,7 @@ import { useLocalStorage } from 'usehooks-ts'
 import { FaCalculator } from 'react-icons/fa'
 import { firstHalfCompleted } from '../utils/constants'
 import { ImageDataLike } from 'gatsby-plugin-image'
+import { tableContainer } from '../components/leagueTable.module.scss'
 
 const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
   const [activeTab, setActiveTab] = useState(
@@ -111,65 +112,79 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
               )}
             </div>
           </div>
-          <div className="block">
-            <div className="tabs">
-              <ul>
-                <li className={activeTab === 'firstHalf' ? 'is-active' : ''}>
-                  <a onClick={() => setActiveTab('firstHalf')}>Hinrunde</a>
-                </li>
-                <li className={activeTab === 'secondHalf' ? 'is-active' : ''}>
-                  <a
-                    className={activeTab === 'secondHalf' ? 'is-active' : ''}
-                    onClick={() =>
-                      firstHalfCompleted && setActiveTab('secondHalf')
-                    }
-                  >
-                    Rückrunde
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
 
-          <div className="table-container u-grow">
-            <table className="table is-fullwidth is-narrow is-striped">
-              <thead>
-                <tr>
-                  <th>Mannschaft</th>
-                  <th>Position</th>
-                  <th>Sp</th>
-                  <th>PK 1</th>
-                  <th>PK 2</th>
-                  <th>Ges</th>
-                </tr>
-              </thead>
-              <tbody>
-                {playerScores
-                  ?.filter(
-                    score =>
-                      score?.isSecondHalf === (activeTab === 'secondHalf'),
-                  )
-                  .map(score => {
-                    return (
-                      <tr key={score?.team?.id}>
-                        <td>
-                          <Link to={`/teams/${score?.team?.id}`}>
-                            {score?.team?.name}
-                          </Link>
-                        </td>
-                        <td>{score?.position}</td>
-                        <td>{score?.gamesPlayed}</td>
-                        <td>{score?.pk1Diff?.join(':')}</td>
-                        <td>{score?.pk2Diff?.join(':')}</td>
-                        <td>
-                          {(score?.won || score?.lost) &&
-                            [score?.won, score?.lost].join(':')}
-                        </td>
-                      </tr>
+          {firstHalfCompleted && (
+            <div className="block">
+              <div className="tabs is-small is-toggle">
+                <ul>
+                  <li className={activeTab === 'firstHalf' ? 'is-active' : ''}>
+                    <a onClick={() => setActiveTab('firstHalf')}>Hinrunde</a>
+                  </li>
+                  <li className={activeTab === 'secondHalf' ? 'is-active' : ''}>
+                    <a
+                      onClick={() =>
+                        firstHalfCompleted && setActiveTab('secondHalf')
+                      }
+                    >
+                      Rückrunde
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          <div className="box p-0">
+            <div className={`${tableContainer} table-container`}>
+              <table className="table is-fullwidth is-narrow is-striped">
+                <thead>
+                  <tr>
+                    <th>Team</th>
+                    <th className="has-text-centered">Pos</th>
+                    <th className="has-text-centered">Sp</th>
+                    <th className="has-text-centered">PK1</th>
+                    <th className="has-text-centered">PK2</th>
+                    <th className="has-text-centered">Ges</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {playerScores
+                    ?.filter(
+                      score =>
+                        score?.isSecondHalf === (activeTab === 'secondHalf'),
                     )
-                  })}
-              </tbody>
-            </table>
+                    .map(score => {
+                      return (
+                        <tr key={score?.team?.id}>
+                          <td className="is-vcentered">
+                            <Link to={`/teams/${score?.team?.id}`}>
+                              {score?.team?.name}
+                            </Link>
+                          </td>
+                          <td className="is-vcentered has-text-centered">
+                            <span className="has-text-weight-bold">
+                              {score?.position}
+                            </span>
+                          </td>
+                          <td className="is-vcentered has-text-centered">
+                            {score?.gamesPlayed}
+                          </td>
+                          <td className="is-vcentered has-text-centered">
+                            {score?.pk1Diff?.join(':')}
+                          </td>
+                          <td className="is-vcentered has-text-centered">
+                            {score?.pk2Diff?.join(':')}
+                          </td>
+                          <td className="is-vcentered has-text-centered">
+                            {(score?.won || score?.lost) &&
+                              [score?.won, score?.lost].join(':')}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>

@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header>
       <nav
-        className={`navbar ${navbar}`}
+        className={`navbar ${navbar} has-shadow`}
         role="navigation"
         aria-label="main navigation"
       >
@@ -56,7 +56,7 @@ const Header = () => {
         >
           <div className="navbar-start">
             <Link to="/" className="navbar-item">
-              Übersicht
+              Start
             </Link>
             <Link to="/clubs" className="navbar-item">
               Vereine

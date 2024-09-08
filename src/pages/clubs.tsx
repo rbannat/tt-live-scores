@@ -1,38 +1,48 @@
 import * as React from 'react'
 import { graphql, Link, PageProps } from 'gatsby'
 
-import Hero from '../components/hero'
 import Layout from '../components/layout'
 import { SEO } from '../components/seo'
 import ClubLogo from '../components/clubLogo'
 
 const ClubsPage = ({ data }: PageProps<Queries.ClubsPageQuery>) => {
-  function renderLogoByClubId(id: string, logos) {
+  function renderLogoByClubId(
+    id: string,
+    logos: Queries.ClubsPageQuery['logos']['nodes'],
+  ) {
     const logo = logos.find(logo => logo.clubId === id)
-    return <ClubLogo logo={logo?.image} />
+    return (
+      <div className="mr-4 is-flex-shrink-0">
+        <ClubLogo logo={logo?.image} />
+      </div>
+    )
   }
 
   return (
     <Layout>
-      <Hero title={'Vereine'}></Hero>
       <section className="section">
         <div className="container">
-          <article className="panel is-primary">
+          <h1 className="title is-4">Vereine</h1>
+          <ul>
             {[...data.allClub.nodes]
               .sort(function (a, b) {
-                return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+                return (a.name?.toLowerCase() ?? 0) <
+                  (b.name?.toLowerCase() ?? 0)
+                  ? -1
+                  : 1
               })
               .map(club => (
-                <Link
-                  key={club.id}
-                  className="panel-block"
-                  to={`/clubs/${club.id}`}
-                >
-                  {renderLogoByClubId(club.id, data.logos.nodes)}
-                  {club.name}
-                </Link>
+                <li key={club.id} className="box p-0">
+                  <Link
+                    to={`/clubs/${club.id}`}
+                    className="is-flex is-align-items-center px-4 py-3 title is-6 "
+                  >
+                    {renderLogoByClubId(club.id, data.logos.nodes)}
+                    {club.name}
+                  </Link>
+                </li>
               ))}
-          </article>
+          </ul>
         </div>
       </section>
     </Layout>

@@ -10,6 +10,7 @@ import Header from './header'
 import Footer from './footer'
 import { useLocalStorage } from 'usehooks-ts'
 import { currentSeason } from '../utils/constants'
+import { main, pageWrapper } from './layout.module.scss'
 
 const Layout = ({ children }: React.PropsWithChildren) => {
   const [, setFavoriteClubs] = useLocalStorage(
@@ -33,11 +34,11 @@ const Layout = ({ children }: React.PropsWithChildren) => {
   }, [])
 
   return (
-    <>
+    <div className={pageWrapper}>
       <Header />
-      <main>{children}</main>
+      <main className={`${main}`}>{children}</main>
       <Footer></Footer>
-    </>
+    </div>
   )
 }
 

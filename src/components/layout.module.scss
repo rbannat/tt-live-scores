@@ -1,0 +1,10 @@
+.main {
+  flex: 1 1 auto;
+  background-color: var(--bulma-scheme-main-bis);
+}
+
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

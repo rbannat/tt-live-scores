@@ -1,23 +1,27 @@
-import * as React from "react"
-import { graphql, Link, PageProps } from "gatsby"
+import * as React from 'react'
+import { graphql, Link, PageProps } from 'gatsby'
 
-import Hero from "../components/hero"
-import Layout from "../components/layout"
-import { SEO } from "../components/seo"
+import Layout from '../components/layout'
+import { SEO } from '../components/seo'
 
 const GroupsPage = ({ data }: PageProps<Queries.GroupsPageQuery>) => {
   return (
     <Layout>
-      <Hero title={"Ligen"}></Hero>
       <section className="section">
         <div className="container">
-          <article className="panel is-primary">
+          <h1 className="title is-4">Ligen</h1>
+          <ul>
             {data.allGroup.nodes.map(group => (
-              <Link className="panel-block" to={`/groups/${group.id}`}>
-                {group.name}
-              </Link>
+              <li key={group.id} className="box p-0">
+                <Link
+                  to={`/groups/${group.id}`}
+                  className="is-flex is-align-items-center px-4 py-3 title is-6"
+                >
+                  {group.name}
+                </Link>
+              </li>
             ))}
-          </article>
+          </ul>
         </div>
       </section>
     </Layout>

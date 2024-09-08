@@ -1,10 +1,71 @@
 import { graphql, HeadProps, Link, PageProps } from 'gatsby'
-import React from 'react'
+import React, { useState } from 'react'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
 import { SEO } from '../components/seo'
 import { useLocalStorage } from 'usehooks-ts'
 import { ImageDataLike } from 'gatsby-plugin-image'
+import { FaAngleDown } from 'react-icons/fa'
+import FixtureList from '../components/fixtureList'
+import { firstHalfCompleted } from '../utils/constants'
+import { tableContainer } from '../components/leagueTable.module.scss'
+
+type PlayerTableProps = {
+  players:
+    | Queries.TeamPageQuery['playersFirstHalf']['nodes']
+    | Queries.TeamPageQuery['playersSecondHalf']['nodes']
+}
+const PlayerTable = ({ players }: PlayerTableProps) => (
+  <div className="box p-0">
+    <div className={`${tableContainer} table-container`}>
+      <table className="table is-fullwidth is-narrow is-striped">
+        <thead>
+          <tr>
+            <th className="has-text-centered">#</th>
+            <th>Name</th>
+            <th className="has-text-centered">Sp</th>
+            <th className="has-text-centered">PK1</th>
+            <th className="has-text-centered">PK2</th>
+            <th className="has-text-centered">Ges</th>
+            <th className="has-text-centered">LPZ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {players.map(
+            (
+              { player, score, won, lost, gamesPlayed, pk1Diff, pk2Diff },
+              index,
+            ) => {
+              return (
+                <tr key={player?.id}>
+                  <td className="is-vcentered has-text-centered">
+                    <span className="has-text-weight-bold">{index + 1}</span>
+                  </td>
+                  <td className="is-vcentered">
+                    <Link to={`/players/${player?.id}`}>{player?.name}</Link>
+                  </td>
+                  <td className="is-vcentered has-text-centered">
+                    {gamesPlayed}
+                  </td>
+                  <td className="is-vcentered has-text-centered">
+                    {pk1Diff?.join(':')}
+                  </td>
+                  <td className="is-vcentered has-text-centered">
+                    {pk2Diff?.join(':')}
+                  </td>
+                  <td className="is-vcentered has-text-centered">
+                    {(won || lost) && [won, lost].join(':')}
+                  </td>
+                  <td className="is-vcentered has-text-centered">{score}</td>
+                </tr>
+              )
+            },
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+)
 
 // Javascript program to convert Roman
 // Numerals to Numberspublic
@@ -54,21 +115,19 @@ function romanToDecimal(str: string) {
   return res
 }
 
-function sortByRomanNumeral(a, b) {
+function sortByRomanNumeral(a: string, b: string) {
   const romanNumeralRegex =
     / M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
 
-  const romanNumeralA = a.match(romanNumeralRegex)
-    ? a.match(romanNumeralRegex)[0].trim()
-    : null
-  const romanNumeralB = b.match(romanNumeralRegex)
-    ? b.match(romanNumeralRegex)[0].trim()
-    : null
+  const aResult = a.match(romanNumeralRegex)
+  const bResult = b.match(romanNumeralRegex)
+  const romanNumeralA = aResult ? aResult[0].trim() : null
+  const romanNumeralB = bResult ? bResult[0].trim() : null
 
-  a = romanNumeralA ? romanToDecimal(romanNumeralA) : 0
-  b = romanNumeralB ? romanToDecimal(romanNumeralB) : 0
+  const newA = romanNumeralA ? romanToDecimal(romanNumeralA) : 0
+  const newB = romanNumeralB ? romanToDecimal(romanNumeralB) : 0
 
-  return a < b ? -1 : 1
+  return newA < newB ? -1 : 1
 }
 
 const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
@@ -86,11 +145,65 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
       ]),
     ])
   }
+
+  function handleMatchFilterSelect(option: typeof matchesFilter) {
+    setMatchesFilter(option)
+    setDropDownActive(false)
+  }
+
+  function toggleDropDown() {
+    setDropDownActive(!dropDownActive)
+  }
+
+  const homeFixtures = [...data.homeFixtures.nodes]
+  const guestFixtures = [...data.guestFixtures.nodes]
+  const allFixtures = [...homeFixtures, ...guestFixtures].sort(
+    (fixtureA, fixtureB) =>
+      new Date(fixtureA?.date ?? '').getTime() -
+      new Date(fixtureB.date ?? '').getTime(),
+  )
+  const groupBy = (array: any[], keyGetter: (item: any) => string) => {
+    return array.reduce(
+      (result, currentItem) => {
+        const key = keyGetter(currentItem)
+        if (!result[key]) {
+          result[key] = []
+        }
+        result[key].push(currentItem)
+        return result
+      },
+      {} as Record<string, any[]>,
+    )
+  }
+  const allDates = groupBy(allFixtures, ({ date }) => date ?? 'notSpecified')
+  const homeDates = groupBy(homeFixtures, ({ date }) => date ?? 'notSpecified')
+  const guestDates = groupBy(
+    guestFixtures,
+    ({ date }) => date ?? 'notSpecified',
+  )
+
+  const playerScores = data.allPlayer.nodes.reduce((playerScores, player) => {
+    return [
+      ...playerScores,
+      player.scores?.find(score => score?.isSecondHalf === firstHalfCompleted),
+    ]
+  }, [])
+
+  playerScores.sort((scoreA, scoreB) => scoreB.score - scoreA.score)
+
   const groups = data.allTeam.group
+
   const [favoriteClubs, setFavoriteClubs] = useLocalStorage(
     'fav-clubs',
     [] as Array<{ id: string; name: string }>,
   )
+  const [activeTab, setActiveTab] = useState<'teams' | 'matches' | 'players'>(
+    'teams',
+  )
+  const [matchesFilter, setMatchesFilter] = useState<'Alle' | 'Heim' | 'Gast'>(
+    'Alle',
+  )
+  const [dropDownActive, setDropDownActive] = useState<boolean>(false)
   return (
     <Layout>
       <Hero
@@ -101,27 +214,150 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
       ></Hero>
       <section className="section">
         <div className="container">
-          {groups.map(group => (
-            <article key={group.fieldValue} className="panel is-primary">
-              <p className="panel-heading">{group.fieldValue}</p>
-              {group.nodes
-                .sort((teamA, teamB) =>
-                  sortByRomanNumeral(teamA.shortName, teamB.shortName),
-                )
-                .map(team => (
-                  <Link
-                    key={team.id}
-                    className="panel-block"
-                    to={`/teams/${team.id}`}
-                  >
-                    <div>
-                      {team.shortName} <br />
-                      <span className="is-size-7">{team.league.name}</span>
+          <nav className="breadcrumb is-small" aria-label="breadcrumbs">
+            <ul>
+              <li>
+                <Link to={`/clubs`}>Vereine</Link>
+              </li>
+              <li className="is-active">
+                <Link to={`/clubs/${data.club?.id}`} aria-current="page">
+                  {data.club?.shortName}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="tabs is-boxed">
+            <ul>
+              <li className={activeTab === 'teams' ? 'is-active' : ''}>
+                <a className="title is-6" onClick={() => setActiveTab('teams')}>
+                  Teams
+                </a>
+              </li>
+              <li className={activeTab === 'matches' ? 'is-active' : ''}>
+                <a
+                  className="title is-6"
+                  onClick={() => setActiveTab('matches')}
+                >
+                  Spielplan
+                </a>
+              </li>
+              <li className={activeTab === 'players' ? 'is-active' : ''}>
+                <a
+                  className="title is-6"
+                  onClick={() => setActiveTab('players')}
+                >
+                  Spieler
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {activeTab === 'teams' ? (
+            groups.map(group => (
+              <div className="block" key={group.fieldValue}>
+                <h2 className="title is-5">{group.fieldValue}</h2>
+                <ul>
+                  {[...group.nodes]
+                    .sort((teamA, teamB) =>
+                      sortByRomanNumeral(
+                        teamA.shortName ?? '',
+                        teamB.shortName ?? '',
+                      ),
+                    )
+                    .map(team => (
+                      <li key={team.id} className="box p-0">
+                        <Link
+                          className="is-flex is-align-items-center px-4 py-3 title is-6 "
+                          to={`/teams/${team.id}`}
+                        >
+                          <div>
+                            {team.shortName} <br />
+                            <span className="is-size-7 has-text-weight-normal">
+                              {team.league?.name}
+                            </span>
+                          </div>
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            ))
+          ) : activeTab === 'matches' ? (
+            <>
+              <div className="block">
+                <div
+                  className={`dropdown ${dropDownActive ? 'is-active' : ''}`}
+                >
+                  <div className="dropdown-trigger">
+                    <button
+                      className="button"
+                      aria-haspopup="true"
+                      aria-controls="dropdown-menu"
+                      onClick={toggleDropDown}
+                    >
+                      <span>{matchesFilter}</span>
+                      <span className="icon">
+                        <FaAngleDown aria-hidden="true" />
+                      </span>
+                    </button>
+                  </div>
+
+                  <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div className="dropdown-content">
+                      <a
+                        href="#"
+                        className={`dropdown-item ${matchesFilter === 'Alle' ? 'is-active' : ''}`}
+                        onClick={() => handleMatchFilterSelect('Alle')}
+                      >
+                        Alle
+                      </a>
+                      <a
+                        className={`dropdown-item ${matchesFilter === 'Heim' ? 'is-active' : ''}`}
+                        onClick={() => handleMatchFilterSelect('Heim')}
+                      >
+                        Heim
+                      </a>
+                      <a
+                        href="#"
+                        className={`dropdown-item ${matchesFilter === 'Gast' ? 'is-active' : ''}`}
+                        onClick={() => handleMatchFilterSelect('Gast')}
+                      >
+                        Gast
+                      </a>
                     </div>
-                  </Link>
-                ))}
-            </article>
-          ))}
+                  </div>
+                </div>
+              </div>
+
+              {Object.entries(
+                matchesFilter === 'Heim'
+                  ? homeDates
+                  : matchesFilter === 'Gast'
+                    ? guestDates
+                    : allDates,
+              ).map(([key, value]) => (
+                <div className="block">
+                  <h2 className="title is-6">
+                    {new Date(key).toLocaleDateString('de-DE', {
+                      weekday: 'long',
+                      year: '2-digit',
+                      month: '2-digit',
+                      day: '2-digit',
+                    })}
+                  </h2>
+                  <FixtureList
+                    fixtures={value}
+                    isPaginated={false}
+                    showDate={false}
+                    noResultsText={'Es sind keine Spiele geplant.'}
+                  ></FixtureList>
+                </div>
+              ))}
+            </>
+          ) : (
+            <PlayerTable players={playerScores}></PlayerTable>
+          )}
         </div>
       </section>
     </Layout>
@@ -156,6 +392,52 @@ export const query = graphql`
             }
           }
         }
+      }
+    }
+    allPlayer(
+      filter: {
+        scores: { elemMatch: { team: { club: { id: { eq: $clubId } } } } }
+      }
+    ) {
+      nodes {
+        scores {
+          score
+          isSecondHalf
+          gamesPlayed
+          pk1Diff
+          pk2Diff
+          won
+          lost
+          score
+          player {
+            id
+            name
+          }
+        }
+      }
+    }
+    allFixture(
+      sort: { date: ASC }
+      filter: { homeTeam: { club: { id: { eq: $clubId } } } }
+    ) {
+      nodes {
+        ...FixtureData
+      }
+    }
+    homeFixtures: allFixture(
+      sort: { date: ASC }
+      filter: { homeTeam: { club: { id: { eq: $clubId } } } }
+    ) {
+      nodes {
+        ...FixtureData
+      }
+    }
+    guestFixtures: allFixture(
+      sort: { date: ASC }
+      filter: { guestTeam: { club: { id: { eq: $clubId } } } }
+    ) {
+      nodes {
+        ...FixtureData
       }
     }
     logo: clubLogosJson(clubId: { eq: $clubId }) {
