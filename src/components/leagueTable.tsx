@@ -6,8 +6,10 @@ import { ImageDataLike } from 'gatsby-plugin-image'
 
 const LeagueTable = ({
   teams,
+  teamId,
 }: {
   teams: Queries.LeaguePageQuery['allTeam']['nodes']
+  teamId?: string
 }) => {
   return (
     <div className={`${tableContainer} table-container`}>
@@ -26,7 +28,10 @@ const LeagueTable = ({
         <tbody>
           {teams.map(team => {
             return (
-              <tr key={team.id}>
+              <tr
+                key={team.id}
+                className={teamId === team.id ? 'is-selected' : undefined}
+              >
                 <td className="is-vcentered has-text-centered">
                   <span className="has-text-weight-bold">{team.position}</span>
                 </td>

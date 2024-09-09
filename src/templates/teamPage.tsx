@@ -7,8 +7,10 @@ import Hero from '../components/hero'
 import PlayerTable from '../components/playerTable'
 import { useLocalStorage } from 'usehooks-ts'
 import { firstHalfCompleted } from '../utils/constants'
+import LeagueTable from '../components/leagueTable'
 
 const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
+  console.log(data)
   function handleFavClick() {
     if (favoriteTeams?.find(team => team.id === data.team?.id)) {
       setFavoriteTeams(prevState =>
@@ -27,7 +29,9 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     'fav-teams',
     [] as Array<{ id: string; name: string }>,
   )
-  const [activeTab, setActiveTab] = useState<'team' | 'matches'>('team')
+  const [activeTab, setActiveTab] = useState<'team' | 'table' | 'matches'>(
+    'team',
+  )
 
   const [activeHalfTab, setActiveHalfTab] = useState(
     firstHalfCompleted ? 'secondHalf' : 'firstHalf',
@@ -90,7 +94,7 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
               </li>
               <li className="is-active">
                 <Link to={`/teams/${data.team?.id}`} aria-current="page">
-                  {data.team?.club?.shortName}
+                  {data.team?.shortName}
                 </Link>
               </li>
             </ul>
@@ -100,7 +104,12 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
             <ul>
               <li className={activeTab === 'team' ? 'is-active' : ''}>
                 <a className="title is-6" onClick={() => setActiveTab('team')}>
-                  Team
+                  Spieler
+                </a>
+              </li>
+              <li className={activeTab === 'table' ? 'is-active' : ''}>
+                <a className="title is-6" onClick={() => setActiveTab('table')}>
+                  Tabelle
                 </a>
               </li>
               <li className={activeTab === 'matches' ? 'is-active' : ''}>
@@ -147,6 +156,13 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
 
               <PlayerTable players={players}></PlayerTable>
             </>
+          ) : activeTab === 'table' ? (
+            <div className="box p-0">
+              <LeagueTable
+                teams={data.teams?.nodes}
+                teamId={data.team?.id}
+              ></LeagueTable>
+            </div>
           ) : (
             <FixtureList
               fixtures={fixtures}
@@ -180,7 +196,7 @@ export const Head = ({ data }: HeadProps<Queries.TeamPageQuery>) => (
 )
 
 export const query = graphql`
-  query TeamPage($teamId: String!, $clubId: String!) {
+  query TeamPage($teamId: String!, $clubId: String!, $leagueId: String!) {
     team(id: { eq: $teamId }) {
       id
       league {
@@ -196,6 +212,46 @@ export const query = graphql`
       }
       fixtures {
         ...FixtureData
+      }
+    }
+    teams: allTeam(
+      filter: { league: { id: { eq: $leagueId } } }
+      sort: { position: ASC }
+    ) {
+      nodes {
+        drawn
+        gamesPlayed
+        id
+        lost
+        matchesDiff
+        matchesLost
+        matchesWon
+        name
+        shortName
+        pointsDiff
+        pointsLost
+        pointsWon
+        position
+        setsDiff
+        won
+        club {
+          id
+          logo {
+            image {
+              childImageSharp {
+                gatsbyImageData(
+                  width: 32
+                  height: 32
+                  layout: FIXED
+                  transformOptions: { fit: CONTAIN }
+                  backgroundColor: "white"
+                  placeholder: BLURRED
+                  formats: [AUTO, WEBP, AVIF]
+                )
+              }
+            }
+          }
+        }
       }
     }
     playersFirstHalf: allPlayerScore(
