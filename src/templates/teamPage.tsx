@@ -10,7 +10,6 @@ import { firstHalfCompleted } from '../utils/constants'
 import LeagueTable from '../components/leagueTable'
 
 const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
-  console.log(data)
   function handleFavClick() {
     if (favoriteTeams?.find(team => team.id === data.team?.id)) {
       setFavoriteTeams(prevState =>

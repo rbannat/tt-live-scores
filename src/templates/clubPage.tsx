@@ -5,7 +5,6 @@ import Layout from '../components/layout'
 import { SEO } from '../components/seo'
 import { useLocalStorage } from 'usehooks-ts'
 import { ImageDataLike } from 'gatsby-plugin-image'
-import { FaAngleDown } from 'react-icons/fa'
 import FixtureList from '../components/fixtureList'
 import { firstHalfCompleted } from '../utils/constants'
 import { tableContainer } from '../components/leagueTable.module.scss'
@@ -146,40 +145,12 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
     ])
   }
 
-  function handleMatchFilterSelect(option: typeof matchesFilter) {
-    setMatchesFilter(option)
-    setDropDownActive(false)
-  }
-
-  function toggleDropDown() {
-    setDropDownActive(!dropDownActive)
-  }
-
   const homeFixtures = [...data.homeFixtures.nodes]
   const guestFixtures = [...data.guestFixtures.nodes]
   const allFixtures = [...homeFixtures, ...guestFixtures].sort(
     (fixtureA, fixtureB) =>
       new Date(fixtureA?.date ?? '').getTime() -
       new Date(fixtureB.date ?? '').getTime(),
-  )
-  const groupBy = (array: any[], keyGetter: (item: any) => string) => {
-    return array.reduce(
-      (result, currentItem) => {
-        const key = keyGetter(currentItem)
-        if (!result[key]) {
-          result[key] = []
-        }
-        result[key].push(currentItem)
-        return result
-      },
-      {} as Record<string, any[]>,
-    )
-  }
-  const allDates = groupBy(allFixtures, ({ date }) => date ?? 'notSpecified')
-  const homeDates = groupBy(homeFixtures, ({ date }) => date ?? 'notSpecified')
-  const guestDates = groupBy(
-    guestFixtures,
-    ({ date }) => date ?? 'notSpecified',
   )
 
   const playerScores = data.allPlayer.nodes.reduce((playerScores, player) => {
@@ -200,10 +171,7 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
   const [activeTab, setActiveTab] = useState<'teams' | 'matches' | 'players'>(
     'teams',
   )
-  const [matchesFilter, setMatchesFilter] = useState<'Alle' | 'Heim' | 'Gast'>(
-    'Alle',
-  )
-  const [dropDownActive, setDropDownActive] = useState<boolean>(false)
+
   return (
     <Layout>
       <Hero
@@ -285,75 +253,13 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
             ))
           ) : activeTab === 'matches' ? (
             <>
-              <div className="block">
-                <div
-                  className={`dropdown ${dropDownActive ? 'is-active' : ''}`}
-                >
-                  <div className="dropdown-trigger">
-                    <button
-                      className="button"
-                      aria-haspopup="true"
-                      aria-controls="dropdown-menu"
-                      onClick={toggleDropDown}
-                    >
-                      <span>{matchesFilter}</span>
-                      <span className="icon">
-                        <FaAngleDown aria-hidden="true" />
-                      </span>
-                    </button>
-                  </div>
-
-                  <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div className="dropdown-content">
-                      <a
-                        href="#"
-                        className={`dropdown-item ${matchesFilter === 'Alle' ? 'is-active' : ''}`}
-                        onClick={() => handleMatchFilterSelect('Alle')}
-                      >
-                        Alle
-                      </a>
-                      <a
-                        className={`dropdown-item ${matchesFilter === 'Heim' ? 'is-active' : ''}`}
-                        onClick={() => handleMatchFilterSelect('Heim')}
-                      >
-                        Heim
-                      </a>
-                      <a
-                        href="#"
-                        className={`dropdown-item ${matchesFilter === 'Gast' ? 'is-active' : ''}`}
-                        onClick={() => handleMatchFilterSelect('Gast')}
-                      >
-                        Gast
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {Object.entries(
-                matchesFilter === 'Heim'
-                  ? homeDates
-                  : matchesFilter === 'Gast'
-                    ? guestDates
-                    : allDates,
-              ).map(([key, value]) => (
-                <div className="block">
-                  <h2 className="title is-6">
-                    {new Date(key).toLocaleDateString('de-DE', {
-                      weekday: 'long',
-                      year: '2-digit',
-                      month: '2-digit',
-                      day: '2-digit',
-                    })}
-                  </h2>
-                  <FixtureList
-                    fixtures={value}
-                    isPaginated={false}
-                    showDate={false}
-                    noResultsText={'Es sind keine Spiele geplant.'}
-                  ></FixtureList>
-                </div>
-              ))}
+              <FixtureList
+                fixtures={allFixtures}
+                groupByDate={true}
+                showFilter={true}
+                clubId={data.club?.id}
+                noResultsText={'Es sind keine Spiele geplant.'}
+              ></FixtureList>
             </>
           ) : (
             <PlayerTable players={playerScores}></PlayerTable>

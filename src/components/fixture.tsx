@@ -129,6 +129,7 @@ export const fixtureDataFragment = graphql`
         name
         shortName
         club {
+          id
           logo {
             image {
               childImageSharp {
@@ -152,6 +153,7 @@ export const fixtureDataFragment = graphql`
         name
         shortName
         club {
+          id
           logo {
             image {
               childImageSharp {
