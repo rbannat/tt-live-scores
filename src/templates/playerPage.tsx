@@ -74,7 +74,7 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
             <div className="level-item has-text-centered">
               {livePz && (
                 <div>
-                  <p className="heading">LivePZ </p>
+                  <p className="heading">LivePZ</p>
                   <p className="title">{livePz}</p>
                   <p className="mt-3">
                     <Button
@@ -92,24 +92,20 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
               )}
             </div>
             <div className="level-item has-text-centered">
-              {data.allPlayerScore.wonTotal && (
-                <div>
-                  <p className="heading">Gewonnen</p>
-                  <p className="title has-text-success mb-5">
-                    {data.allPlayerScore.wonTotal}
-                  </p>
-                </div>
-              )}
+              <div>
+                <p className="heading">Gewonnen</p>
+                <p className="title has-text-success mb-5">
+                  {data.allPlayerScore.wonTotal ?? '0'}
+                </p>
+              </div>
             </div>
             <div className="level-item has-text-centered">
-              {data.allPlayerScore.lostTotal && (
-                <div>
-                  <p className="heading">Verloren</p>
-                  <p className="title has-text-danger mb-5">
-                    {data.allPlayerScore.lostTotal}
-                  </p>
-                </div>
-              )}
+              <div>
+                <p className="heading">Verloren</p>
+                <p className="title has-text-danger mb-5">
+                  {data.allPlayerScore.lostTotal ?? '0'}
+                </p>
+              </div>
             </div>
           </div>
 

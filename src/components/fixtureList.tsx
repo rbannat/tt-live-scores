@@ -43,14 +43,21 @@ const FixtureList = ({
       {} as Record<string, any[]>,
     )
   }
-  const allDates = groupBy(fixtures, ({ date }) => date ?? 'notSpecified')
+
+  const dateKeyGetter = function ({ date }: Queries.FixtureDataFragment) {
+    if (!date) return 'notSpecified'
+    const dateObj = new Date(date)
+    return `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`
+  }
+
+  const allDates = groupBy(fixtures, dateKeyGetter)
   const homeDates = groupBy(
     fixtures.filter(fixture => fixture.homeTeam?.club?.id === clubId),
-    ({ date }) => date ?? 'notSpecified',
+    dateKeyGetter,
   )
   const guestDates = groupBy(
     fixtures.filter(fixture => fixture.guestTeam?.club?.id === clubId),
-    ({ date }) => date ?? 'notSpecified',
+    dateKeyGetter,
   )
 
   function handleMatchFilterSelect(option: typeof matchesFilter) {
@@ -62,50 +69,75 @@ const FixtureList = ({
     setDropDownActive(!dropDownActive)
   }
 
+  function getFixtureVariant({
+    fixture,
+    teamId,
+    clubId,
+  }: {
+    fixture: Queries.FixtureDataFragment
+    teamId?: string
+    clubId?: string
+  }) {
+    // Early exits for missing teamId or clubId
+    if (!teamId && !clubId) return
+
+    const { homeTeam, guestTeam, result } = fixture
+
+    // Validate fixture data
+    if (
+      !homeTeam?.id ||
+      !guestTeam?.id ||
+      !homeTeam.club?.id ||
+      !guestTeam.club?.id ||
+      !result ||
+      result[0] === null ||
+      result[1] === null
+    ) {
+      return undefined
+    }
+
+    const [homeResult, guestResult] = result
+
+    // Check if teamId or clubId matches either home or guest team
+    const isTeamInvolved =
+      teamId && (homeTeam.id === teamId || guestTeam.id === teamId)
+    const isClubInvolved =
+      clubId && (homeTeam.club.id === clubId || guestTeam.club.id === clubId)
+
+    if (teamId && !isTeamInvolved) return undefined
+    if (clubId && !isClubInvolved) return undefined
+
+    // Determine the match result variant
+    if (homeResult === guestResult) return 'draw'
+
+    const isHomeWin = homeResult > guestResult
+    const isGuestWin = guestResult > homeResult
+
+    const isTeamHome = homeTeam.id === teamId
+    const isClubHome = homeTeam.club.id === clubId
+
+    const isWin = teamId
+      ? (isTeamHome && isHomeWin) || (!isTeamHome && isGuestWin)
+      : (isClubHome && isHomeWin) || (!isClubHome && isGuestWin)
+
+    return isWin ? 'win' : 'lose'
+  }
+
   const renderFixture = (fixture: Queries.FixtureDataFragment | null) => {
-    const hasResult =
-      !!fixture?.result &&
-      fixture.result[0] !== null &&
-      fixture.result[1] !== null
-
-    // TODO: also render variant if has clubId!
-    const hasTeam =
-      teamId &&
-      (fixture?.homeTeam?.id === teamId || fixture?.guestTeam?.id === teamId)
-    const variant =
-      hasTeam && hasResult
-        ? fixture.result[0] !== null &&
-          fixture.result[1] !== null &&
-          fixture.result[0] === fixture.result[1]
-          ? 'draw'
-          : (fixture?.homeTeam?.id === teamId &&
-                fixture.result[0] !== null &&
-                fixture.result[1] !== null &&
-                fixture.result[0] > fixture.result[1]) ||
-              (fixture?.guestTeam?.id === teamId &&
-                fixture.result[0] !== null &&
-                fixture.result[1] !== null &&
-                fixture.result[1] > fixture.result[0])
-            ? 'win'
-            : 'lose'
-        : undefined
-
     return (
-      <>
-        {fixture && (
-          <Fixture
-            key={fixture.id}
-            id={fixture.id}
-            homeTeam={fixture.homeTeam}
-            guestTeam={fixture.guestTeam}
-            date={fixture.date}
-            result={fixture.result}
-            link={fixture.link}
-            variant={variant}
-            showDate={!groupByDate}
-          ></Fixture>
-        )}
-      </>
+      fixture && (
+        <Fixture
+          key={fixture.id}
+          id={fixture.id}
+          homeTeam={fixture.homeTeam}
+          guestTeam={fixture.guestTeam}
+          date={fixture.date}
+          result={fixture.result}
+          link={fixture.link}
+          variant={getFixtureVariant({ fixture, clubId, teamId })}
+          showDate={!groupByDate}
+        ></Fixture>
+      )
     )
   }
 

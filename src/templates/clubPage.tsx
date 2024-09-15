@@ -9,12 +9,13 @@ import FixtureList from '../components/fixtureList'
 import { firstHalfCompleted } from '../utils/constants'
 import { tableContainer } from '../components/leagueTable.module.scss'
 
+type Player = Queries.ClubPageQuery['allPlayer']['nodes'][number]
+type PlayerScore = NonNullable<Player['scores']>[number]
+
 type PlayerTableProps = {
-  players:
-    | Queries.TeamPageQuery['playersFirstHalf']['nodes']
-    | Queries.TeamPageQuery['playersSecondHalf']['nodes']
+  playerScores: NonNullable<PlayerScore>[]
 }
-const PlayerTable = ({ players }: PlayerTableProps) => (
+const PlayerTable = ({ playerScores }: PlayerTableProps) => (
   <div className="box p-0">
     <div className={`${tableContainer} table-container`}>
       <table className="table is-fullwidth is-narrow is-striped">
@@ -30,7 +31,7 @@ const PlayerTable = ({ players }: PlayerTableProps) => (
           </tr>
         </thead>
         <tbody>
-          {players.map(
+          {playerScores.map(
             (
               { player, score, won, lost, gamesPlayed, pk1Diff, pk2Diff },
               index,
@@ -153,14 +154,20 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
       new Date(fixtureB.date ?? '').getTime(),
   )
 
-  const playerScores = data.allPlayer.nodes.reduce((playerScores, player) => {
-    return [
-      ...playerScores,
-      player.scores?.find(score => score?.isSecondHalf === firstHalfCompleted),
-    ]
-  }, [])
+  const playerScores = data.allPlayer.nodes.reduce<NonNullable<PlayerScore>[]>(
+    (playerScores, player) => {
+      const score = player.scores?.find(
+        score => score?.isSecondHalf === firstHalfCompleted,
+      )
+      return score ? [...playerScores, score] : playerScores
+    },
+    [],
+  )
 
-  playerScores.sort((scoreA, scoreB) => scoreB.score - scoreA.score)
+  playerScores.sort(
+    (scoreA, scoreB) =>
+      (scoreB ? (scoreB.score ?? 0) : 0) - (scoreA ? (scoreA.score ?? 0) : 0),
+  )
 
   const groups = data.allTeam.group
 
@@ -222,8 +229,8 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
           </div>
 
           {activeTab === 'teams' ? (
-            groups.map(group => (
-              <div className="block" key={group.fieldValue}>
+            groups.map((group, index) => (
+              <div className="block" key={group.fieldValue ?? index}>
                 <h2 className="title is-5">{group.fieldValue}</h2>
                 <ul>
                   {[...group.nodes]
@@ -252,17 +259,16 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
               </div>
             ))
           ) : activeTab === 'matches' ? (
-            <>
-              <FixtureList
-                fixtures={allFixtures}
-                groupByDate={true}
-                showFilter={true}
-                clubId={data.club?.id}
-                noResultsText={'Es sind keine Spiele geplant.'}
-              ></FixtureList>
-            </>
+            <FixtureList
+              fixtures={allFixtures}
+              groupByDate={true}
+              showFilter={true}
+              clubId={data.club?.id}
+              noResultsText={'Es sind keine Spiele geplant.'}
+              itemsPerPage={3}
+            ></FixtureList>
           ) : (
-            <PlayerTable players={playerScores}></PlayerTable>
+            <PlayerTable playerScores={playerScores}></PlayerTable>
           )}
         </div>
       </section>

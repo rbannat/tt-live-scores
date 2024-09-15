@@ -8,7 +8,7 @@ type HeroProps = {
   title: string
   subtitle?: React.ReactElement
   isFav?: boolean
-  clubLogo?: { image?: ImageDataLike | null; size?: 'large' | 'normal' }
+  clubLogo?: { image: ImageDataLike; size?: 'large' | 'normal' }
   onFavClick?: () => void
 }
 const Hero = ({ title, subtitle, isFav, onFavClick, clubLogo }: HeroProps) => {

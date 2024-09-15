@@ -102,7 +102,7 @@ const Fixture = ({
       </div>
       <div className={`${dateContainer}`}>
         {showDate && <div className={`is-size-7`}>{day}</div>}
-        {!result && <div className="has-text-weight-bold">{time}</div>}
+        {<div className="has-text-weight-bold">{time}</div>}
         {link && (
           <a
             className="is-size-7"
