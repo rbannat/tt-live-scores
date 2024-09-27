@@ -153,6 +153,12 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
       new Date(fixtureA?.date ?? '').getTime() -
       new Date(fixtureB.date ?? '').getTime(),
   )
+  const fixtures = allFixtures.filter(
+    ({ date }) => date && date >= new Date().toISOString().split('T')[0],
+  )
+  const results = allFixtures
+    .filter(({ date }) => date && date < new Date().toISOString().split('T')[0])
+    .reverse()
 
   const playerScores = data.allPlayer.nodes.reduce<NonNullable<PlayerScore>[]>(
     (playerScores, player) => {
@@ -175,9 +181,9 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
     'fav-clubs',
     [] as Array<{ id: string; name: string }>,
   )
-  const [activeTab, setActiveTab] = useState<'teams' | 'matches' | 'players'>(
-    'teams',
-  )
+  const [activeTab, setActiveTab] = useState<
+    'teams' | 'results' | 'fixtures' | 'players'
+  >('teams')
 
   return (
     <Layout>
@@ -209,10 +215,18 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
                   Teams
                 </a>
               </li>
-              <li className={activeTab === 'matches' ? 'is-active' : ''}>
+              <li className={activeTab === 'results' ? 'is-active' : ''}>
                 <a
                   className="title is-6"
-                  onClick={() => setActiveTab('matches')}
+                  onClick={() => setActiveTab('results')}
+                >
+                  Ergebnisse
+                </a>
+              </li>
+              <li className={activeTab === 'fixtures' ? 'is-active' : ''}>
+                <a
+                  className="title is-6"
+                  onClick={() => setActiveTab('fixtures')}
                 >
                   Spielplan
                 </a>
@@ -258,9 +272,18 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
                 </ul>
               </div>
             ))
-          ) : activeTab === 'matches' ? (
+          ) : activeTab === 'results' ? (
             <FixtureList
-              fixtures={allFixtures}
+              fixtures={results}
+              groupByDate={true}
+              showFilter={true}
+              clubId={data.club?.id}
+              noResultsText={'Es sind keine Ergebnisse verfügbar.'}
+              itemsPerPage={3}
+            ></FixtureList>
+          ) : activeTab === 'fixtures' ? (
+            <FixtureList
+              fixtures={fixtures}
               groupByDate={true}
               showFilter={true}
               clubId={data.club?.id}
@@ -326,14 +349,6 @@ export const query = graphql`
             name
           }
         }
-      }
-    }
-    allFixture(
-      sort: { date: ASC }
-      filter: { homeTeam: { club: { id: { eq: $clubId } } } }
-    ) {
-      nodes {
-        ...FixtureData
       }
     }
     homeFixtures: allFixture(

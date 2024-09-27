@@ -8,10 +8,12 @@ import Hero from '../components/hero'
 
 const LeaguePage = ({ data }: PageProps<Queries.LeaguePageQuery>) => {
   const fixtures = data.fixtures.nodes.filter(
-    ({ date }) => date >= new Date().toISOString().split('T')[0],
+    ({ date }) => date && date >= new Date().toISOString().split('T')[0],
   )
 
-  const [activeTab, setActiveTab] = useState<'table' | 'matches'>('table')
+  const [activeTab, setActiveTab] = useState<'table' | 'results' | 'fixtures'>(
+    'table',
+  )
 
   return (
     <Layout>
@@ -43,12 +45,20 @@ const LeaguePage = ({ data }: PageProps<Queries.LeaguePageQuery>) => {
                   Tabelle
                 </a>
               </li>
-              <li className={activeTab === 'matches' ? 'is-active' : ''}>
+              <li className={activeTab === 'results' ? 'is-active' : ''}>
                 <a
                   className="title is-6"
-                  onClick={() => setActiveTab('matches')}
+                  onClick={() => setActiveTab('results')}
                 >
-                  Spiele
+                  Ergebnisse
+                </a>
+              </li>
+              <li className={activeTab === 'fixtures' ? 'is-active' : ''}>
+                <a
+                  className="title is-6"
+                  onClick={() => setActiveTab('fixtures')}
+                >
+                  Spielplan
                 </a>
               </li>
             </ul>
@@ -58,23 +68,18 @@ const LeaguePage = ({ data }: PageProps<Queries.LeaguePageQuery>) => {
             <div className="box p-0">
               <LeagueTable teams={data.allTeam.nodes}></LeagueTable>
             </div>
+          ) : activeTab === 'results' ? (
+            <FixtureList
+              fixtures={data.results.nodes}
+              groupByDate={true}
+              noResultsText={'Es sind keine Ergebnisse verfügbar.'}
+            ></FixtureList>
           ) : (
-            <div className="columns">
-              <div className="column">
-                <FixtureList
-                  fixtures={data.results.nodes}
-                  title={'Neueste Ergebnisse'}
-                  noResultsText={'Es sind keine Ergebnisse verfügbar.'}
-                ></FixtureList>
-              </div>
-              <div className="column">
-                <FixtureList
-                  fixtures={fixtures}
-                  title={'Nächste Spiele'}
-                  noResultsText={'Es sind keine kommenden Spiele verfügbar.'}
-                ></FixtureList>
-              </div>
-            </div>
+            <FixtureList
+              fixtures={fixtures}
+              groupByDate={true}
+              noResultsText={'Es sind keine kommenden Spiele verfügbar.'}
+            ></FixtureList>
           )}
         </div>
       </section>

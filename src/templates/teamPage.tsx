@@ -28,15 +28,15 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
     'fav-teams',
     [] as Array<{ id: string; name: string }>,
   )
-  const [activeTab, setActiveTab] = useState<'team' | 'table' | 'matches'>(
-    'team',
-  )
+  const [activeTab, setActiveTab] = useState<
+    'team' | 'table' | 'results' | 'fixtures'
+  >('team')
 
   const [activeHalfTab, setActiveHalfTab] = useState(
     firstHalfCompleted ? 'secondHalf' : 'firstHalf',
   )
 
-  const fixtures = data.team?.fixtures
+  const allFixtures = data.team?.fixtures
     ? data.team.fixtures
         .reduce<NonNullable<Queries.FixtureDataFragment[]>>(
           (fixtures, fixture) => {
@@ -50,6 +50,12 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
             : 0
         })
     : []
+  const fixtures = allFixtures.filter(
+    ({ date }) => date && date >= new Date().toISOString().split('T')[0],
+  )
+  const results = allFixtures
+    .filter(({ date }) => date && date < new Date().toISOString().split('T')[0])
+    .reverse()
   const players = sortPlayersByPosition(
     data && data.team
       ? activeHalfTab === 'firstHalf'
@@ -111,10 +117,18 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
                   Tabelle
                 </a>
               </li>
-              <li className={activeTab === 'matches' ? 'is-active' : ''}>
+              <li className={activeTab === 'results' ? 'is-active' : ''}>
                 <a
                   className="title is-6"
-                  onClick={() => setActiveTab('matches')}
+                  onClick={() => setActiveTab('results')}
+                >
+                  Ergebnisse
+                </a>
+              </li>
+              <li className={activeTab === 'fixtures' ? 'is-active' : ''}>
+                <a
+                  className="title is-6"
+                  onClick={() => setActiveTab('fixtures')}
                 >
                   Spielplan
                 </a>
@@ -162,6 +176,13 @@ const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
                 teamId={data.team?.id}
               ></LeagueTable>
             </div>
+          ) : activeTab === 'results' ? (
+            <FixtureList
+              fixtures={results}
+              noResultsText={'Es sind keine Ergebnisse verfügbar.'}
+              isPaginated={false}
+              teamId={data.team?.id}
+            ></FixtureList>
           ) : (
             <FixtureList
               fixtures={fixtures}
