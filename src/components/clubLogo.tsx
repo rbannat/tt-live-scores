@@ -7,10 +7,7 @@ import {
   StaticImage,
 } from 'gatsby-plugin-image'
 
-type ClubLogoProps = {
-  logo?: ImageDataLike
-  size?: 'normal' | 'large'
-}
+type ClubLogoProps = { logo?: ImageDataLike; size?: 'normal' | 'large' }
 
 export default function ClubLogo({ logo, size = 'normal' }: ClubLogoProps) {
   const image = logo && getImage(logo)

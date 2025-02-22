@@ -152,7 +152,6 @@ export const query = graphql`
                 gatsbyImageData(
                   width: 64
                   transformOptions: { fit: CONTAIN }
-                  backgroundColor: "white"
                   placeholder: BLURRED
                   formats: [AUTO, WEBP, AVIF]
                 )
@@ -171,7 +170,6 @@ export const query = graphql`
               gatsbyImageData(
                 width: 64
                 transformOptions: { fit: CONTAIN }
-                backgroundColor: "white"
                 placeholder: BLURRED
                 formats: [AUTO, WEBP, AVIF]
               )

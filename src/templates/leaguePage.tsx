@@ -134,7 +134,6 @@ export const query = graphql`
                   height: 32
                   layout: FIXED
                   transformOptions: { fit: CONTAIN }
-                  backgroundColor: "white"
                   placeholder: BLURRED
                   formats: [AUTO, WEBP, AVIF]
                 )
