@@ -6,8 +6,8 @@ import { SEO } from '../components/seo'
 import { useLocalStorage } from 'usehooks-ts'
 import { ImageDataLike } from 'gatsby-plugin-image'
 import FixtureList from '../components/fixtureList'
-import { firstHalfCompleted } from '../utils/constants'
 import { tableContainer } from '../components/leagueTable.module.scss'
+import { firstHalfCompleted } from '../utils/constants'
 
 type Player = Queries.ClubPageQuery['allPlayer']['nodes'][number]
 type PlayerScore = NonNullable<Player['scores']>[number]
@@ -48,13 +48,17 @@ const PlayerTable = ({ playerScores }: PlayerTableProps) => (
                     {gamesPlayed}
                   </td>
                   <td className="is-vcentered has-text-centered">
-                    {pk1Diff?.join(':')}
+                    {pk1Diff && !pk1Diff[0] && !pk1Diff[1]
+                      ? ''
+                      : pk1Diff?.join(':')}
                   </td>
                   <td className="is-vcentered has-text-centered">
-                    {pk2Diff?.join(':')}
+                    {pk2Diff && !pk2Diff[0] && !pk2Diff[1]
+                      ? ''
+                      : pk2Diff?.join(':')}
                   </td>
                   <td className="is-vcentered has-text-centered">
-                    {(won || lost) && [won, lost].join(':')}
+                    {won || lost ? [won, lost].join(':') : ''}
                   </td>
                   <td className="is-vcentered has-text-centered">{score}</td>
                 </tr>
@@ -130,6 +134,43 @@ function sortByRomanNumeral(a: string, b: string) {
   return newA < newB ? -1 : 1
 }
 
+function sumUpAllPlayerScores(playerScores: PlayerScore[]): PlayerScore {
+  return playerScores.reduce<PlayerScore>(
+    (summedUpScore, playerScore) => {
+      return {
+        ...summedUpScore,
+        player: playerScore?.player ?? null,
+        isSecondHalf: firstHalfCompleted,
+        score: playerScore?.isSecondHalf
+          ? (playerScore?.score ?? null)
+          : (summedUpScore?.score ?? null),
+        gamesPlayed:
+          (summedUpScore?.gamesPlayed ?? 0) + (playerScore?.gamesPlayed ?? 0),
+        pk1Diff: [
+          (summedUpScore?.pk1Diff?.[0] ?? 0) + (playerScore?.pk1Diff?.[0] ?? 0),
+          (summedUpScore?.pk1Diff?.[1] ?? 0) + (playerScore?.pk1Diff?.[1] ?? 0),
+        ],
+        pk2Diff: [
+          (summedUpScore?.pk2Diff?.[0] ?? 0) + (playerScore?.pk2Diff?.[0] ?? 0),
+          (summedUpScore?.pk2Diff?.[1] ?? 0) + (playerScore?.pk2Diff?.[1] ?? 0),
+        ],
+        won: (summedUpScore?.won ?? 0) + (playerScore?.won ?? 0),
+        lost: (summedUpScore?.lost ?? 0) + (playerScore?.lost ?? 0),
+      }
+    },
+    {
+      player: null,
+      isSecondHalf: firstHalfCompleted,
+      score: null,
+      gamesPlayed: null,
+      pk1Diff: null,
+      pk2Diff: null,
+      won: null,
+      lost: null,
+    },
+  )
+}
+
 const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
   function handleFavClick() {
     if (favoriteClubs?.find(club => club.id === data.club?.id)) {
@@ -162,9 +203,9 @@ const ClubPage = ({ data }: PageProps<Queries.ClubPageQuery>) => {
 
   const playerScores = data.allPlayer.nodes.reduce<NonNullable<PlayerScore>[]>(
     (playerScores, player) => {
-      const score = player.scores?.find(
-        score => score?.isSecondHalf === firstHalfCompleted,
-      )
+      const score = player?.scores
+        ? sumUpAllPlayerScores([...player.scores])
+        : null
       return score ? [...playerScores, score] : playerScores
     },
     [],

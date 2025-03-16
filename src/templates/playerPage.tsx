@@ -35,11 +35,14 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
   }
 
   const playerScores = data.allPlayerScore?.nodes
-  const livePz = playerScores && playerScores[0] && playerScores[0].score
+  // filter scores by first or second half
+  const currentLivePz = playerScores?.filter(
+    score => score?.isSecondHalf === firstHalfCompleted,
+  )[0].score
   const { winPoints, losePoints, winTtr, loseTtr, winProbability } =
     calculateTtr(
       parseInt(myTtr || '0'),
-      livePz || 0,
+      currentLivePz || 0,
       age === 'option2',
       age === 'option3',
       totalBelow30,
@@ -72,10 +75,10 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
         <div className="container">
           <div className="level is-mobile">
             <div className="level-item has-text-centered">
-              {livePz && (
+              {currentLivePz && (
                 <div>
                   <p className="heading">LivePZ</p>
-                  <p className="title">{livePz}</p>
+                  <p className="title">{currentLivePz}</p>
                   <p className="mt-3">
                     <Button
                       size={'small'}
@@ -246,7 +249,7 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
               <p>
                 Die <strong>Gewinnwahrscheinlichkeit</strong> gegen{' '}
                 <strong>
-                  {data.player?.name} ({livePz})
+                  {data.player?.name} ({currentLivePz})
                 </strong>{' '}
                 beträgt:
               </p>
