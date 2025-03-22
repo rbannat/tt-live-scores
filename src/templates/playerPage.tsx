@@ -34,11 +34,11 @@ const PlayerPage = ({ data }: PageProps<Queries.PlayerPageQuery>) => {
     setIsOpenModal(true)
   }
 
-  const playerScores = data.allPlayerScore?.nodes
+  const playerScores = data.allPlayerScore.nodes
   // filter scores by first or second half
-  const currentLivePz = playerScores?.filter(
+  const currentLivePz = playerScores.filter(
     score => score?.isSecondHalf === firstHalfCompleted,
-  )[0].score
+  )[0]?.score
   const { winPoints, losePoints, winTtr, loseTtr, winProbability } =
     calculateTtr(
       parseInt(myTtr || '0'),
