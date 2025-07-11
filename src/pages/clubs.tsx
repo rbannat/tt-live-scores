@@ -1,9 +1,9 @@
-import * as React from 'react'
 import { graphql, Link, PageProps } from 'gatsby'
+import * as React from 'react'
 
+import ClubLogo from '../components/clubLogo'
 import Layout from '../components/layout'
 import { SEO } from '../components/seo'
-import ClubLogo from '../components/clubLogo'
 
 const ClubsPage = ({ data }: PageProps<Queries.ClubsPageQuery>) => {
   function renderLogoByClubId(

@@ -1,8 +1,8 @@
 import { graphql, HeadProps, Link, PageProps } from 'gatsby'
 import React from 'react'
+import Hero from '../components/hero'
 import Layout from '../components/layout'
 import { SEO } from '../components/seo'
-import Hero from '../components/hero'
 
 const GroupPage = ({ data }: PageProps<Queries.GroupPageQuery>) => {
   const leagues = data.allLeague.nodes

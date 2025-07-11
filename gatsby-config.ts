@@ -102,7 +102,15 @@ const config: GatsbyConfig = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     `gatsby-plugin-offline`,
-    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        sassOptions: {
+          api: 'modern',
+          silenceDeprecations: ['legacy-js-api'],
+        },
+      },
+    },
     'gatsby-plugin-dts-css-modules',
     {
       resolve: 'gatsby-plugin-local-search',

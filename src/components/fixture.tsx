@@ -1,17 +1,17 @@
+import { graphql, Link } from 'gatsby'
+import { ImageDataLike } from 'gatsby-plugin-image'
 import React from 'react'
+import { FaExternalLinkAlt } from 'react-icons/fa'
+import ClubLogo from './clubLogo'
 import {
   container,
-  team,
   dateContainer,
-  teamsContainer,
-  lose,
-  win,
   draw,
+  lose,
+  team,
+  teamsContainer,
+  win,
 } from './fixture.module.scss'
-import { FaExternalLinkAlt } from 'react-icons/fa'
-import { graphql, Link } from 'gatsby'
-import ClubLogo from './clubLogo'
-import { ImageDataLike } from 'gatsby-plugin-image'
 
 type FixtureProps = Queries.FixtureDataFragment & {
   variant?: 'win' | 'lose' | 'draw'

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+import { FaAngleDown } from 'react-icons/fa'
+import Fixture from './fixture'
 import Pagination from './pagination'
 import usePagination from './usePagination'
-import Fixture from './fixture'
-import { FaAngleDown } from 'react-icons/fa'
 
 const FixtureList = ({
   fixtures,

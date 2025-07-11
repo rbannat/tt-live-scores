@@ -1,12 +1,12 @@
-import * as React from "react"
+import * as React from 'react'
 
-import Layout from "../components/layout"
-import { SEO } from "../components/seo"
-import Hero from "../components/hero"
+import Hero from '../components/hero'
+import Layout from '../components/layout'
+import { SEO } from '../components/seo'
 
 const NotFoundPage = () => (
   <Layout>
-    <Hero title={"NOT FOUND"}></Hero>
+    <Hero title={'NOT FOUND'}></Hero>
     <section className="section">
       <div className="container">
         <p>You just hit a route that doesn&#39;t exist... the sadness.</p>

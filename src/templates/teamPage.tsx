@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
 import { HeadProps, Link, PageProps, graphql } from 'gatsby'
-import Layout from '../components/layout'
-import { SEO } from '../components/seo'
+import React, { useState } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 import FixtureList from '../components/fixtureList'
 import Hero from '../components/hero'
-import PlayerTable from '../components/playerTable'
-import { useLocalStorage } from 'usehooks-ts'
-import { firstHalfCompleted } from '../utils/constants'
+import Layout from '../components/layout'
 import LeagueTable from '../components/leagueTable'
+import PlayerTable from '../components/playerTable'
+import { SEO } from '../components/seo'
+import { firstHalfCompleted } from '../utils/constants'
 
 const TeamPage = ({ data }: PageProps<Queries.TeamPageQuery>) => {
   function handleFavClick() {

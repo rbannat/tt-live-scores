@@ -1,8 +1,8 @@
-import React from 'react'
 import { Link } from 'gatsby'
-import { tableContainer } from './leagueTable.module.scss'
-import ClubLogo from './clubLogo'
 import { ImageDataLike } from 'gatsby-plugin-image'
+import React from 'react'
+import ClubLogo from './clubLogo'
+import { tableContainer } from './leagueTable.module.scss'
 
 const LeagueTable = ({
   teams,

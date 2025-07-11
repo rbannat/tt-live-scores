@@ -35,13 +35,12 @@
     "@types/node": "^22.5.1",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.2.11",
-    "@typescript-eslint/eslint-plugin": "^8.3.0",
-    "@typescript-eslint/parser": "^8.3.0",
     "eslint": "^9.9.1",
-    "eslint-config-react-app": "^7.0.0",
+    "eslint-config-prettier": "^10.1.5",
     "gatsby-plugin-dts-css-modules": "^3.0.0",
     "prettier": "^3.0.3",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "typescript-eslint": "^8.36.0"
   },
   "keywords": [
     "gatsby"
@@ -55,8 +54,9 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \"",
-    "lint": "eslint --ignore-path .gitignore .",
-    "lint:fix": "npm run lint -- --fix"
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "type-check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

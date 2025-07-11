@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
 import { HeadProps, Link, PageProps, graphql } from 'gatsby'
-import Layout from '../components/layout'
-import { SEO } from '../components/seo'
-import LeagueTable from '../components/leagueTable'
+import React, { useState } from 'react'
 import FixtureList from '../components/fixtureList'
 import Hero from '../components/hero'
+import Layout from '../components/layout'
+import LeagueTable from '../components/leagueTable'
+import { SEO } from '../components/seo'
 
 const LeaguePage = ({ data }: PageProps<Queries.LeaguePageQuery>) => {
   const fixtures = data.fixtures.nodes.filter(

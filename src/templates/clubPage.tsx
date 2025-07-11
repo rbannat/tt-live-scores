@@ -1,12 +1,12 @@
 import { graphql, HeadProps, Link, PageProps } from 'gatsby'
+import { ImageDataLike } from 'gatsby-plugin-image'
 import React, { useState } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
+import FixtureList from '../components/fixtureList'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
-import { SEO } from '../components/seo'
-import { useLocalStorage } from 'usehooks-ts'
-import { ImageDataLike } from 'gatsby-plugin-image'
-import FixtureList from '../components/fixtureList'
 import { tableContainer } from '../components/leagueTable.module.scss'
+import { SEO } from '../components/seo'
 import { firstHalfCompleted } from '../utils/constants'
 
 type Player = Queries.ClubPageQuery['allPlayer']['nodes'][number]

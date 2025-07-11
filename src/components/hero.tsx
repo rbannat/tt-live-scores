@@ -1,8 +1,8 @@
-import React from 'react'
-import { favButton, hero } from './hero.module.scss'
-import { FaRegHeart, FaHeart } from 'react-icons/fa'
 import { ImageDataLike } from 'gatsby-plugin-image'
+import React from 'react'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import ClubLogo from './clubLogo'
+import { favButton, hero } from './hero.module.scss'
 
 type HeroProps = {
   title: string

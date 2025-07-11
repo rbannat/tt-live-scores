@@ -1088,11 +1088,8 @@ type Fixture = Node & {
   readonly homeTeam: Maybe<Team>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
-  readonly isFirstHalf: Maybe<Scalars['Boolean']>;
   readonly league: Maybe<League>;
   readonly link: Maybe<Scalars['String']>;
-  readonly note: Maybe<Scalars['String']>;
-  readonly nr: Maybe<Scalars['String']>;
   readonly parent: Maybe<Node>;
   readonly result: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
 };
@@ -1149,11 +1146,8 @@ type FixtureFieldSelector = {
   readonly homeTeam: InputMaybe<TeamFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
-  readonly isFirstHalf: InputMaybe<FieldSelectorEnum>;
   readonly league: InputMaybe<LeagueFieldSelector>;
   readonly link: InputMaybe<FieldSelectorEnum>;
-  readonly note: InputMaybe<FieldSelectorEnum>;
-  readonly nr: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly result: InputMaybe<FieldSelectorEnum>;
 };
@@ -1165,11 +1159,8 @@ type FixtureFilterInput = {
   readonly homeTeam: InputMaybe<TeamFilterInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
-  readonly isFirstHalf: InputMaybe<BooleanQueryOperatorInput>;
   readonly league: InputMaybe<LeagueFilterInput>;
   readonly link: InputMaybe<StringQueryOperatorInput>;
-  readonly note: InputMaybe<StringQueryOperatorInput>;
-  readonly nr: InputMaybe<StringQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly result: InputMaybe<IntQueryOperatorInput>;
 };
@@ -1226,11 +1217,8 @@ type FixtureSortInput = {
   readonly homeTeam: InputMaybe<TeamSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
-  readonly isFirstHalf: InputMaybe<SortOrderEnum>;
   readonly league: InputMaybe<LeagueSortInput>;
   readonly link: InputMaybe<SortOrderEnum>;
-  readonly note: InputMaybe<SortOrderEnum>;
-  readonly nr: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly result: InputMaybe<SortOrderEnum>;
 };
@@ -2356,7 +2344,6 @@ type PlayerScore = Node & {
   readonly isSecondHalf: Maybe<Scalars['Boolean']>;
   readonly lost: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
-  readonly performance: Maybe<Scalars['Float']>;
   readonly pk1Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly pk2Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly pk3Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
@@ -2421,7 +2408,6 @@ type PlayerScoreFieldSelector = {
   readonly isSecondHalf: InputMaybe<FieldSelectorEnum>;
   readonly lost: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
-  readonly performance: InputMaybe<FieldSelectorEnum>;
   readonly pk1Diff: InputMaybe<FieldSelectorEnum>;
   readonly pk2Diff: InputMaybe<FieldSelectorEnum>;
   readonly pk3Diff: InputMaybe<FieldSelectorEnum>;
@@ -2441,7 +2427,6 @@ type PlayerScoreFilterInput = {
   readonly isSecondHalf: InputMaybe<BooleanQueryOperatorInput>;
   readonly lost: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
-  readonly performance: InputMaybe<FloatQueryOperatorInput>;
   readonly pk1Diff: InputMaybe<IntQueryOperatorInput>;
   readonly pk2Diff: InputMaybe<IntQueryOperatorInput>;
   readonly pk3Diff: InputMaybe<IntQueryOperatorInput>;
@@ -2506,7 +2491,6 @@ type PlayerScoreSortInput = {
   readonly isSecondHalf: InputMaybe<SortOrderEnum>;
   readonly lost: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
-  readonly performance: InputMaybe<SortOrderEnum>;
   readonly pk1Diff: InputMaybe<SortOrderEnum>;
   readonly pk2Diff: InputMaybe<SortOrderEnum>;
   readonly pk3Diff: InputMaybe<SortOrderEnum>;
@@ -2857,11 +2841,8 @@ type Query_fixtureArgs = {
   homeTeam: InputMaybe<TeamFilterInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
-  isFirstHalf: InputMaybe<BooleanQueryOperatorInput>;
   league: InputMaybe<LeagueFilterInput>;
   link: InputMaybe<StringQueryOperatorInput>;
-  note: InputMaybe<StringQueryOperatorInput>;
-  nr: InputMaybe<StringQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   result: InputMaybe<IntQueryOperatorInput>;
 };
@@ -2934,7 +2915,6 @@ type Query_playerScoreArgs = {
   isSecondHalf: InputMaybe<BooleanQueryOperatorInput>;
   lost: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
-  performance: InputMaybe<FloatQueryOperatorInput>;
   pk1Diff: InputMaybe<IntQueryOperatorInput>;
   pk2Diff: InputMaybe<IntQueryOperatorInput>;
   pk3Diff: InputMaybe<IntQueryOperatorInput>;

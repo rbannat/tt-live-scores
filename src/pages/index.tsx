@@ -1,14 +1,14 @@
-import * as React from 'react'
 import { graphql, Link, PageProps } from 'gatsby'
-import './styles.scss'
-import Layout from '../components/layout'
-import { SEO } from '../components/seo'
+import * as React from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import ClubLogo from '../components/clubLogo'
+import Layout from '../components/layout'
 import {
   ScrollContainer,
   ScrollContainerItem,
 } from '../components/scrollContainer'
+import { SEO } from '../components/seo'
+import './styles.scss'
 
 const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
   const [favoriteClubs] = useLocalStorage(
