@@ -35,6 +35,7 @@ const Hero = ({ title, subtitle, isFav, onFavClick, clubLogo }: HeroProps) => {
                 className={`button is-danger is-large has-background-inherit is-inverted ${favButton}`}
                 onClick={onFavClick}
               >
+                <span className="is-sr-only">Zu Favoriten hinzufügen</span>
                 <span className="icon">
                   {isFav ? (
                     <FaHeart aria-hidden="true" />

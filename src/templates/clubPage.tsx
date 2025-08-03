@@ -141,9 +141,10 @@ function sumUpAllPlayerScores(playerScores: PlayerScore[]): PlayerScore {
         ...summedUpScore,
         player: playerScore?.player ?? null,
         isSecondHalf: firstHalfCompleted,
-        score: playerScore?.isSecondHalf
-          ? (playerScore?.score ?? null)
-          : (summedUpScore?.score ?? null),
+        score:
+          playerScore?.isSecondHalf || !summedUpScore?.score
+            ? (playerScore?.score ?? null)
+            : (summedUpScore?.score ?? null),
         gamesPlayed:
           (summedUpScore?.gamesPlayed ?? 0) + (playerScore?.gamesPlayed ?? 0),
         pk1Diff: [

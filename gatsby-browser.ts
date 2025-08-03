@@ -1,3 +1,5 @@
+import './src/global.scss'
+
 export const onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(`Die App wurde aktualisiert. Jetzt neu laden?`)
 

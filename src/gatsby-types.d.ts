@@ -42,8 +42,9 @@ type Association = Node & {
   readonly internal: Internal;
   readonly logo: Maybe<Scalars['String']>;
   readonly name: Maybe<Scalars['String']>;
+  readonly originalId: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
-  readonly sportCategoryId: Maybe<Scalars['String']>;
+  readonly sportCategoryId: Maybe<Scalars['Int']>;
 };
 
 type AssociationConnection = {
@@ -97,6 +98,7 @@ type AssociationFieldSelector = {
   readonly internal: InputMaybe<InternalFieldSelector>;
   readonly logo: InputMaybe<FieldSelectorEnum>;
   readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly originalId: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly sportCategoryId: InputMaybe<FieldSelectorEnum>;
 };
@@ -107,8 +109,9 @@ type AssociationFilterInput = {
   readonly internal: InputMaybe<InternalFilterInput>;
   readonly logo: InputMaybe<StringQueryOperatorInput>;
   readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly originalId: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
-  readonly sportCategoryId: InputMaybe<StringQueryOperatorInput>;
+  readonly sportCategoryId: InputMaybe<IntQueryOperatorInput>;
 };
 
 type AssociationGroupConnection = {
@@ -158,6 +161,7 @@ type AssociationSortInput = {
   readonly internal: InputMaybe<InternalSortInput>;
   readonly logo: InputMaybe<SortOrderEnum>;
   readonly name: InputMaybe<SortOrderEnum>;
+  readonly originalId: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly sportCategoryId: InputMaybe<SortOrderEnum>;
 };
@@ -1088,8 +1092,11 @@ type Fixture = Node & {
   readonly homeTeam: Maybe<Team>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
+  readonly isFirstHalf: Maybe<Scalars['Boolean']>;
   readonly league: Maybe<League>;
   readonly link: Maybe<Scalars['String']>;
+  readonly note: Maybe<Scalars['String']>;
+  readonly nr: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
   readonly result: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
 };
@@ -1146,8 +1153,11 @@ type FixtureFieldSelector = {
   readonly homeTeam: InputMaybe<TeamFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
+  readonly isFirstHalf: InputMaybe<FieldSelectorEnum>;
   readonly league: InputMaybe<LeagueFieldSelector>;
   readonly link: InputMaybe<FieldSelectorEnum>;
+  readonly note: InputMaybe<FieldSelectorEnum>;
+  readonly nr: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly result: InputMaybe<FieldSelectorEnum>;
 };
@@ -1159,8 +1169,11 @@ type FixtureFilterInput = {
   readonly homeTeam: InputMaybe<TeamFilterInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
+  readonly isFirstHalf: InputMaybe<BooleanQueryOperatorInput>;
   readonly league: InputMaybe<LeagueFilterInput>;
   readonly link: InputMaybe<StringQueryOperatorInput>;
+  readonly note: InputMaybe<StringQueryOperatorInput>;
+  readonly nr: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly result: InputMaybe<IntQueryOperatorInput>;
 };
@@ -1217,8 +1230,11 @@ type FixtureSortInput = {
   readonly homeTeam: InputMaybe<TeamSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
+  readonly isFirstHalf: InputMaybe<SortOrderEnum>;
   readonly league: InputMaybe<LeagueSortInput>;
   readonly link: InputMaybe<SortOrderEnum>;
+  readonly note: InputMaybe<SortOrderEnum>;
+  readonly nr: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly result: InputMaybe<SortOrderEnum>;
 };
@@ -1900,12 +1916,15 @@ type JSONQueryOperatorInput = {
 type League = Node & {
   readonly association: Maybe<Association>;
   readonly children: ReadonlyArray<Node>;
+  readonly fixtures: Maybe<ReadonlyArray<Maybe<LeagueFixtures>>>;
   readonly group: Maybe<Group>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
   readonly name: Maybe<Scalars['String']>;
+  readonly ogiginalId: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
   readonly shortName: Maybe<Scalars['String']>;
+  readonly teams: Maybe<ReadonlyArray<Maybe<LeagueTeams>>>;
 };
 
 type LeagueConnection = {
@@ -1956,27 +1975,89 @@ type LeagueEdge = {
 type LeagueFieldSelector = {
   readonly association: InputMaybe<AssociationFieldSelector>;
   readonly children: InputMaybe<NodeFieldSelector>;
+  readonly fixtures: InputMaybe<LeagueFixturesFieldSelector>;
   readonly group: InputMaybe<GroupFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
   readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly ogiginalId: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly shortName: InputMaybe<FieldSelectorEnum>;
+  readonly teams: InputMaybe<LeagueTeamsFieldSelector>;
 };
 
 type LeagueFilterInput = {
   readonly association: InputMaybe<AssociationFilterInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
+  readonly fixtures: InputMaybe<LeagueFixturesFilterListInput>;
   readonly group: InputMaybe<GroupFilterInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
   readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly ogiginalId: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly shortName: InputMaybe<StringQueryOperatorInput>;
+  readonly teams: InputMaybe<LeagueTeamsFilterListInput>;
 };
 
 type LeagueFilterListInput = {
   readonly elemMatch: InputMaybe<LeagueFilterInput>;
+};
+
+type LeagueFixtures = {
+  readonly date: Maybe<Scalars['Date']>;
+  readonly guestTeamId: Maybe<Scalars['Int']>;
+  readonly homeTeamId: Maybe<Scalars['Int']>;
+  readonly isFirstHalf: Maybe<Scalars['Boolean']>;
+  readonly leagueId: Maybe<Scalars['Int']>;
+  readonly link: Maybe<Scalars['String']>;
+  readonly note: Maybe<Scalars['String']>;
+  readonly nr: Maybe<Scalars['Int']>;
+};
+
+
+type LeagueFixtures_dateArgs = {
+  difference: InputMaybe<Scalars['String']>;
+  formatString: InputMaybe<Scalars['String']>;
+  fromNow: InputMaybe<Scalars['Boolean']>;
+  locale: InputMaybe<Scalars['String']>;
+};
+
+type LeagueFixturesFieldSelector = {
+  readonly date: InputMaybe<FieldSelectorEnum>;
+  readonly guestTeamId: InputMaybe<FieldSelectorEnum>;
+  readonly homeTeamId: InputMaybe<FieldSelectorEnum>;
+  readonly isFirstHalf: InputMaybe<FieldSelectorEnum>;
+  readonly leagueId: InputMaybe<FieldSelectorEnum>;
+  readonly link: InputMaybe<FieldSelectorEnum>;
+  readonly note: InputMaybe<FieldSelectorEnum>;
+  readonly nr: InputMaybe<FieldSelectorEnum>;
+};
+
+type LeagueFixturesFilterInput = {
+  readonly date: InputMaybe<DateQueryOperatorInput>;
+  readonly guestTeamId: InputMaybe<IntQueryOperatorInput>;
+  readonly homeTeamId: InputMaybe<IntQueryOperatorInput>;
+  readonly isFirstHalf: InputMaybe<BooleanQueryOperatorInput>;
+  readonly leagueId: InputMaybe<IntQueryOperatorInput>;
+  readonly link: InputMaybe<StringQueryOperatorInput>;
+  readonly note: InputMaybe<StringQueryOperatorInput>;
+  readonly nr: InputMaybe<IntQueryOperatorInput>;
+};
+
+type LeagueFixturesFilterListInput = {
+  readonly elemMatch: InputMaybe<LeagueFixturesFilterInput>;
+};
+
+type LeagueFixturesSortInput = {
+  readonly date: InputMaybe<SortOrderEnum>;
+  readonly guestTeamId: InputMaybe<SortOrderEnum>;
+  readonly homeTeamId: InputMaybe<SortOrderEnum>;
+  readonly isFirstHalf: InputMaybe<SortOrderEnum>;
+  readonly leagueId: InputMaybe<SortOrderEnum>;
+  readonly link: InputMaybe<SortOrderEnum>;
+  readonly note: InputMaybe<SortOrderEnum>;
+  readonly nr: InputMaybe<SortOrderEnum>;
 };
 
 type LeagueGroupConnection = {
@@ -2023,12 +2104,187 @@ type LeagueGroupConnection_sumArgs = {
 type LeagueSortInput = {
   readonly association: InputMaybe<AssociationSortInput>;
   readonly children: InputMaybe<NodeSortInput>;
+  readonly fixtures: InputMaybe<LeagueFixturesSortInput>;
   readonly group: InputMaybe<GroupSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
   readonly name: InputMaybe<SortOrderEnum>;
+  readonly ogiginalId: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly shortName: InputMaybe<SortOrderEnum>;
+  readonly teams: InputMaybe<LeagueTeamsSortInput>;
+};
+
+type LeagueTeams = {
+  readonly clubName: Maybe<Scalars['String']>;
+  readonly clubShortName: Maybe<Scalars['String']>;
+  readonly drawn: Maybe<Scalars['Int']>;
+  readonly gamesPlayed: Maybe<Scalars['Int']>;
+  readonly id: Maybe<Scalars['Int']>;
+  readonly leagueId: Maybe<Scalars['Int']>;
+  readonly lost: Maybe<Scalars['Int']>;
+  readonly matchesDiff: Maybe<Scalars['Int']>;
+  readonly matchesLost: Maybe<Scalars['Int']>;
+  readonly matchesWon: Maybe<Scalars['Int']>;
+  readonly name: Maybe<Scalars['String']>;
+  readonly playersFirstHalf: Maybe<ReadonlyArray<Maybe<LeagueTeamsPlayersFirstHalf>>>;
+  readonly pointsDiff: Maybe<Scalars['Int']>;
+  readonly pointsLost: Maybe<Scalars['Int']>;
+  readonly pointsWon: Maybe<Scalars['Int']>;
+  readonly position: Maybe<Scalars['Int']>;
+  readonly setsDiff: Maybe<Scalars['Int']>;
+  readonly shortName: Maybe<Scalars['String']>;
+  readonly won: Maybe<Scalars['Int']>;
+};
+
+type LeagueTeamsFieldSelector = {
+  readonly clubName: InputMaybe<FieldSelectorEnum>;
+  readonly clubShortName: InputMaybe<FieldSelectorEnum>;
+  readonly drawn: InputMaybe<FieldSelectorEnum>;
+  readonly gamesPlayed: InputMaybe<FieldSelectorEnum>;
+  readonly id: InputMaybe<FieldSelectorEnum>;
+  readonly leagueId: InputMaybe<FieldSelectorEnum>;
+  readonly lost: InputMaybe<FieldSelectorEnum>;
+  readonly matchesDiff: InputMaybe<FieldSelectorEnum>;
+  readonly matchesLost: InputMaybe<FieldSelectorEnum>;
+  readonly matchesWon: InputMaybe<FieldSelectorEnum>;
+  readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly playersFirstHalf: InputMaybe<LeagueTeamsPlayersFirstHalfFieldSelector>;
+  readonly pointsDiff: InputMaybe<FieldSelectorEnum>;
+  readonly pointsLost: InputMaybe<FieldSelectorEnum>;
+  readonly pointsWon: InputMaybe<FieldSelectorEnum>;
+  readonly position: InputMaybe<FieldSelectorEnum>;
+  readonly setsDiff: InputMaybe<FieldSelectorEnum>;
+  readonly shortName: InputMaybe<FieldSelectorEnum>;
+  readonly won: InputMaybe<FieldSelectorEnum>;
+};
+
+type LeagueTeamsFilterInput = {
+  readonly clubName: InputMaybe<StringQueryOperatorInput>;
+  readonly clubShortName: InputMaybe<StringQueryOperatorInput>;
+  readonly drawn: InputMaybe<IntQueryOperatorInput>;
+  readonly gamesPlayed: InputMaybe<IntQueryOperatorInput>;
+  readonly id: InputMaybe<IntQueryOperatorInput>;
+  readonly leagueId: InputMaybe<IntQueryOperatorInput>;
+  readonly lost: InputMaybe<IntQueryOperatorInput>;
+  readonly matchesDiff: InputMaybe<IntQueryOperatorInput>;
+  readonly matchesLost: InputMaybe<IntQueryOperatorInput>;
+  readonly matchesWon: InputMaybe<IntQueryOperatorInput>;
+  readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly playersFirstHalf: InputMaybe<LeagueTeamsPlayersFirstHalfFilterListInput>;
+  readonly pointsDiff: InputMaybe<IntQueryOperatorInput>;
+  readonly pointsLost: InputMaybe<IntQueryOperatorInput>;
+  readonly pointsWon: InputMaybe<IntQueryOperatorInput>;
+  readonly position: InputMaybe<IntQueryOperatorInput>;
+  readonly setsDiff: InputMaybe<IntQueryOperatorInput>;
+  readonly shortName: InputMaybe<StringQueryOperatorInput>;
+  readonly won: InputMaybe<IntQueryOperatorInput>;
+};
+
+type LeagueTeamsFilterListInput = {
+  readonly elemMatch: InputMaybe<LeagueTeamsFilterInput>;
+};
+
+type LeagueTeamsPlayersFirstHalf = {
+  readonly id: Maybe<Scalars['Int']>;
+  readonly name: Maybe<Scalars['String']>;
+  readonly scores: Maybe<ReadonlyArray<Maybe<LeagueTeamsPlayersFirstHalfScores>>>;
+};
+
+type LeagueTeamsPlayersFirstHalfFieldSelector = {
+  readonly id: InputMaybe<FieldSelectorEnum>;
+  readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly scores: InputMaybe<LeagueTeamsPlayersFirstHalfScoresFieldSelector>;
+};
+
+type LeagueTeamsPlayersFirstHalfFilterInput = {
+  readonly id: InputMaybe<IntQueryOperatorInput>;
+  readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly scores: InputMaybe<LeagueTeamsPlayersFirstHalfScoresFilterListInput>;
+};
+
+type LeagueTeamsPlayersFirstHalfFilterListInput = {
+  readonly elemMatch: InputMaybe<LeagueTeamsPlayersFirstHalfFilterInput>;
+};
+
+type LeagueTeamsPlayersFirstHalfScores = {
+  readonly attributes: Maybe<Scalars['String']>;
+  readonly gamesPlayed: Maybe<Scalars['Int']>;
+  readonly isSecondHalf: Maybe<Scalars['Boolean']>;
+  readonly lost: Maybe<Scalars['Int']>;
+  readonly playerId: Maybe<Scalars['Int']>;
+  readonly position: Maybe<Scalars['Int']>;
+  readonly score: Maybe<Scalars['Int']>;
+  readonly teamId: Maybe<Scalars['Int']>;
+  readonly won: Maybe<Scalars['Int']>;
+};
+
+type LeagueTeamsPlayersFirstHalfScoresFieldSelector = {
+  readonly attributes: InputMaybe<FieldSelectorEnum>;
+  readonly gamesPlayed: InputMaybe<FieldSelectorEnum>;
+  readonly isSecondHalf: InputMaybe<FieldSelectorEnum>;
+  readonly lost: InputMaybe<FieldSelectorEnum>;
+  readonly playerId: InputMaybe<FieldSelectorEnum>;
+  readonly position: InputMaybe<FieldSelectorEnum>;
+  readonly score: InputMaybe<FieldSelectorEnum>;
+  readonly teamId: InputMaybe<FieldSelectorEnum>;
+  readonly won: InputMaybe<FieldSelectorEnum>;
+};
+
+type LeagueTeamsPlayersFirstHalfScoresFilterInput = {
+  readonly attributes: InputMaybe<StringQueryOperatorInput>;
+  readonly gamesPlayed: InputMaybe<IntQueryOperatorInput>;
+  readonly isSecondHalf: InputMaybe<BooleanQueryOperatorInput>;
+  readonly lost: InputMaybe<IntQueryOperatorInput>;
+  readonly playerId: InputMaybe<IntQueryOperatorInput>;
+  readonly position: InputMaybe<IntQueryOperatorInput>;
+  readonly score: InputMaybe<IntQueryOperatorInput>;
+  readonly teamId: InputMaybe<IntQueryOperatorInput>;
+  readonly won: InputMaybe<IntQueryOperatorInput>;
+};
+
+type LeagueTeamsPlayersFirstHalfScoresFilterListInput = {
+  readonly elemMatch: InputMaybe<LeagueTeamsPlayersFirstHalfScoresFilterInput>;
+};
+
+type LeagueTeamsPlayersFirstHalfScoresSortInput = {
+  readonly attributes: InputMaybe<SortOrderEnum>;
+  readonly gamesPlayed: InputMaybe<SortOrderEnum>;
+  readonly isSecondHalf: InputMaybe<SortOrderEnum>;
+  readonly lost: InputMaybe<SortOrderEnum>;
+  readonly playerId: InputMaybe<SortOrderEnum>;
+  readonly position: InputMaybe<SortOrderEnum>;
+  readonly score: InputMaybe<SortOrderEnum>;
+  readonly teamId: InputMaybe<SortOrderEnum>;
+  readonly won: InputMaybe<SortOrderEnum>;
+};
+
+type LeagueTeamsPlayersFirstHalfSortInput = {
+  readonly id: InputMaybe<SortOrderEnum>;
+  readonly name: InputMaybe<SortOrderEnum>;
+  readonly scores: InputMaybe<LeagueTeamsPlayersFirstHalfScoresSortInput>;
+};
+
+type LeagueTeamsSortInput = {
+  readonly clubName: InputMaybe<SortOrderEnum>;
+  readonly clubShortName: InputMaybe<SortOrderEnum>;
+  readonly drawn: InputMaybe<SortOrderEnum>;
+  readonly gamesPlayed: InputMaybe<SortOrderEnum>;
+  readonly id: InputMaybe<SortOrderEnum>;
+  readonly leagueId: InputMaybe<SortOrderEnum>;
+  readonly lost: InputMaybe<SortOrderEnum>;
+  readonly matchesDiff: InputMaybe<SortOrderEnum>;
+  readonly matchesLost: InputMaybe<SortOrderEnum>;
+  readonly matchesWon: InputMaybe<SortOrderEnum>;
+  readonly name: InputMaybe<SortOrderEnum>;
+  readonly playersFirstHalf: InputMaybe<LeagueTeamsPlayersFirstHalfSortInput>;
+  readonly pointsDiff: InputMaybe<SortOrderEnum>;
+  readonly pointsLost: InputMaybe<SortOrderEnum>;
+  readonly pointsWon: InputMaybe<SortOrderEnum>;
+  readonly position: InputMaybe<SortOrderEnum>;
+  readonly setsDiff: InputMaybe<SortOrderEnum>;
+  readonly shortName: InputMaybe<SortOrderEnum>;
+  readonly won: InputMaybe<SortOrderEnum>;
 };
 
 type LocalSearchPages = Node & {
@@ -2228,6 +2484,7 @@ type Player = Node & {
   readonly id: Scalars['ID'];
   readonly internal: Internal;
   readonly name: Maybe<Scalars['String']>;
+  readonly originalId: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
   readonly scores: Maybe<ReadonlyArray<Maybe<PlayerScore>>>;
 };
@@ -2282,6 +2539,7 @@ type PlayerFieldSelector = {
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
   readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly originalId: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly scores: InputMaybe<PlayerScoreFieldSelector>;
 };
@@ -2291,6 +2549,7 @@ type PlayerFilterInput = {
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
   readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly originalId: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly scores: InputMaybe<PlayerScoreFilterListInput>;
 };
@@ -2337,6 +2596,7 @@ type PlayerGroupConnection_sumArgs = {
 };
 
 type PlayerScore = Node & {
+  readonly attributes: Maybe<Scalars['String']>;
   readonly children: ReadonlyArray<Node>;
   readonly gamesPlayed: Maybe<Scalars['Int']>;
   readonly id: Scalars['ID'];
@@ -2349,7 +2609,7 @@ type PlayerScore = Node & {
   readonly pk3Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly pk4Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly player: Maybe<Player>;
-  readonly position: Maybe<Scalars['String']>;
+  readonly position: Maybe<Scalars['Int']>;
   readonly score: Maybe<Scalars['Int']>;
   readonly team: Maybe<Team>;
   readonly won: Maybe<Scalars['Int']>;
@@ -2401,6 +2661,7 @@ type PlayerScoreEdge = {
 };
 
 type PlayerScoreFieldSelector = {
+  readonly attributes: InputMaybe<FieldSelectorEnum>;
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly gamesPlayed: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
@@ -2420,6 +2681,7 @@ type PlayerScoreFieldSelector = {
 };
 
 type PlayerScoreFilterInput = {
+  readonly attributes: InputMaybe<StringQueryOperatorInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
   readonly gamesPlayed: InputMaybe<IntQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
@@ -2432,7 +2694,7 @@ type PlayerScoreFilterInput = {
   readonly pk3Diff: InputMaybe<IntQueryOperatorInput>;
   readonly pk4Diff: InputMaybe<IntQueryOperatorInput>;
   readonly player: InputMaybe<PlayerFilterInput>;
-  readonly position: InputMaybe<StringQueryOperatorInput>;
+  readonly position: InputMaybe<IntQueryOperatorInput>;
   readonly score: InputMaybe<IntQueryOperatorInput>;
   readonly team: InputMaybe<TeamFilterInput>;
   readonly won: InputMaybe<IntQueryOperatorInput>;
@@ -2484,6 +2746,7 @@ type PlayerScoreGroupConnection_sumArgs = {
 };
 
 type PlayerScoreSortInput = {
+  readonly attributes: InputMaybe<SortOrderEnum>;
   readonly children: InputMaybe<NodeSortInput>;
   readonly gamesPlayed: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
@@ -2507,6 +2770,7 @@ type PlayerSortInput = {
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
   readonly name: InputMaybe<SortOrderEnum>;
+  readonly originalId: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly scores: InputMaybe<PlayerScoreSortInput>;
 };
@@ -2721,8 +2985,9 @@ type Query_associationArgs = {
   internal: InputMaybe<InternalFilterInput>;
   logo: InputMaybe<StringQueryOperatorInput>;
   name: InputMaybe<StringQueryOperatorInput>;
+  originalId: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
-  sportCategoryId: InputMaybe<StringQueryOperatorInput>;
+  sportCategoryId: InputMaybe<IntQueryOperatorInput>;
 };
 
 
@@ -2841,8 +3106,11 @@ type Query_fixtureArgs = {
   homeTeam: InputMaybe<TeamFilterInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
+  isFirstHalf: InputMaybe<BooleanQueryOperatorInput>;
   league: InputMaybe<LeagueFilterInput>;
   link: InputMaybe<StringQueryOperatorInput>;
+  note: InputMaybe<StringQueryOperatorInput>;
+  nr: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   result: InputMaybe<IntQueryOperatorInput>;
 };
@@ -2874,12 +3142,15 @@ type Query_imageSharpArgs = {
 type Query_leagueArgs = {
   association: InputMaybe<AssociationFilterInput>;
   children: InputMaybe<NodeFilterListInput>;
+  fixtures: InputMaybe<LeagueFixturesFilterListInput>;
   group: InputMaybe<GroupFilterInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
   name: InputMaybe<StringQueryOperatorInput>;
+  ogiginalId: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   shortName: InputMaybe<StringQueryOperatorInput>;
+  teams: InputMaybe<LeagueTeamsFilterListInput>;
 };
 
 
@@ -2902,12 +3173,14 @@ type Query_playerArgs = {
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
   name: InputMaybe<StringQueryOperatorInput>;
+  originalId: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   scores: InputMaybe<PlayerScoreFilterListInput>;
 };
 
 
 type Query_playerScoreArgs = {
+  attributes: InputMaybe<StringQueryOperatorInput>;
   children: InputMaybe<NodeFilterListInput>;
   gamesPlayed: InputMaybe<IntQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
@@ -2920,7 +3193,7 @@ type Query_playerScoreArgs = {
   pk3Diff: InputMaybe<IntQueryOperatorInput>;
   pk4Diff: InputMaybe<IntQueryOperatorInput>;
   player: InputMaybe<PlayerFilterInput>;
-  position: InputMaybe<StringQueryOperatorInput>;
+  position: InputMaybe<IntQueryOperatorInput>;
   score: InputMaybe<IntQueryOperatorInput>;
   team: InputMaybe<TeamFilterInput>;
   won: InputMaybe<IntQueryOperatorInput>;
@@ -3014,9 +3287,9 @@ type Query_teamArgs = {
   matchesLost: InputMaybe<IntQueryOperatorInput>;
   matchesWon: InputMaybe<IntQueryOperatorInput>;
   name: InputMaybe<StringQueryOperatorInput>;
+  originalId: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   playersFirstHalf: InputMaybe<TeamPlayersFirstHalfFilterListInput>;
-  playersSecondHalf: InputMaybe<TeamPlayersSecondHalfFilterListInput>;
   pointsDiff: InputMaybe<IntQueryOperatorInput>;
   pointsLost: InputMaybe<IntQueryOperatorInput>;
   pointsWon: InputMaybe<IntQueryOperatorInput>;
@@ -3827,9 +4100,9 @@ type Team = Node & {
   readonly matchesLost: Maybe<Scalars['Int']>;
   readonly matchesWon: Maybe<Scalars['Int']>;
   readonly name: Maybe<Scalars['String']>;
+  readonly originalId: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
   readonly playersFirstHalf: Maybe<ReadonlyArray<Maybe<TeamPlayersFirstHalf>>>;
-  readonly playersSecondHalf: Maybe<ReadonlyArray<Maybe<TeamPlayersSecondHalf>>>;
   readonly pointsDiff: Maybe<Scalars['Int']>;
   readonly pointsLost: Maybe<Scalars['Int']>;
   readonly pointsWon: Maybe<Scalars['Int']>;
@@ -3898,9 +4171,9 @@ type TeamFieldSelector = {
   readonly matchesLost: InputMaybe<FieldSelectorEnum>;
   readonly matchesWon: InputMaybe<FieldSelectorEnum>;
   readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly originalId: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly playersFirstHalf: InputMaybe<TeamPlayersFirstHalfFieldSelector>;
-  readonly playersSecondHalf: InputMaybe<TeamPlayersSecondHalfFieldSelector>;
   readonly pointsDiff: InputMaybe<FieldSelectorEnum>;
   readonly pointsLost: InputMaybe<FieldSelectorEnum>;
   readonly pointsWon: InputMaybe<FieldSelectorEnum>;
@@ -3924,9 +4197,9 @@ type TeamFilterInput = {
   readonly matchesLost: InputMaybe<IntQueryOperatorInput>;
   readonly matchesWon: InputMaybe<IntQueryOperatorInput>;
   readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly originalId: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly playersFirstHalf: InputMaybe<TeamPlayersFirstHalfFilterListInput>;
-  readonly playersSecondHalf: InputMaybe<TeamPlayersSecondHalfFilterListInput>;
   readonly pointsDiff: InputMaybe<IntQueryOperatorInput>;
   readonly pointsLost: InputMaybe<IntQueryOperatorInput>;
   readonly pointsWon: InputMaybe<IntQueryOperatorInput>;
@@ -4001,26 +4274,6 @@ type TeamPlayersFirstHalfSortInput = {
   readonly player: InputMaybe<PlayerSortInput>;
 };
 
-type TeamPlayersSecondHalf = {
-  readonly player: Maybe<Player>;
-};
-
-type TeamPlayersSecondHalfFieldSelector = {
-  readonly player: InputMaybe<PlayerFieldSelector>;
-};
-
-type TeamPlayersSecondHalfFilterInput = {
-  readonly player: InputMaybe<PlayerFilterInput>;
-};
-
-type TeamPlayersSecondHalfFilterListInput = {
-  readonly elemMatch: InputMaybe<TeamPlayersSecondHalfFilterInput>;
-};
-
-type TeamPlayersSecondHalfSortInput = {
-  readonly player: InputMaybe<PlayerSortInput>;
-};
-
 type TeamSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
   readonly club: InputMaybe<ClubSortInput>;
@@ -4035,9 +4288,9 @@ type TeamSortInput = {
   readonly matchesLost: InputMaybe<SortOrderEnum>;
   readonly matchesWon: InputMaybe<SortOrderEnum>;
   readonly name: InputMaybe<SortOrderEnum>;
+  readonly originalId: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly playersFirstHalf: InputMaybe<TeamPlayersFirstHalfSortInput>;
-  readonly playersSecondHalf: InputMaybe<TeamPlayersSecondHalfSortInput>;
   readonly pointsDiff: InputMaybe<SortOrderEnum>;
   readonly pointsLost: InputMaybe<SortOrderEnum>;
   readonly pointsWon: InputMaybe<SortOrderEnum>;
@@ -4139,7 +4392,7 @@ type PlayerPageQueryVariables = Exact<{
 }>;
 
 
-type PlayerPageQuery = { readonly player: { readonly id: string, readonly name: string | null } | null, readonly allPlayerScore: { readonly wonTotal: number | null, readonly lostTotal: number | null, readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly isSecondHalf: boolean | null, readonly gamesPlayed: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly won: number | null, readonly lost: number | null, readonly score: number | null, readonly team: { readonly id: string, readonly name: string | null, readonly club: { readonly id: string, readonly shortName: string | null, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null }> } };
+type PlayerPageQuery = { readonly player: { readonly id: string, readonly name: string | null } | null, readonly allPlayerScore: { readonly wonTotal: number | null, readonly lostTotal: number | null, readonly nodes: ReadonlyArray<{ readonly position: number | null, readonly isSecondHalf: boolean | null, readonly gamesPlayed: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly won: number | null, readonly lost: number | null, readonly score: number | null, readonly team: { readonly id: string, readonly name: string | null, readonly club: { readonly id: string, readonly shortName: string | null, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null }> } };
 
 type SearchQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4163,7 +4416,7 @@ type TeamPageQueryVariables = Exact<{
 }>;
 
 
-type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null } | null> | null } | null, readonly teams: { readonly nodes: ReadonlyArray<{ readonly drawn: number | null, readonly gamesPlayed: number | null, readonly id: string, readonly lost: number | null, readonly matchesDiff: number | null, readonly matchesLost: number | null, readonly matchesWon: number | null, readonly name: string | null, readonly shortName: string | null, readonly pointsDiff: number | null, readonly pointsLost: number | null, readonly pointsWon: number | null, readonly position: number | null, readonly setsDiff: number | null, readonly won: number | null, readonly club: { readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null }> }, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: string | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null, readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
+type TeamPageQuery = { readonly team: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly league: { readonly id: string, readonly name: string | null, readonly shortName: string | null } | null, readonly club: { readonly id: string, readonly shortName: string | null } | null, readonly fixtures: ReadonlyArray<{ readonly id: string, readonly date: string | null, readonly result: ReadonlyArray<number | null> | null, readonly link: string | null, readonly guestTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null, readonly homeTeam: { readonly id: string, readonly name: string | null, readonly shortName: string | null, readonly club: { readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null } | null } | null> | null } | null, readonly teams: { readonly nodes: ReadonlyArray<{ readonly drawn: number | null, readonly gamesPlayed: number | null, readonly id: string, readonly lost: number | null, readonly matchesDiff: number | null, readonly matchesLost: number | null, readonly matchesWon: number | null, readonly name: string | null, readonly shortName: string | null, readonly pointsDiff: number | null, readonly pointsLost: number | null, readonly pointsWon: number | null, readonly position: number | null, readonly setsDiff: number | null, readonly won: number | null, readonly club: { readonly id: string, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null }> }, readonly playersFirstHalf: { readonly nodes: ReadonlyArray<{ readonly position: number | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly playersSecondHalf: { readonly nodes: ReadonlyArray<{ readonly position: number | null, readonly score: number | null, readonly won: number | null, readonly lost: number | null, readonly pk1Diff: ReadonlyArray<number | null> | null, readonly pk2Diff: ReadonlyArray<number | null> | null, readonly gamesPlayed: number | null, readonly player: { readonly id: string, readonly name: string | null } | null }> }, readonly logo: { readonly image: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null, readonly placeholderImage: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
 
 type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 

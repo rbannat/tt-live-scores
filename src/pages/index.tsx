@@ -8,7 +8,6 @@ import {
   ScrollContainerItem,
 } from '../components/scrollContainer'
 import { SEO } from '../components/seo'
-import './styles.scss'
 
 const IndexPage = ({ data }: PageProps<Queries.IndexPageQuery>) => {
   const [favoriteClubs] = useLocalStorage(

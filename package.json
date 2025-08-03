@@ -17,7 +17,7 @@
     "gatsby-plugin-sass": "^6.7.0",
     "gatsby-plugin-sharp": "^5.7.0",
     "gatsby-source-filesystem": "^5.7.0",
-    "gatsby-source-ttlive": "^3.3.0",
+    "gatsby-source-ttlive": "^3.4.0",
     "gatsby-transformer-json": "^5.13.1",
     "gatsby-transformer-sharp": "^5.7.0",
     "gatsby-transformer-xml": "^5.7.0",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "^4.3.0",
-    "@types/node": "^22.5.1",
+    "@types/node": "^24.0.13",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.2.11",
     "eslint": "^9.9.1",
