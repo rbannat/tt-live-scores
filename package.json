@@ -9,6 +9,7 @@
     "clsx": "^2.0.0",
     "formik": "^2.4.5",
     "gatsby": "^5.12.5",
+    "gatsby-adapter-netlify": "^1.2.0",
     "gatsby-plugin-fontawesome-css": "^1.2.0",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-local-search": "^2.0.1",
