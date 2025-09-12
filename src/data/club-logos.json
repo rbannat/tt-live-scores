@@ -197,7 +197,7 @@
   },
   {
     "clubId": "045b9f82-88e3-5db2-bf39-6dc6d0014cb4",
-    "image": "../images/club-logos/sv-strassenwesen.jpg"
+    "image": "../images/club-logos/svswb.png"
   },
   {
     "clubId": "83f64e56-809f-58cc-8a41-71eb58436a01",
@@ -346,5 +346,13 @@
   {
     "clubId": "d6bebb16-93fc-5de2-9067-bf78dee0abaa",
     "image": "../images/club-logos/ttv-treptow-90.jpg"
+  },
+  {
+    "clubId": "94743e97-0afd-54d9-b3ee-bb579ada2d49",
+    "image": "../images/club-logos/sv-roter-stern.png"
+  },
+  {
+    "clubId": "f97313c2-94ba-599e-acf7-40920f8cf009",
+    "image": "../images/club-logos/ttcz.png"
   }
 ]
