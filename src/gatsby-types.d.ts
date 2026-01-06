@@ -2132,6 +2132,7 @@ type LeagueTeams = {
   readonly matchesWon: Maybe<Scalars['Int']>;
   readonly name: Maybe<Scalars['String']>;
   readonly playersFirstHalf: Maybe<ReadonlyArray<Maybe<LeagueTeamsPlayersFirstHalf>>>;
+  readonly playersSecondHalf: Maybe<ReadonlyArray<Maybe<LeagueTeamsPlayersSecondHalf>>>;
   readonly pointsDiff: Maybe<Scalars['Int']>;
   readonly pointsLost: Maybe<Scalars['Int']>;
   readonly pointsWon: Maybe<Scalars['Int']>;
@@ -2154,6 +2155,7 @@ type LeagueTeamsFieldSelector = {
   readonly matchesWon: InputMaybe<FieldSelectorEnum>;
   readonly name: InputMaybe<FieldSelectorEnum>;
   readonly playersFirstHalf: InputMaybe<LeagueTeamsPlayersFirstHalfFieldSelector>;
+  readonly playersSecondHalf: InputMaybe<LeagueTeamsPlayersSecondHalfFieldSelector>;
   readonly pointsDiff: InputMaybe<FieldSelectorEnum>;
   readonly pointsLost: InputMaybe<FieldSelectorEnum>;
   readonly pointsWon: InputMaybe<FieldSelectorEnum>;
@@ -2176,6 +2178,7 @@ type LeagueTeamsFilterInput = {
   readonly matchesWon: InputMaybe<IntQueryOperatorInput>;
   readonly name: InputMaybe<StringQueryOperatorInput>;
   readonly playersFirstHalf: InputMaybe<LeagueTeamsPlayersFirstHalfFilterListInput>;
+  readonly playersSecondHalf: InputMaybe<LeagueTeamsPlayersSecondHalfFilterListInput>;
   readonly pointsDiff: InputMaybe<IntQueryOperatorInput>;
   readonly pointsLost: InputMaybe<IntQueryOperatorInput>;
   readonly pointsWon: InputMaybe<IntQueryOperatorInput>;
@@ -2218,6 +2221,8 @@ type LeagueTeamsPlayersFirstHalfScores = {
   readonly lost: Maybe<Scalars['Int']>;
   readonly pk1Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly pk2Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
+  readonly pk3Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
+  readonly pk4Diff: Maybe<ReadonlyArray<Maybe<Scalars['Int']>>>;
   readonly playerId: Maybe<Scalars['Int']>;
   readonly position: Maybe<Scalars['String']>;
   readonly score: Maybe<Scalars['Int']>;
@@ -2232,6 +2237,8 @@ type LeagueTeamsPlayersFirstHalfScoresFieldSelector = {
   readonly lost: InputMaybe<FieldSelectorEnum>;
   readonly pk1Diff: InputMaybe<FieldSelectorEnum>;
   readonly pk2Diff: InputMaybe<FieldSelectorEnum>;
+  readonly pk3Diff: InputMaybe<FieldSelectorEnum>;
+  readonly pk4Diff: InputMaybe<FieldSelectorEnum>;
   readonly playerId: InputMaybe<FieldSelectorEnum>;
   readonly position: InputMaybe<FieldSelectorEnum>;
   readonly score: InputMaybe<FieldSelectorEnum>;
@@ -2246,6 +2253,8 @@ type LeagueTeamsPlayersFirstHalfScoresFilterInput = {
   readonly lost: InputMaybe<IntQueryOperatorInput>;
   readonly pk1Diff: InputMaybe<IntQueryOperatorInput>;
   readonly pk2Diff: InputMaybe<IntQueryOperatorInput>;
+  readonly pk3Diff: InputMaybe<IntQueryOperatorInput>;
+  readonly pk4Diff: InputMaybe<IntQueryOperatorInput>;
   readonly playerId: InputMaybe<IntQueryOperatorInput>;
   readonly position: InputMaybe<StringQueryOperatorInput>;
   readonly score: InputMaybe<IntQueryOperatorInput>;
@@ -2264,6 +2273,8 @@ type LeagueTeamsPlayersFirstHalfScoresSortInput = {
   readonly lost: InputMaybe<SortOrderEnum>;
   readonly pk1Diff: InputMaybe<SortOrderEnum>;
   readonly pk2Diff: InputMaybe<SortOrderEnum>;
+  readonly pk3Diff: InputMaybe<SortOrderEnum>;
+  readonly pk4Diff: InputMaybe<SortOrderEnum>;
   readonly playerId: InputMaybe<SortOrderEnum>;
   readonly position: InputMaybe<SortOrderEnum>;
   readonly score: InputMaybe<SortOrderEnum>;
@@ -2275,6 +2286,86 @@ type LeagueTeamsPlayersFirstHalfSortInput = {
   readonly id: InputMaybe<SortOrderEnum>;
   readonly name: InputMaybe<SortOrderEnum>;
   readonly scores: InputMaybe<LeagueTeamsPlayersFirstHalfScoresSortInput>;
+};
+
+type LeagueTeamsPlayersSecondHalf = {
+  readonly id: Maybe<Scalars['Int']>;
+  readonly name: Maybe<Scalars['String']>;
+  readonly scores: Maybe<ReadonlyArray<Maybe<LeagueTeamsPlayersSecondHalfScores>>>;
+};
+
+type LeagueTeamsPlayersSecondHalfFieldSelector = {
+  readonly id: InputMaybe<FieldSelectorEnum>;
+  readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly scores: InputMaybe<LeagueTeamsPlayersSecondHalfScoresFieldSelector>;
+};
+
+type LeagueTeamsPlayersSecondHalfFilterInput = {
+  readonly id: InputMaybe<IntQueryOperatorInput>;
+  readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly scores: InputMaybe<LeagueTeamsPlayersSecondHalfScoresFilterListInput>;
+};
+
+type LeagueTeamsPlayersSecondHalfFilterListInput = {
+  readonly elemMatch: InputMaybe<LeagueTeamsPlayersSecondHalfFilterInput>;
+};
+
+type LeagueTeamsPlayersSecondHalfScores = {
+  readonly attributes: Maybe<Scalars['String']>;
+  readonly gamesPlayed: Maybe<Scalars['Int']>;
+  readonly isSecondHalf: Maybe<Scalars['Boolean']>;
+  readonly lost: Maybe<Scalars['Int']>;
+  readonly playerId: Maybe<Scalars['Int']>;
+  readonly position: Maybe<Scalars['String']>;
+  readonly score: Maybe<Scalars['Int']>;
+  readonly teamId: Maybe<Scalars['Int']>;
+  readonly won: Maybe<Scalars['Int']>;
+};
+
+type LeagueTeamsPlayersSecondHalfScoresFieldSelector = {
+  readonly attributes: InputMaybe<FieldSelectorEnum>;
+  readonly gamesPlayed: InputMaybe<FieldSelectorEnum>;
+  readonly isSecondHalf: InputMaybe<FieldSelectorEnum>;
+  readonly lost: InputMaybe<FieldSelectorEnum>;
+  readonly playerId: InputMaybe<FieldSelectorEnum>;
+  readonly position: InputMaybe<FieldSelectorEnum>;
+  readonly score: InputMaybe<FieldSelectorEnum>;
+  readonly teamId: InputMaybe<FieldSelectorEnum>;
+  readonly won: InputMaybe<FieldSelectorEnum>;
+};
+
+type LeagueTeamsPlayersSecondHalfScoresFilterInput = {
+  readonly attributes: InputMaybe<StringQueryOperatorInput>;
+  readonly gamesPlayed: InputMaybe<IntQueryOperatorInput>;
+  readonly isSecondHalf: InputMaybe<BooleanQueryOperatorInput>;
+  readonly lost: InputMaybe<IntQueryOperatorInput>;
+  readonly playerId: InputMaybe<IntQueryOperatorInput>;
+  readonly position: InputMaybe<StringQueryOperatorInput>;
+  readonly score: InputMaybe<IntQueryOperatorInput>;
+  readonly teamId: InputMaybe<IntQueryOperatorInput>;
+  readonly won: InputMaybe<IntQueryOperatorInput>;
+};
+
+type LeagueTeamsPlayersSecondHalfScoresFilterListInput = {
+  readonly elemMatch: InputMaybe<LeagueTeamsPlayersSecondHalfScoresFilterInput>;
+};
+
+type LeagueTeamsPlayersSecondHalfScoresSortInput = {
+  readonly attributes: InputMaybe<SortOrderEnum>;
+  readonly gamesPlayed: InputMaybe<SortOrderEnum>;
+  readonly isSecondHalf: InputMaybe<SortOrderEnum>;
+  readonly lost: InputMaybe<SortOrderEnum>;
+  readonly playerId: InputMaybe<SortOrderEnum>;
+  readonly position: InputMaybe<SortOrderEnum>;
+  readonly score: InputMaybe<SortOrderEnum>;
+  readonly teamId: InputMaybe<SortOrderEnum>;
+  readonly won: InputMaybe<SortOrderEnum>;
+};
+
+type LeagueTeamsPlayersSecondHalfSortInput = {
+  readonly id: InputMaybe<SortOrderEnum>;
+  readonly name: InputMaybe<SortOrderEnum>;
+  readonly scores: InputMaybe<LeagueTeamsPlayersSecondHalfScoresSortInput>;
 };
 
 type LeagueTeamsSortInput = {
@@ -2290,6 +2381,7 @@ type LeagueTeamsSortInput = {
   readonly matchesWon: InputMaybe<SortOrderEnum>;
   readonly name: InputMaybe<SortOrderEnum>;
   readonly playersFirstHalf: InputMaybe<LeagueTeamsPlayersFirstHalfSortInput>;
+  readonly playersSecondHalf: InputMaybe<LeagueTeamsPlayersSecondHalfSortInput>;
   readonly pointsDiff: InputMaybe<SortOrderEnum>;
   readonly pointsLost: InputMaybe<SortOrderEnum>;
   readonly pointsWon: InputMaybe<SortOrderEnum>;
@@ -3302,6 +3394,7 @@ type Query_teamArgs = {
   originalId: InputMaybe<IntQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   playersFirstHalf: InputMaybe<TeamPlayersFirstHalfFilterListInput>;
+  playersSecondHalf: InputMaybe<TeamPlayersSecondHalfFilterListInput>;
   pointsDiff: InputMaybe<IntQueryOperatorInput>;
   pointsLost: InputMaybe<IntQueryOperatorInput>;
   pointsWon: InputMaybe<IntQueryOperatorInput>;
@@ -4115,6 +4208,7 @@ type Team = Node & {
   readonly originalId: Maybe<Scalars['Int']>;
   readonly parent: Maybe<Node>;
   readonly playersFirstHalf: Maybe<ReadonlyArray<Maybe<TeamPlayersFirstHalf>>>;
+  readonly playersSecondHalf: Maybe<ReadonlyArray<Maybe<TeamPlayersSecondHalf>>>;
   readonly pointsDiff: Maybe<Scalars['Int']>;
   readonly pointsLost: Maybe<Scalars['Int']>;
   readonly pointsWon: Maybe<Scalars['Int']>;
@@ -4186,6 +4280,7 @@ type TeamFieldSelector = {
   readonly originalId: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly playersFirstHalf: InputMaybe<TeamPlayersFirstHalfFieldSelector>;
+  readonly playersSecondHalf: InputMaybe<TeamPlayersSecondHalfFieldSelector>;
   readonly pointsDiff: InputMaybe<FieldSelectorEnum>;
   readonly pointsLost: InputMaybe<FieldSelectorEnum>;
   readonly pointsWon: InputMaybe<FieldSelectorEnum>;
@@ -4212,6 +4307,7 @@ type TeamFilterInput = {
   readonly originalId: InputMaybe<IntQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly playersFirstHalf: InputMaybe<TeamPlayersFirstHalfFilterListInput>;
+  readonly playersSecondHalf: InputMaybe<TeamPlayersSecondHalfFilterListInput>;
   readonly pointsDiff: InputMaybe<IntQueryOperatorInput>;
   readonly pointsLost: InputMaybe<IntQueryOperatorInput>;
   readonly pointsWon: InputMaybe<IntQueryOperatorInput>;
@@ -4286,6 +4382,26 @@ type TeamPlayersFirstHalfSortInput = {
   readonly player: InputMaybe<PlayerSortInput>;
 };
 
+type TeamPlayersSecondHalf = {
+  readonly player: Maybe<Player>;
+};
+
+type TeamPlayersSecondHalfFieldSelector = {
+  readonly player: InputMaybe<PlayerFieldSelector>;
+};
+
+type TeamPlayersSecondHalfFilterInput = {
+  readonly player: InputMaybe<PlayerFilterInput>;
+};
+
+type TeamPlayersSecondHalfFilterListInput = {
+  readonly elemMatch: InputMaybe<TeamPlayersSecondHalfFilterInput>;
+};
+
+type TeamPlayersSecondHalfSortInput = {
+  readonly player: InputMaybe<PlayerSortInput>;
+};
+
 type TeamSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
   readonly club: InputMaybe<ClubSortInput>;
@@ -4303,6 +4419,7 @@ type TeamSortInput = {
   readonly originalId: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly playersFirstHalf: InputMaybe<TeamPlayersFirstHalfSortInput>;
+  readonly playersSecondHalf: InputMaybe<TeamPlayersSecondHalfSortInput>;
   readonly pointsDiff: InputMaybe<SortOrderEnum>;
   readonly pointsLost: InputMaybe<SortOrderEnum>;
   readonly pointsWon: InputMaybe<SortOrderEnum>;
