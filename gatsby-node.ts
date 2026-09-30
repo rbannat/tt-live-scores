@@ -1,5 +1,13 @@
+import fs from 'fs'
 import path from 'path'
 import { GatsbyNode } from 'gatsby'
+
+export const onPostBuild: GatsbyNode['onPostBuild'] = async () => {
+  await fs.promises.writeFile(
+    path.join('public', 'build-info.json'),
+    JSON.stringify({ buildTime: new Date().toISOString() }),
+  )
+}
 
 export const createPages: GatsbyNode['createPages'] = async ({
   graphql,
