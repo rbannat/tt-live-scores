@@ -16,7 +16,7 @@
     "gatsby-plugin-sass": "^6.16.0",
     "gatsby-plugin-sharp": "^5.16.0",
     "gatsby-source-filesystem": "^5.16.0",
-    "gatsby-source-ttlive": "^3.5.0",
+    "gatsby-source-ttlive": "^3.6.0",
     "gatsby-transformer-json": "^5.16.0",
     "gatsby-transformer-sharp": "^5.16.0",
     "prop-types": "^15.8.1",
